@@ -30,6 +30,7 @@
 		9F2142342CE9DAA3004167D7 /* IcySkyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IcySkyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F58925A2CEB3B0300798943 /* Model */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Model; path = Packages/Model; sourceTree = "<group>"; };
 		9F58925B2CEB3B0900798943 /* Features */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Features; path = Packages/Features; sourceTree = "<group>"; };
+		9F5F5E102CEE46B200A4712C /* IcySky-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "IcySky-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -72,6 +73,7 @@
 		9F21421A2CE9DAA1004167D7 = {
 			isa = PBXGroup;
 			children = (
+				9F5F5E102CEE46B200A4712C /* IcySky-Info.plist */,
 				9F2142252CE9DAA1004167D7 /* App */,
 				9F2142372CE9DAA3004167D7 /* IcySkyTests */,
 				9F58925A2CEB3B0300798943 /* Model */,
@@ -361,6 +363,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "IcySky-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Icy Sky";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -404,6 +407,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "IcySky-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Icy Sky";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
