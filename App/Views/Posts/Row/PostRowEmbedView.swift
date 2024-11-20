@@ -1,0 +1,28 @@
+import ATProtoKit
+import DesignSystem
+import Models
+import SwiftUI
+
+struct PostRowEmbedView: View {
+  let post: Post
+
+  var body: some View {
+    if let embed = post.embed {
+      switch embed {
+      case .embedImagesView(let images):
+        PostRowImagesView(images: images)
+      case .embedExternalView(let externalView):
+        PostRowEmbedExternalView(externalView: externalView)
+      case .embedRecordView(let record):
+        switch record.record {
+        case .viewRecord(_):
+          EmptyView()
+        default:
+          EmptyView()
+        }
+      default:
+        EmptyView()
+      }
+    }
+  }
+}
