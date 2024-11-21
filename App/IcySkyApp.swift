@@ -39,6 +39,7 @@ struct IcySkyApp: App {
             .containerRelativeFrame([.horizontal, .vertical])
         }
       }
+      .ignoresSafeArea(.keyboard, edges: .all)
       .scrollDisabled(paths[selectedTab ?? .feed]?.isEmpty == false)
       .sheet(isPresented: $isAUthPresented) {
         AuthView { session in
