@@ -39,7 +39,8 @@ let package = Package(
     .target(
       name: "DesignSystem",
       dependencies: [
-        .product(name: "VariableBlur", package: "VariableBlur")
+        .product(name: "VariableBlur", package: "VariableBlur"),
+        .product(name: "Router", package: "Model"),
       ]
     ),
   ]
