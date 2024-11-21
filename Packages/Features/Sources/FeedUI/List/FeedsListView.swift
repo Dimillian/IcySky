@@ -22,7 +22,7 @@ public struct FeedsListView: View {
 
   public var body: some View {
     List {
-      headerView
+      titleView
         .listRowSeparator(.hidden)
 
       ForEach(feeds) { feed in
@@ -44,52 +44,24 @@ public struct FeedsListView: View {
     }
   }
 
-  private var headerView: some View {
-    ZStack(alignment: .center) {
-      searchFieldView
-        .transition(.push(from: .leading).combined(with: .opacity))
-      titleView
-        .transition(.push(from: .trailing).combined(with: .opacity))
-    }
-    .animation(.smooth, value: isInSearch)
-  }
-
   @ViewBuilder
   private var titleView: some View {
-    if !isInSearch {
-      FeedsListTitleView(
-        filter: $filter,
-        isInSearch: $isInSearch,
-        isSearchFocused: $isSearchFocused
-      )
-    }
-  }
-
-  @ViewBuilder
-  private var searchFieldView: some View {
-    if isInSearch {
-      HStack(alignment: .center) {
-        TextField("Search feeds", text: $searchText)
-          .focused($isSearchFocused)
-          .padding()
-          .pillStyle()
-          .task(id: searchText) {
-            guard !searchText.isEmpty else {
-              await fetchSuggestedFeed()
-              return
-            }
-            await searchFeed(query: searchText)
-          }
-        Button {
-          isInSearch.toggle()
-          isSearchFocused = false
-          Task { await fetchSuggestedFeed() }
-        } label: {
-          Image(systemName: "xmark")
-            .padding()
-        }
-        .buttonStyle(.pill)
+    FeedsListTitleView(
+      filter: $filter,
+      searchText: $searchText,
+      isInSearch: $isInSearch,
+      isSearchFocused: $isSearchFocused
+    )
+    .task(id: searchText) {
+      guard !searchText.isEmpty else {
+        await fetchSuggestedFeed()
+        return
       }
+      await searchFeed(query: searchText)
+    }
+    .onChange(of: isInSearch, initial: false) {
+      guard !isInSearch else { return }
+      Task { await fetchSuggestedFeed() }
     }
   }
 
