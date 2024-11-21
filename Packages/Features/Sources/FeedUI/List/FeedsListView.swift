@@ -34,6 +34,7 @@ public struct FeedsListView: View {
     .toolbarVisibility(.hidden, for: .navigationBar)
     .scrollContentBackground(.hidden)
     .task(id: filter) {
+      guard !isInSearch else { return }
       switch filter {
       case .suggested:
         await fetchSuggestedFeed()
@@ -82,6 +83,7 @@ public struct FeedsListView: View {
         Button {
           isInSearch.toggle()
           isSearchFocused = false
+          Task { await fetchSuggestedFeed() }
         } label: {
           Image(systemName: "xmark")
             .padding()
