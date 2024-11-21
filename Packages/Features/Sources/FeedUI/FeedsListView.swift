@@ -5,12 +5,14 @@ import SwiftUI
 import VariableBlur
 import Models
 
-struct FeedsListView: View {
+public struct FeedsListView: View {
   @Environment(BSkyClient.self) var client
 
   @State var feeds: [Feed] = []
+  
+  public init() { }
 
-  var body: some View {
+  public var body: some View {
     List {
       headerView
         .listRowSeparator(.hidden)

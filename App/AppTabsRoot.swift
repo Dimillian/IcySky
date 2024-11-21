@@ -3,6 +3,8 @@ import DesignSystem
 import Network
 import Models
 import Auth
+import FeedUI
+import PostUI
 
 @MainActor
 extension AppTab {

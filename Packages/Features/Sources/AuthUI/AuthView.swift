@@ -5,14 +5,18 @@ import SwiftUI
 import Network
 import ATProtoKit
 
-struct AuthView: View {
+public struct AuthView: View {
   public let onSessionCreated: (UserSession) -> Void
 
   @State private var handle: String = ""
   @State private var appPassword: String = ""
   @State private var error: String? = nil
+  
+  public init(_ onSessionCreated: @escaping (UserSession) -> Void) {
+    self.onSessionCreated = onSessionCreated
+  }
 
-  var body: some View {
+  public var body: some View {
     Form {
       HeaderView(title: "🦋 Bluesky Login")
         

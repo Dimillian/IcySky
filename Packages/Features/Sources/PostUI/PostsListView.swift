@@ -4,7 +4,7 @@ import Models
 import Network
 import SwiftUI
 
-struct PostsListView: View {
+public struct PostsListView: View {
   @Environment(BSkyClient.self) var client
   @Environment(\.dismiss) var dismiss
 
@@ -12,8 +12,12 @@ struct PostsListView: View {
 
   @State var posts: [Post] = []
   @State var cursor: String?
+  
+  public init(feed: Feed) {
+    self.feed = feed
+  }
 
-  var body: some View {
+  public var body: some View {
     List {
       HeaderView(title: feed.displayName)
         .padding(.bottom)

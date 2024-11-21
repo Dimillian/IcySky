@@ -3,12 +3,19 @@
 
 import PackageDescription
 
+let baseDeps: [PackageDescription.Target.Dependency] = [
+  .product(name: "Network", package: "Model"),
+  .product(name: "Models", package: "Model"),
+  "DesignSystem",
+]
+
 let package = Package(
   name: "Features",
   platforms: [.iOS(.v18), .macOS(.v15)],
   products: [
-    .library(name: "Feed", targets: ["Feed"]),
-    .library(name: "Post", targets: ["Post"]),
+    .library(name: "FeedUI", targets: ["FeedUI"]),
+    .library(name: "PostUI", targets: ["PostUI"]),
+    .library(name: "AuthUI", targets: ["AuthUI"]),
     .library(name: "DesignSystem", targets: ["DesignSystem"]),
   ],
   dependencies: [
@@ -17,16 +24,16 @@ let package = Package(
   ],
   targets: [
     .target(
-      name: "Feed",
-      dependencies: [
-        .product(name: "Network", package: "Model")
-      ]
+      name: "FeedUI",
+      dependencies: baseDeps
     ),
     .target(
-      name: "Post",
-      dependencies: [
-        .product(name: "Network", package: "Model")
-      ]
+      name: "PostUI",
+      dependencies: baseDeps
+    ),
+    .target(
+      name: "AuthUI",
+      dependencies: baseDeps
     ),
     .target(
       name: "DesignSystem",

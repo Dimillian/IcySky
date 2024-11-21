@@ -4,6 +4,7 @@ import Network
 import SwiftUI
 import VariableBlur
 import Auth
+import AuthUI
 
 @main
 struct IcySkyApp: App {
