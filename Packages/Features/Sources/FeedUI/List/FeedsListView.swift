@@ -33,12 +33,12 @@ public struct FeedsListView: View {
     .navigationBarTitleDisplayMode(.inline)
     .toolbarVisibility(.hidden, for: .navigationBar)
     .scrollContentBackground(.hidden)
-    .onChange(of: filter, initial: true) {
+    .task(id: filter) {
       switch filter {
       case .suggested:
-        Task { await fetchSuggestedFeed() }
+        await fetchSuggestedFeed()
       case .myFeeds:
-        Task { await fetchMyFeeds() }
+        await fetchMyFeeds()
       }
     }
   }
@@ -101,19 +101,13 @@ public struct FeedsListView: View {
   }
 
   private func fetchMyFeeds() async {
-    guard let preferences = currentUser.preferences else { return }
-    switch preferences {
-    case .savedFeeds(let definition):
-      let feedURI = definition.pinned
-      do {
-        let feeds = try await client.protoClient.getFeedGenerators(feedURI)
-        withAnimation {
-          self.feeds = feeds.feeds.map { $0.feedItem }
-        }
-      } catch {}
-    default:
-      break
-    }
+    guard let savedFeeds = currentUser.savedFeeds else { return }
+    do {
+      let feeds = try await client.protoClient.getFeedGenerators(savedFeeds.saved)
+      withAnimation {
+        self.feeds = feeds.feeds.map { $0.feedItem }
+      }
+    } catch {}
   }
 
   private func searchFeed(query: String) async {

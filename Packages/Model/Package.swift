@@ -11,10 +11,11 @@ let package = Package(
     .library(name: "Models", targets: ["Models"]),
     .library(name: "Auth", targets: ["Auth"]),
     .library(name: "User", targets: ["User"]),
+    .library(name: "Router", targets: ["Router"]),
   ],
   dependencies: [
     .package(
-      url: "https://github.com/Dimillian/ATProtoKit", branch: "auth-getPopularFeedGenerators"),
+      url: "https://github.com/Dimillian/ATProtoKit", branch: "fix-preferences"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
   ],
   targets: [
@@ -43,6 +44,10 @@ let package = Package(
         .product(name: "ATProtoKit", package: "ATProtoKit"),
         "Network",
       ]
+    ),
+    .target(
+      name: "Router",
+      dependencies: ["Models"]
     ),
   ]
 )

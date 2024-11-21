@@ -3,6 +3,7 @@ import Auth
 import AuthUI
 import DesignSystem
 import Network
+import Router
 import SwiftUI
 import User
 import VariableBlur
@@ -13,6 +14,7 @@ struct IcySkyApp: App {
   @State var currentUser: CurrentUser?
   @State var selectedTab: AppTab? = .feed
   @State var isAUthPresented = false
+  @State var paths: [AppTab: [RouterDestination]] = [:]
 
   var body: some Scene {
     WindowGroup {
@@ -20,8 +22,13 @@ struct IcySkyApp: App {
         if let client, let currentUser {
           LazyHStack {
             ForEach(AppTab.allCases) { tab in
-              tab.rootView
-                .id(tab)
+              AppTabRootView(
+                tab: tab,
+                path: .init(
+                  get: { paths[tab] ?? [] },
+                  set: { paths[tab] = $0 })
+              )
+              .id(tab)
             }
           }
           .scrollTargetLayout()
@@ -32,6 +39,7 @@ struct IcySkyApp: App {
             .containerRelativeFrame([.horizontal, .vertical])
         }
       }
+      .scrollDisabled(paths[selectedTab ?? .feed]?.isEmpty == false)
       .sheet(isPresented: $isAUthPresented) {
         AuthView { session in
           self.client = BSkyClient(session: session, protoClient: ATProtoKit(session: session))
@@ -74,7 +82,13 @@ struct IcySkyApp: App {
             .offset(y: 40)
             .ignoresSafeArea()
 
-            TabBarView(selectedtab: $selectedTab)
+            TabBarView(
+              selectedtab: $selectedTab,
+              selectedTapPath: .init(
+                get: { paths[selectedTab ?? .feed] ?? [] },
+                set: { paths[selectedTab ?? .feed] = $0 }
+              )
+            )
           }
         }
       )

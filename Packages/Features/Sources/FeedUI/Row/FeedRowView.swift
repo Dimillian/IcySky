@@ -1,14 +1,15 @@
 import ATProtoKit
 import DesignSystem
-import Network
-import SwiftUI
 import Models
+import Network
+import Router
+import SwiftUI
 
 struct FeedRowView: View {
   let feed: FeedItem
 
   var body: some View {
-    NavigationLink(value: feed) {
+    NavigationLink(value: RouterDestination.feed(feed)) {
       VStack(alignment: .leading, spacing: 12) {
         headerView
         if let description = feed.description {

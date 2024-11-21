@@ -1,13 +1,13 @@
 {
-  "originHash" : "e4459560d86170985b59f73349228325c36e0f1916791c7dda32625eaf8ff8f3",
+  "originHash" : "65a430dcfe34595830ce5a22638977642426d41e50a8a9714f2479b70ba0a0f8",
   "pins" : [
     {
       "identity" : "atprotokit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Dimillian/ATProtoKit",
       "state" : {
-        "branch" : "auth-getPopularFeedGenerators",
-        "revision" : "f9b7989df286ed1980670f491706a62a0cfd5422"
+        "branch" : "fix-preferences",
+        "revision" : "e59fdc3e240f22f1215f3ead360fc27f6c29c6ff"
       }
     },
     {

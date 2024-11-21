@@ -6,6 +6,7 @@ import PackageDescription
 let baseDeps: [PackageDescription.Target.Dependency] = [
   .product(name: "Network", package: "Model"),
   .product(name: "Models", package: "Model"),
+  .product(name: "Router", package: "Model"),
   "DesignSystem",
 ]
 
@@ -20,7 +21,7 @@ let package = Package(
   ],
   dependencies: [
     .package(name: "Model", path: "../Model"),
-    .package(url: "https://github.com/nikstar/VariableBlur", from: "1.2.0")
+    .package(url: "https://github.com/nikstar/VariableBlur", from: "1.2.0"),
   ],
   targets: [
     .target(

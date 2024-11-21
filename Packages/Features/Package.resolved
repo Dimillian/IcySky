@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Dimillian/ATProtoKit",
       "state" : {
-        "branch" : "auth-getPopularFeedGenerators",
-        "revision" : "f9b7989df286ed1980670f491706a62a0cfd5422"
+        "branch" : "fix-preferences",
+        "revision" : "b7afdedf3c1f2dcdde3b6571180d93a468dd5723"
       }
     },
     {
