@@ -11,7 +11,6 @@ struct IcySkyApp: App {
   @State var client: BSkyClient?
   @State var selectedTab: AppTab? = .feed
   @State var isAUthPresented = false
-  @State var auth = Auth()
   
   var body: some Scene {
     WindowGroup {
@@ -37,7 +36,7 @@ struct IcySkyApp: App {
       }
       .task {
         do {
-          if let userSession = try await auth.session {
+          if let userSession = try await Auth().session {
             self.client = BSkyClient(session: userSession, protoClient: ATProtoKit(session: userSession))
           } else {
             isAUthPresented = true

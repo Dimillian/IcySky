@@ -12,7 +12,7 @@ let package = Package(
     .library(name: "Auth", targets: ["Auth"])
   ],
   dependencies: [
-    .package(url: "https://github.com/MasterJ93/ATProtoKit", .upToNextMajor(from: "0.19.2")),
+    .package(url: "https://github.com/Dimillian/ATProtoKit", branch: "auth-getPopularFeedGenerators"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0")
   ],
   targets: [
