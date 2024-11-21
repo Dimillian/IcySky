@@ -4,7 +4,7 @@ import Models
 import SwiftUI
 
 struct PostRowEmbedView: View {
-  let post: Post
+  let post: PostItem
 
   var body: some View {
     if let embed = post.embed {

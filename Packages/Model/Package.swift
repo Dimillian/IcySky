@@ -9,11 +9,13 @@ let package = Package(
   products: [
     .library(name: "Network", targets: ["Network"]),
     .library(name: "Models", targets: ["Models"]),
-    .library(name: "Auth", targets: ["Auth"])
+    .library(name: "Auth", targets: ["Auth"]),
+    .library(name: "User", targets: ["User"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/Dimillian/ATProtoKit", branch: "auth-getPopularFeedGenerators"),
-    .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0")
+    .package(
+      url: "https://github.com/Dimillian/ATProtoKit", branch: "auth-getPopularFeedGenerators"),
+    .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
   ],
   targets: [
     .target(
@@ -32,8 +34,15 @@ let package = Package(
       name: "Auth",
       dependencies: [
         .product(name: "ATProtoKit", package: "ATProtoKit"),
-        .product(name: "KeychainSwift", package: "keychain-swift")
+        .product(name: "KeychainSwift", package: "keychain-swift"),
       ]
-    )
+    ),
+    .target(
+      name: "User",
+      dependencies: [
+        .product(name: "ATProtoKit", package: "ATProtoKit"),
+        "Network",
+      ]
+    ),
   ]
 )

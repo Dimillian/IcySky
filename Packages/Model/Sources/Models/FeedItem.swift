@@ -1,7 +1,7 @@
 import ATProtoKit
 import Foundation
 
-public struct Feed: Codable, Equatable, Identifiable, Hashable {
+public struct FeedItem: Codable, Equatable, Identifiable, Hashable {
   public func hash(into hasher: inout Hasher) {
     hasher.combine(uri)
   }
@@ -35,8 +35,8 @@ public struct Feed: Codable, Equatable, Identifiable, Hashable {
 }
 
 extension AppBskyLexicon.Feed.GeneratorViewDefinition {
-  public var feedItem: Feed {
-    Feed(
+  public var feedItem: FeedItem {
+    FeedItem(
       uri: feedURI,
       displayName: displayName,
       description: description,

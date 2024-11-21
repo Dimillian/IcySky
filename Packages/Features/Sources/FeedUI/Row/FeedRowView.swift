@@ -5,7 +5,7 @@ import SwiftUI
 import Models
 
 struct FeedRowView: View {
-  let feed: Feed
+  let feed: FeedItem
 
   var body: some View {
     NavigationLink(value: feed) {
@@ -83,7 +83,7 @@ struct FeedRowView: View {
   NavigationStack {
     List {
       FeedRowView(
-        feed: Feed(
+        feed: FeedItem(
           uri: "",
           displayName: "Preview Feed",
           description: "This is a sample feed",
@@ -94,7 +94,7 @@ struct FeedRowView: View {
         )
       )
       FeedRowView(
-        feed: Feed(
+        feed: FeedItem(
           uri: "",
           displayName: "Preview Feed",
           description: "This is a sample feed",

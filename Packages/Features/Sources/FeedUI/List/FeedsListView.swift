@@ -3,15 +3,19 @@ import DesignSystem
 import Models
 import Network
 import SwiftUI
+import User
 import VariableBlur
 
 public struct FeedsListView: View {
   @Environment(BSkyClient.self) var client
+  @Environment(CurrentUser.self) var currentUser
 
-  @State var feeds: [Feed] = []
+  @State var feeds: [FeedItem] = []
+  @State var filter: FeedsListFilter = .suggested
 
   @State var isInSearch: Bool = false
   @State var searchText: String = ""
+
   @FocusState var isSearchFocused: Bool
 
   public init() {}
@@ -29,8 +33,13 @@ public struct FeedsListView: View {
     .navigationBarTitleDisplayMode(.inline)
     .toolbarVisibility(.hidden, for: .navigationBar)
     .scrollContentBackground(.hidden)
-    .task {
-      await fetchSuggestedFeed()
+    .onChange(of: filter, initial: true) {
+      switch filter {
+      case .suggested:
+        Task { await fetchSuggestedFeed() }
+      case .myFeeds:
+        Task { await fetchMyFeeds() }
+      }
     }
   }
 
@@ -47,38 +56,11 @@ public struct FeedsListView: View {
   @ViewBuilder
   private var titleView: some View {
     if !isInSearch {
-      HStack(alignment: .center) {
-        Menu {
-          Button(action: {}, label: { Text("Discover") })
-        } label: {
-          HStack {
-            Text("Feeds")
-              .foregroundStyle(
-                .primary.shadow(
-                  .inner(
-                    color: .shadowSecondary.opacity(0.5),
-                    radius: 1, x: -1, y: -1))
-              )
-              .shadow(color: .black.opacity(0.2), radius: 1, x: 1, y: 1)
-              .font(.largeTitle)
-              .fontWeight(.bold)
-            Image(systemName: "chevron.up.chevron.down")
-              .imageScale(.large)
-          }
-        }
-        .buttonStyle(.plain)
-        Spacer()
-        Button(action: {
-          isInSearch.toggle()
-          isSearchFocused = true
-        }) {
-          Label("Search", systemImage: "magnifyingglass")
-            .padding(.horizontal, 18)
-            .padding(.vertical, 8)
-            .foregroundStyle(.secondary)
-        }
-        .buttonStyle(.pill)
-      }
+      FeedsListTitleView(
+        filter: $filter,
+        isInSearch: $isInSearch,
+        isSearchFocused: $isSearchFocused
+      )
     }
   }
 
@@ -92,6 +74,7 @@ public struct FeedsListView: View {
           .pillStyle()
           .task(id: searchText) {
             guard !searchText.isEmpty else {
+              await fetchSuggestedFeed()
               return
             }
             await searchFeed(query: searchText)
@@ -99,9 +82,6 @@ public struct FeedsListView: View {
         Button {
           isInSearch.toggle()
           isSearchFocused = false
-          Task {
-            await fetchSuggestedFeed()
-          }
         } label: {
           Image(systemName: "xmark")
             .padding()
@@ -110,16 +90,32 @@ public struct FeedsListView: View {
       }
     }
   }
-  
+
   private func fetchSuggestedFeed() async {
     do {
       let feeds = try await client.protoClient.getSuggestedFeeds()
       withAnimation {
         self.feeds = feeds.feeds.map { $0.feedItem }
       }
-    } catch { }
+    } catch {}
   }
-  
+
+  private func fetchMyFeeds() async {
+    guard let preferences = currentUser.preferences else { return }
+    switch preferences {
+    case .savedFeeds(let definition):
+      let feedURI = definition.pinned
+      do {
+        let feeds = try await client.protoClient.getFeedGenerators(feedURI)
+        withAnimation {
+          self.feeds = feeds.feeds.map { $0.feedItem }
+        }
+      } catch {}
+    default:
+      break
+    }
+  }
+
   private func searchFeed(query: String) async {
     do {
       try await Task.sleep(for: .milliseconds(250))
@@ -127,7 +123,7 @@ public struct FeedsListView: View {
       withAnimation {
         self.feeds = feeds.feeds.map { $0.feedItem }
       }
-    } catch { }
+    } catch {}
   }
 }
 

@@ -1,21 +1,23 @@
 import ATProtoKit
+import Auth
+import AuthUI
 import DesignSystem
 import Network
 import SwiftUI
+import User
 import VariableBlur
-import Auth
-import AuthUI
 
 @main
 struct IcySkyApp: App {
   @State var client: BSkyClient?
+  @State var currentUser: CurrentUser?
   @State var selectedTab: AppTab? = .feed
   @State var isAUthPresented = false
-  
+
   var body: some Scene {
     WindowGroup {
       ScrollView(.horizontal) {
-        if let client {
+        if let client, let currentUser {
           LazyHStack {
             ForEach(AppTab.allCases) { tab in
               tab.rootView
@@ -24,8 +26,10 @@ struct IcySkyApp: App {
           }
           .scrollTargetLayout()
           .environment(client)
+          .environment(currentUser)
         } else {
           ProgressView()
+            .containerRelativeFrame([.horizontal, .vertical])
         }
       }
       .sheet(isPresented: $isAUthPresented) {
@@ -37,7 +41,7 @@ struct IcySkyApp: App {
       .task {
         do {
           if let userSession = try await Auth().session {
-            self.client = BSkyClient(session: userSession, protoClient: ATProtoKit(session: userSession))
+            refreshEnvWith(session: userSession)
           } else {
             isAUthPresented = true
           }
@@ -69,11 +73,17 @@ struct IcySkyApp: App {
             .frame(height: 100)
             .offset(y: 40)
             .ignoresSafeArea()
-            
+
             TabBarView(selectedtab: $selectedTab)
           }
         }
       )
     }
+  }
+
+  private func refreshEnvWith(session: UserSession) {
+    let client = BSkyClient(session: session, protoClient: ATProtoKit(session: session))
+    self.client = client
+    self.currentUser = CurrentUser(client: client)
   }
 }

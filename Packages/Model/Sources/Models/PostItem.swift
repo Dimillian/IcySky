@@ -1,7 +1,7 @@
 import ATProtoKit
 import Foundation
 
-public struct Post: Codable, Hashable, Identifiable, Equatable {
+public struct PostItem: Codable, Hashable, Identifiable, Equatable {
   public func hash(into hasher: inout Hasher) {
     hasher.combine(uri)
   }
@@ -71,8 +71,8 @@ extension ATUnion.EmbedViewUnion: @retroactive Equatable {
 }
 
 extension AppBskyLexicon.Feed.FeedViewPostDefinition {
-  public var postItem: Post {
-    Post(
+  public var postItem: PostItem {
+    PostItem(
       uri: post.postURI,
       indexedAt: post.indexedAt,
       author: .init(
@@ -93,8 +93,8 @@ extension AppBskyLexicon.Feed.FeedViewPostDefinition {
 }
 
 extension AppBskyLexicon.Embed.RecordDefinition.ViewRecord {
-  public var postItem: Post {
-    Post(
+  public var postItem: PostItem {
+    PostItem(
       uri: recordURI,
       indexedAt: indexedAt,
       author: .init(

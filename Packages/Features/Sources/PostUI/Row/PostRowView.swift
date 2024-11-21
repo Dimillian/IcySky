@@ -4,7 +4,7 @@ import Network
 import SwiftUI
 
 struct PostRowView: View {
-  let post: Post
+  let post: PostItem
 
   var body: some View {
     HStack(alignment: .top, spacing: 8) {

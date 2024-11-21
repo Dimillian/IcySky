@@ -8,12 +8,12 @@ public struct PostsListView: View {
   @Environment(BSkyClient.self) var client
   @Environment(\.dismiss) var dismiss
 
-  let feed: Feed
+  let feed: FeedItem
 
-  @State var posts: [Post] = []
+  @State var posts: [PostItem] = []
   @State var cursor: String?
   
-  public init(feed: Feed) {
+  public init(feed: FeedItem) {
     self.feed = feed
   }
 

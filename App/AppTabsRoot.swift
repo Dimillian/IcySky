@@ -15,7 +15,7 @@ extension AppTab {
       NavigationStack {
         FeedsListView()
           .containerRelativeFrame([.horizontal, .vertical])
-          .navigationDestination(for: Feed.self) { feed in
+          .navigationDestination(for: FeedItem.self) { feed in
             PostsListView(feed: feed)
           }
       }
