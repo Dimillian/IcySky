@@ -5,14 +5,20 @@ public struct PillModifier: ViewModifier {
   
   let material: Material
   let isPressed: Bool
+  let isCircle: Bool
 
-  public init(material: Material, isPressed: Bool) {
+  public init(material: Material, isPressed: Bool, isCircle: Bool = false) {
     self.material = material
     self.isPressed = isPressed
+    self.isCircle = isCircle
   }
 
   public func body(content: Content) -> some View {
     content.background {
+      if isCircle {
+        background
+          .clipShape(Circle())
+      }
       if colorScheme == .dark {
         background
           .clipShape(Capsule())
@@ -35,6 +41,12 @@ public struct PillModifier: ViewModifier {
 extension View {
   public func pillStyle(material: Material = .ultraThickMaterial, isPressed: Bool = false) -> some View {
     modifier(PillModifier(material: material, isPressed: isPressed))
+  }
+}
+
+extension View {
+  public func circleStyle(material: Material = .ultraThickMaterial, isPressed: Bool = false) -> some View {
+    modifier(PillModifier(material: material, isPressed: isPressed, isCircle: true))
   }
 }
 

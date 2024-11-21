@@ -14,3 +14,18 @@ extension ButtonStyle where Self == PillButtonStyle {
     PillButtonStyle()
   }
 }
+
+public struct CircleButtonStyle: ButtonStyle {
+  public init() {}
+
+  public func makeBody(configuration: Configuration) -> some View {
+    configuration.label
+      .circleStyle(isPressed: configuration.isPressed)
+  }
+}
+
+extension ButtonStyle where Self == CircleButtonStyle {
+  public static var circle: Self {
+    CircleButtonStyle()
+  }
+}

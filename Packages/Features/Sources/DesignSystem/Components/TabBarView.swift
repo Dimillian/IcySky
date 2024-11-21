@@ -47,11 +47,11 @@ public struct TabBarView: View {
             startPoint: .top, endPoint: .bottom)
         )
         .shadow(color: .clear, radius: 1, x: 0, y: 0)
-        .padding()
+        .frame(width: 50, height: 50)
     }
-    .buttonStyle(.pill)
+    .buttonStyle(.circle)
     .animation(.bouncy, value: selectedTapPath)
-    .offset(x: selectedTapPath.isEmpty ? 0 : -160)
+    .offset(x: selectedTapPath.isEmpty ? 0 : -164)
   }
 
   private var tabbarView: some View {
