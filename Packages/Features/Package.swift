@@ -19,7 +19,7 @@ let package = Package(
     .library(name: "DesignSystem", targets: ["DesignSystem"]),
   ],
   dependencies: [
-    .package(name: "Model", path: "./Model"),
+    .package(name: "Model", path: "../Model"),
     .package(url: "https://github.com/nikstar/VariableBlur", from: "1.2.0")
   ],
   targets: [
