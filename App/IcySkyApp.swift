@@ -23,7 +23,7 @@ struct IcySkyApp: App {
     WindowGroup {
       ScrollView(.horizontal) {
         if let client, let currentUser {
-          HStack {
+          LazyHStack {
             ForEach(AppTab.allCases) { tab in
               AppTabRootView(tab: tab)
                 .id(tab)
@@ -80,12 +80,12 @@ struct IcySkyApp: App {
               direction: .blurredBottomClearTop
             )
             .frame(height: 100)
+            .offset(y: 40)
             .ignoresSafeArea()
 
             if client != nil {
               TabBarView()
                 .environment(router)
-                .offset(y: -40)
             }
           }
         }
