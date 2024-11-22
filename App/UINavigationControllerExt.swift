@@ -6,6 +6,7 @@ extension UINavigationController: @retroactive UIGestureRecognizerDelegate {
     interactivePopGestureRecognizer?.delegate = self
     
     let gesture = UnidirectionalPanGestureRecognizer(direction: .horizontal)
+    gesture.delegate = self
     if let targets = interactivePopGestureRecognizer?.value(forKey: "targets") {
       gesture.setValue(targets, forKey: "targets")
       view.addGestureRecognizer(gesture)

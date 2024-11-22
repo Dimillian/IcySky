@@ -35,11 +35,12 @@ struct FeedsListTitleView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             }
-            VStack(spacing: 8) {
+            VStack(spacing: 6) {
               Image(systemName: "chevron.up")
               Image(systemName: "chevron.down")
             }
             .imageScale(.large)
+            .offset(y: 2)
           }
         }
         .buttonStyle(.plain)

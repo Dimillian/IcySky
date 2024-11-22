@@ -15,6 +15,8 @@ public struct FeedsListView: View {
 
   @State var isInSearch: Bool = false
   @State var searchText: String = ""
+  
+  @State var error: Error?
 
   @FocusState var isSearchFocused: Bool
 
@@ -22,11 +24,15 @@ public struct FeedsListView: View {
 
   public var body: some View {
     List {
-      titleView
+      headerView
         .listRowSeparator(.hidden)
 
-      ForEach(feeds) { feed in
-        FeedRowView(feed: feed)
+      if let error {
+        errorView
+      } else  {
+        ForEach(feeds) { feed in
+          FeedRowView(feed: feed)
+        }
       }
     }
     .listStyle(.plain)
@@ -38,14 +44,13 @@ public struct FeedsListView: View {
       switch filter {
       case .suggested:
         await fetchSuggestedFeed()
-      case .myFeeds:
+      case .savedFeeds, .pinned:
         await fetchMyFeeds()
       }
     }
   }
 
-  @ViewBuilder
-  private var titleView: some View {
+  private var headerView: some View {
     FeedsListTitleView(
       filter: $filter,
       searchText: $searchText,
@@ -54,7 +59,6 @@ public struct FeedsListView: View {
     )
     .task(id: searchText) {
       guard !searchText.isEmpty else {
-        await fetchSuggestedFeed()
         return
       }
       await searchFeed(query: searchText)
@@ -64,24 +68,49 @@ public struct FeedsListView: View {
       Task { await fetchSuggestedFeed() }
     }
   }
+  
+  @ViewBuilder
+  private var errorView: some View {
+    if let error {
+      VStack {
+        Text("Error: \(error.localizedDescription)")
+          .foregroundColor(.red)
+        Button {
+          Task {
+            await fetchSuggestedFeed()
+          }
+        } label: {
+          Text("Retry")
+            .padding()
+        }
+        .buttonStyle(.pill)
+      }
+      .listRowSeparator(.hidden)
+    }
+  }
+}
 
+extension FeedsListView {
   private func fetchSuggestedFeed() async {
+    error = nil
     do {
       let feeds = try await client.protoClient.getSuggestedFeeds()
       withAnimation {
         self.feeds = feeds.feeds.map { $0.feedItem }
       }
-    } catch {}
+    } catch {
+      self.error = error
+    }
   }
 
   private func fetchMyFeeds() async {
     guard let savedFeeds = currentUser.savedFeeds else { return }
     do {
-      let feeds = try await client.protoClient.getFeedGenerators(savedFeeds.saved)
+      let feeds = try await client.protoClient.getFeedGenerators(filter == .savedFeeds ? savedFeeds.saved : savedFeeds.pinned)
       withAnimation {
         self.feeds = feeds.feeds.map { $0.feedItem }
       }
-    } catch {}
+    } catch { }
   }
 
   private func searchFeed(query: String) async {
@@ -91,7 +120,7 @@ public struct FeedsListView: View {
       withAnimation {
         self.feeds = feeds.feeds.map { $0.feedItem }
       }
-    } catch {}
+    } catch { }
   }
 }
 
