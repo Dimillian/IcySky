@@ -3,20 +3,37 @@ import Models
 import Network
 import SwiftUI
 
+extension EnvironmentValues {
+  @Entry public var isQuote: Bool = false
+}
+
 struct PostRowView: View {
+  @Environment(\.isQuote) var isQuote
+
   let post: PostItem
 
   var body: some View {
-    HStack(alignment: .top, spacing: 8) {
-      avatarView
-      VStack(alignment: .leading, spacing: 8) {
-        authorView
-        bodyView
-        PostRowEmbedView(post: post)
+    if isQuote {
+      mainView
+        .listRowSeparator(.hidden)
+    } else {
+      HStack(alignment: .top, spacing: 8) {
+        avatarView
+        mainView
+      }
+      .listRowSeparator(.hidden)
+    }
+  }
+
+  private var mainView: some View {
+    VStack(alignment: .leading, spacing: 8) {
+      authorView
+      bodyView
+      PostRowEmbedView(post: post)
+      if !isQuote {
         actionsView
       }
     }
-    .listRowSeparator(.hidden)
   }
 
   private var avatarView: some View {
@@ -26,12 +43,12 @@ struct PostRowView: View {
         image
           .resizable()
           .scaledToFit()
-          .frame(width: 32, height: 32)
+          .frame(width: isQuote ? 16 : 32, height: isQuote ? 16 : 32)
           .clipShape(Circle())
       default:
         Circle()
           .fill(.gray.opacity(0.2))
-          .frame(width: 32, height: 32)
+          .frame(width: isQuote ? 16 : 32, height: isQuote ? 16 : 32)
       }
     }
     .overlay {
@@ -48,6 +65,9 @@ struct PostRowView: View {
 
   private var authorView: some View {
     HStack(alignment: .center) {
+      if isQuote {
+        avatarView
+      }
       Text(post.author.displayName ?? "")
         .font(.callout)
         .foregroundStyle(.primary)

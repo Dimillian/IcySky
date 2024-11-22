@@ -5,24 +5,29 @@ import Models
 import Network
 import PostUI
 import Router
-import SwiftUI
 import SettingsUI
+import SwiftUI
 
 struct AppTabRootView: View {
+  @Environment(Router.self) var router
+
   let tab: AppTab
 
-  @Binding var path: [RouterDestination]
-
   var body: some View {
-    NavigationStack(path: $path) {
+    @Bindable var router = router
+
+    NavigationStack(path: $router[tab]) {
       tab.rootView
         .navigationBarHidden(true)
         .navigationDestination(for: RouterDestination.self) { destination in
           switch destination {
           case .feed(let feed):
             PostsListView(feed: feed)
+          case .post(let post):
+            Text(post.content)
           }
         }
+        .environment(\.currentTab, tab)
     }
     .containerRelativeFrame([.horizontal, .vertical])
   }

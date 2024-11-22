@@ -1,30 +1,10 @@
 import Router
 import SwiftUI
 
-public enum AppTab: String, CaseIterable, Identifiable, Hashable {
-  case feed, notification, messages, profile, settings
-
-  public var id: String { rawValue }
-
-  public var icon: String {
-    switch self {
-    case .feed: return "square.stack"
-    case .notification: return "bell"
-    case .messages: return "message"
-    case .profile: return "person"
-    case .settings: return "gearshape"
-    }
-  }
-}
-
 public struct TabBarView: View {
-  @Binding var selectedtab: AppTab?
-  @Binding var selectedTapPath: [RouterDestination]
+  @Environment(Router.self) var router
 
-  public init(selectedtab: Binding<AppTab?>, selectedTapPath: Binding<[RouterDestination]>) {
-    _selectedtab = selectedtab
-    _selectedTapPath = selectedTapPath
-  }
+  public init() {}
 
   public var body: some View {
     ZStack(alignment: .center) {
@@ -35,7 +15,7 @@ public struct TabBarView: View {
 
   private var backButtonView: some View {
     Button {
-      _ = selectedTapPath.removeLast()
+      router[router.selectedTab ?? .feed].removeLast()
     } label: {
       Image(systemName: "chevron.left")
         .symbolRenderingMode(.palette)
@@ -50,8 +30,8 @@ public struct TabBarView: View {
         .frame(width: 50, height: 50)
     }
     .buttonStyle(.circle)
-    .animation(.bouncy, value: selectedTapPath)
-    .offset(x: selectedTapPath.isEmpty ? 0 : -164)
+    .animation(.bouncy, value: router.selectedTabPath)
+    .offset(x: router.selectedTabPath.isEmpty ? 0 : -164)
   }
 
   private var tabbarView: some View {
@@ -59,27 +39,27 @@ public struct TabBarView: View {
       ForEach(AppTab.allCases, id: \.rawValue) { tab in
         Button {
           withAnimation {
-            if selectedtab == tab {
-              selectedTapPath = []
+            if router.selectedTab == tab {
+              router.popToRoot(for: tab)
             }
-            selectedtab = tab
+            router.selectedTab = tab
           }
         } label: {
           Image(systemName: tab.icon)
             .symbolRenderingMode(.palette)
-            .symbolVariant(selectedtab == tab ? .fill : .none)
+            .symbolVariant(router.selectedTab == tab ? .fill : .none)
             .symbolEffect(
               .bounce,
-              options: .repeat(selectedtab == tab ? 1 : 0),
-              value: selectedtab
+              options: .repeat(router.selectedTab == tab ? 1 : 0),
+              value: router.selectedTab
             )
             .imageScale(.medium)
             .foregroundStyle(
               .linearGradient(
-                colors: selectedtab == tab ? [.indigo, .purple] : [.indigo, .secondary],
+                colors: router.selectedTab == tab ? [.indigo, .purple] : [.indigo, .secondary],
                 startPoint: .top, endPoint: .bottom)
             )
-            .shadow(color: selectedtab == tab ? .indigo : .clear, radius: 1, x: 0, y: 0)
+            .shadow(color: router.selectedTab == tab ? .indigo : .clear, radius: 1, x: 0, y: 0)
         }
       }
     }
@@ -89,12 +69,14 @@ public struct TabBarView: View {
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
-  TabBarView(selectedtab: .constant(.feed), selectedTapPath: .constant([]))
+  TabBarView()
     .padding()
     .environment(\.colorScheme, .light)
+    .environment(Router())
 
-  TabBarView(selectedtab: .constant(.feed), selectedTapPath: .constant([]))
+  TabBarView()
     .padding()
     .background(.black)
     .environment(\.colorScheme, .dark)
+    .environment(Router())
 }

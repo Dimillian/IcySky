@@ -15,8 +15,8 @@ struct PostRowEmbedView: View {
         PostRowEmbedExternalView(externalView: externalView)
       case .embedRecordView(let record):
         switch record.record {
-        case .viewRecord(_):
-          EmptyView()
+        case .viewRecord(let post):
+          PostRowEmbedQuoteView(post: post.postItem)
         default:
           EmptyView()
         }

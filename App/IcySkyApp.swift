@@ -13,37 +13,34 @@ struct IcySkyApp: App {
   @State var client: BSkyClient?
   @State var auth: Auth = .init()
   @State var currentUser: CurrentUser?
+  @State var router: Router = .init()
   
-  @State var selectedTab: AppTab? = .feed
   @State var isAUthPresented = false
-  @State var paths: [AppTab: [RouterDestination]] = [:]
 
   var body: some Scene {
+    @Bindable var router = router
+    
     WindowGroup {
       ScrollView(.horizontal) {
         if let client, let currentUser {
           LazyHStack {
             ForEach(AppTab.allCases) { tab in
-              AppTabRootView(
-                tab: tab,
-                path: .init(
-                  get: { paths[tab] ?? [] },
-                  set: { paths[tab] = $0 })
-              )
-              .id(tab)
+              AppTabRootView(tab: tab)
+                .id(tab)
             }
           }
           .scrollTargetLayout()
           .environment(client)
           .environment(currentUser)
           .environment(auth)
+          .environment(router)
         } else {
           ProgressView()
             .containerRelativeFrame([.horizontal, .vertical])
         }
       }
       .ignoresSafeArea(.keyboard, edges: .all)
-      .scrollDisabled(paths[selectedTab ?? .feed]?.isEmpty == false)
+      .scrollDisabled(router.selectedTabPath.isEmpty == false)
       .sheet(isPresented: $isAUthPresented) {
         AuthView()
           .environment(auth)
@@ -62,7 +59,7 @@ struct IcySkyApp: App {
         }
       }
       .scrollTargetBehavior(.viewAligned)
-      .scrollPosition(id: $selectedTab)
+      .scrollPosition(id: $router.selectedTab)
       .overlay(
         alignment: .top,
         content: {
@@ -87,13 +84,8 @@ struct IcySkyApp: App {
             .ignoresSafeArea()
 
             if client != nil {
-              TabBarView(
-                selectedtab: $selectedTab,
-                selectedTapPath: .init(
-                  get: { paths[selectedTab ?? .feed] ?? [] },
-                  set: { paths[selectedTab ?? .feed] = $0 }
-                )
-              )
+              TabBarView()
+                .environment(router)
             }
           }
         }
