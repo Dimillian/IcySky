@@ -4,6 +4,8 @@ import Models
 import SwiftUI
 
 struct PostRowEmbedExternalView: View {
+  @Environment(\.openURL) var openURL
+  
   let externalView: AppBskyLexicon.Embed.ExternalDefinition.View
 
   var body: some View {
@@ -47,5 +49,11 @@ struct PostRowEmbedExternalView: View {
         .fill(.ultraThinMaterial)
     )
     .glowingRoundedRectangle()
+    .contentShape(Rectangle())
+    .onTapGesture {
+      if let url = URL(string: externalView.external.embedURI) {
+        openURL(url)
+      }
+    }
   }
 }

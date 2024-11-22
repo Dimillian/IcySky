@@ -92,6 +92,28 @@ extension AppBskyLexicon.Feed.FeedViewPostDefinition {
   }
 }
 
+extension AppBskyLexicon.Feed.PostViewDefinition {
+  public var postItem: PostItem {
+    PostItem(
+      uri: postURI,
+      indexedAt: indexedAt,
+      author: .init(
+        did: author.actorDID,
+        handle: author.actorHandle,
+        displayName: author.displayName,
+        avatarImageURL: author.avatarImageURL
+      ),
+      content: record.getRecord(ofType: AppBskyLexicon.Feed.PostRecord.self)?.text ?? "",
+      replyCount: replyCount ?? 0,
+      repostCount: repostCount ?? 0,
+      likeCount: likeCount ?? 0,
+      isLiked: viewer?.likeURI != nil,
+      isReposted: viewer?.repostURI != nil,
+      embed: embed
+    )
+  }
+}
+
 extension AppBskyLexicon.Embed.RecordDefinition.ViewRecord {
   public var postItem: PostItem {
     PostItem(

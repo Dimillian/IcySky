@@ -23,7 +23,7 @@ struct IcySkyApp: App {
     WindowGroup {
       ScrollView(.horizontal) {
         if let client, let currentUser {
-          LazyHStack {
+          HStack {
             ForEach(AppTab.allCases) { tab in
               AppTabRootView(tab: tab)
                 .id(tab)
@@ -39,8 +39,6 @@ struct IcySkyApp: App {
             .containerRelativeFrame([.horizontal, .vertical])
         }
       }
-      .ignoresSafeArea(.keyboard, edges: .all)
-      .scrollDisabled(router.selectedTabPath.isEmpty == false)
       .sheet(isPresented: $isAUthPresented) {
         AuthView()
           .environment(auth)
@@ -58,6 +56,8 @@ struct IcySkyApp: App {
           isAUthPresented = true
         }
       }
+      .ignoresSafeArea(.keyboard, edges: .all)
+      .scrollDisabled(router.selectedTabPath.isEmpty == false)
       .scrollTargetBehavior(.viewAligned)
       .scrollPosition(id: $router.selectedTab)
       .overlay(
@@ -80,12 +80,12 @@ struct IcySkyApp: App {
               direction: .blurredBottomClearTop
             )
             .frame(height: 100)
-            .offset(y: 40)
             .ignoresSafeArea()
 
             if client != nil {
               TabBarView()
                 .environment(router)
+                .offset(y: -40)
             }
           }
         }

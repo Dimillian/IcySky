@@ -2,13 +2,16 @@ import DesignSystem
 import Models
 import Network
 import SwiftUI
+import Router
 
 extension EnvironmentValues {
   @Entry public var isQuote: Bool = false
+  @Entry public var isFocused: Bool = false
 }
 
 struct PostRowView: View {
   @Environment(\.isQuote) var isQuote
+  @Environment(Router.self) var router
 
   let post: PostItem
 
@@ -33,6 +36,10 @@ struct PostRowView: View {
       if !isQuote {
         actionsView
       }
+    }
+    .contentShape(Rectangle())
+    .onTapGesture {
+      router.navigateTo(.post(post))
     }
   }
 

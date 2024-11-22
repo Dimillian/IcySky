@@ -24,7 +24,7 @@ struct AppTabRootView: View {
           case .feed(let feed):
             PostsListView(feed: feed)
           case .post(let post):
-            Text(post.content)
+            PostDetailView(post: post)
           }
         }
         .environment(\.currentTab, tab)

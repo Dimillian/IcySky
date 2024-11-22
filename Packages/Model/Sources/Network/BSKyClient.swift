@@ -22,3 +22,5 @@ public class BSkyClient {
           protoClient: .init())
   }
 }
+
+extension ATProtoKit: @unchecked @retroactive Sendable { }
