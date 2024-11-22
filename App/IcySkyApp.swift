@@ -56,7 +56,6 @@ struct IcySkyApp: App {
           isAUthPresented = true
         }
       }
-      .ignoresSafeArea(.keyboard, edges: .all)
       .scrollDisabled(router.selectedTabPath.isEmpty == false)
       .scrollTargetBehavior(.viewAligned)
       .scrollPosition(id: $router.selectedTab)
@@ -86,10 +85,12 @@ struct IcySkyApp: App {
             if client != nil {
               TabBarView()
                 .environment(router)
+                .ignoresSafeArea(.keyboard)
             }
           }
         }
       )
+      .ignoresSafeArea(.keyboard, edges: .all)
     }
   }
 
