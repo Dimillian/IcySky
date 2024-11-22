@@ -19,7 +19,6 @@
 		9F58939D2CEDF04200798943 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 9F58939C2CEDF04200798943 /* Auth */; };
 		9F58939F2CEDF04200798943 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 9F58939E2CEDF04200798943 /* Models */; };
 		9FAEE3BA2CF09BB400F86CDC /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FAEE3B92CF09BB400F86CDC /* SettingsUI */; };
-		9FD63DDE2CEF1F5B00243D9A /* FeedUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FD63DDD2CEF1F5B00243D9A /* FeedUI */; };
 		9FD63DE02CEF1F5B00243D9A /* PostUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FD63DDF2CEF1F5B00243D9A /* PostUI */; };
 		9FD63DE22CEF20F500243D9A /* AuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FD63DE12CEF20F500243D9A /* AuthUI */; };
 /* End PBXBuildFile section */
@@ -46,7 +45,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F1552F12CEF35C000DD9F6E /* FeedUI in Frameworks */,
-				9FD63DDE2CEF1F5B00243D9A /* FeedUI in Frameworks */,
 				9FAEE3BA2CF09BB400F86CDC /* SettingsUI in Frameworks */,
 				9F1552F32CEF35C000DD9F6E /* PostUI in Frameworks */,
 				9F58939F2CEDF04200798943 /* Models in Frameworks */,
