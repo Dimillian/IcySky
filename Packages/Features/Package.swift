@@ -8,6 +8,7 @@ let baseDeps: [PackageDescription.Target.Dependency] = [
   .product(name: "Models", package: "Model"),
   .product(name: "Router", package: "Model"),
   .product(name: "Auth", package: "Model"),
+  .product(name: "User", package: "Model"),
   "DesignSystem",
 ]
 

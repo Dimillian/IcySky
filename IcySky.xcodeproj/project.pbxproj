@@ -14,43 +14,28 @@
 		9F1552EF2CEF35C000DD9F6E /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 9F1552EE2CEF35C000DD9F6E /* DesignSystem */; };
 		9F1552F12CEF35C000DD9F6E /* FeedUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9F1552F02CEF35C000DD9F6E /* FeedUI */; };
 		9F1552F32CEF35C000DD9F6E /* PostUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9F1552F22CEF35C000DD9F6E /* PostUI */; };
-		9F1553012CEF464700DD9F6E /* User in Frameworks */ = {isa = PBXBuildFile; productRef = 9F1553002CEF464700DD9F6E /* User */; };
-		9F15531C2CEF77A500DD9F6E /* Router in Frameworks */ = {isa = PBXBuildFile; productRef = 9F15531B2CEF77A500DD9F6E /* Router */; };
-		9F47EA3C2CF081BD0023F4D0 /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9F47EA3B2CF081BD0023F4D0 /* SettingsUI */; };
 		9F5892032CEB2E2D00798943 /* Network in Frameworks */ = {isa = PBXBuildFile; productRef = 9F5892022CEB2E2D00798943 /* Network */; };
 		9F5892972CEC703B00798943 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 9F5892962CEC703B00798943 /* DesignSystem */; };
 		9F58939D2CEDF04200798943 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 9F58939C2CEDF04200798943 /* Auth */; };
 		9F58939F2CEDF04200798943 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 9F58939E2CEDF04200798943 /* Models */; };
+		9FAEE3BA2CF09BB400F86CDC /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FAEE3B92CF09BB400F86CDC /* SettingsUI */; };
 		9FD63DDE2CEF1F5B00243D9A /* FeedUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FD63DDD2CEF1F5B00243D9A /* FeedUI */; };
 		9FD63DE02CEF1F5B00243D9A /* PostUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FD63DDF2CEF1F5B00243D9A /* PostUI */; };
 		9FD63DE22CEF20F500243D9A /* AuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FD63DE12CEF20F500243D9A /* AuthUI */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		9F2142352CE9DAA3004167D7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9F21421B2CE9DAA1004167D7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9F2142222CE9DAA1004167D7;
-			remoteInfo = IcySky;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		9F2142232CE9DAA1004167D7 /* IcySky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IcySky.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F2142342CE9DAA3004167D7 /* IcySkyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IcySkyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F5F5E102CEE46B200A4712C /* IcySky-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "IcySky-Info.plist"; sourceTree = "<group>"; };
+		9FAEE3A72CF0994400F86CDC /* Features */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Features; path = Packages/Features; sourceTree = "<group>"; };
+		9FAEE3A82CF0994C00F86CDC /* Model */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Model; path = Packages/Model; sourceTree = "<group>"; };
+		9FAEE3B72CF099E600F86CDC /* PackageTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = PackageTests.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9F2142252CE9DAA1004167D7 /* App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = App;
-			sourceTree = "<group>";
-		};
-		9F2142372CE9DAA3004167D7 /* IcySkyTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = IcySkyTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -62,12 +47,11 @@
 			files = (
 				9F1552F12CEF35C000DD9F6E /* FeedUI in Frameworks */,
 				9FD63DDE2CEF1F5B00243D9A /* FeedUI in Frameworks */,
-				9F1553012CEF464700DD9F6E /* User in Frameworks */,
+				9FAEE3BA2CF09BB400F86CDC /* SettingsUI in Frameworks */,
 				9F1552F32CEF35C000DD9F6E /* PostUI in Frameworks */,
 				9F58939F2CEDF04200798943 /* Models in Frameworks */,
 				9F1552ED2CEF35C000DD9F6E /* AuthUI in Frameworks */,
 				9F1552EF2CEF35C000DD9F6E /* DesignSystem in Frameworks */,
-				9F15531C2CEF77A500DD9F6E /* Router in Frameworks */,
 				9F5892032CEB2E2D00798943 /* Network in Frameworks */,
 				9F1552E82CEF35B200DD9F6E /* Models in Frameworks */,
 				9F58939D2CEDF04200798943 /* Auth in Frameworks */,
@@ -76,14 +60,6 @@
 				9F1552E62CEF35B200DD9F6E /* Auth in Frameworks */,
 				9FD63DE22CEF20F500243D9A /* AuthUI in Frameworks */,
 				9F1552EA2CEF35B200DD9F6E /* Network in Frameworks */,
-				9F47EA3C2CF081BD0023F4D0 /* SettingsUI in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9F2142312CE9DAA3004167D7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,10 +69,12 @@
 		9F21421A2CE9DAA1004167D7 = {
 			isa = PBXGroup;
 			children = (
+				9FAEE3B72CF099E600F86CDC /* PackageTests.xctestplan */,
 				9F5F5E102CEE46B200A4712C /* IcySky-Info.plist */,
 				9F2142252CE9DAA1004167D7 /* App */,
-				9F2142372CE9DAA3004167D7 /* IcySkyTests */,
-				9F5892952CEC703B00798943 /* Frameworks */,
+				9FAEE3A82CF0994C00F86CDC /* Model */,
+				9FAEE3A72CF0994400F86CDC /* Features */,
+				9FAEE3B82CF09BB400F86CDC /* Frameworks */,
 				9F2142242CE9DAA1004167D7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -105,12 +83,11 @@
 			isa = PBXGroup;
 			children = (
 				9F2142232CE9DAA1004167D7 /* IcySky.app */,
-				9F2142342CE9DAA3004167D7 /* IcySkyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9F5892952CEC703B00798943 /* Frameworks */ = {
+		9FAEE3B82CF09BB400F86CDC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -151,36 +128,11 @@
 				9F1552EE2CEF35C000DD9F6E /* DesignSystem */,
 				9F1552F02CEF35C000DD9F6E /* FeedUI */,
 				9F1552F22CEF35C000DD9F6E /* PostUI */,
-				9F1553002CEF464700DD9F6E /* User */,
-				9F15531B2CEF77A500DD9F6E /* Router */,
-				9F47EA3B2CF081BD0023F4D0 /* SettingsUI */,
+				9FAEE3B92CF09BB400F86CDC /* SettingsUI */,
 			);
 			productName = IcySky;
 			productReference = 9F2142232CE9DAA1004167D7 /* IcySky.app */;
 			productType = "com.apple.product-type.application";
-		};
-		9F2142332CE9DAA3004167D7 /* IcySkyTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9F21424B2CE9DAA3004167D7 /* Build configuration list for PBXNativeTarget "IcySkyTests" */;
-			buildPhases = (
-				9F2142302CE9DAA3004167D7 /* Sources */,
-				9F2142312CE9DAA3004167D7 /* Frameworks */,
-				9F2142322CE9DAA3004167D7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				9F2142362CE9DAA3004167D7 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				9F2142372CE9DAA3004167D7 /* IcySkyTests */,
-			);
-			name = IcySkyTests;
-			packageProductDependencies = (
-			);
-			productName = IcySkyTests;
-			productReference = 9F2142342CE9DAA3004167D7 /* IcySkyTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -195,10 +147,6 @@
 					9F2142222CE9DAA1004167D7 = {
 						CreatedOnToolsVersion = 16.1;
 					};
-					9F2142332CE9DAA3004167D7 = {
-						CreatedOnToolsVersion = 16.1;
-						TestTargetID = 9F2142222CE9DAA1004167D7;
-					};
 				};
 			};
 			buildConfigurationList = 9F21421E2CE9DAA1004167D7 /* Build configuration list for PBXProject "IcySky" */;
@@ -211,8 +159,6 @@
 			mainGroup = 9F21421A2CE9DAA1004167D7;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				9F1552E42CEF35B200DD9F6E /* XCLocalSwiftPackageReference "Packages/Model" */,
-				9F1552EB2CEF35C000DD9F6E /* XCLocalSwiftPackageReference "Packages/Features" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9F2142242CE9DAA1004167D7 /* Products */;
@@ -220,20 +166,12 @@
 			projectRoot = "";
 			targets = (
 				9F2142222CE9DAA1004167D7 /* IcySky */,
-				9F2142332CE9DAA3004167D7 /* IcySkyTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		9F2142212CE9DAA1004167D7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9F2142322CE9DAA3004167D7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -250,22 +188,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9F2142302CE9DAA3004167D7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9F2142362CE9DAA3004167D7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9F2142222CE9DAA1004167D7 /* IcySky */;
-			targetProxy = 9F2142352CE9DAA3004167D7 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		9F2142462CE9DAA3004167D7 /* Debug */ = {
@@ -470,52 +393,6 @@
 			};
 			name = Release;
 		};
-		9F21424C2CE9DAA3004167D7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = K5WN7B7AT2;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
-				MACOSX_DEPLOYMENT_TARGET = 15.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.thomasricouard.IcySkyTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IcySky.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/IcySky";
-				XROS_DEPLOYMENT_TARGET = 2.1;
-			};
-			name = Debug;
-		};
-		9F21424D2CE9DAA3004167D7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = K5WN7B7AT2;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
-				MACOSX_DEPLOYMENT_TARGET = 15.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.thomasricouard.IcySkyTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IcySky.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/IcySky";
-				XROS_DEPLOYMENT_TARGET = 2.1;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -537,27 +414,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9F21424B2CE9DAA3004167D7 /* Build configuration list for PBXNativeTarget "IcySkyTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9F21424C2CE9DAA3004167D7 /* Debug */,
-				9F21424D2CE9DAA3004167D7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		9F1552E42CEF35B200DD9F6E /* XCLocalSwiftPackageReference "Packages/Model" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/Model;
-		};
-		9F1552EB2CEF35C000DD9F6E /* XCLocalSwiftPackageReference "Packages/Features" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/Features;
-		};
-/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		9F1552E52CEF35B200DD9F6E /* Auth */ = {
@@ -588,21 +445,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = PostUI;
 		};
-		9F1553002CEF464700DD9F6E /* User */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9F1552E42CEF35B200DD9F6E /* XCLocalSwiftPackageReference "Packages/Model" */;
-			productName = User;
-		};
-		9F15531B2CEF77A500DD9F6E /* Router */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9F1552E42CEF35B200DD9F6E /* XCLocalSwiftPackageReference "Packages/Model" */;
-			productName = Router;
-		};
-		9F47EA3B2CF081BD0023F4D0 /* SettingsUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9F1552EB2CEF35C000DD9F6E /* XCLocalSwiftPackageReference "Packages/Features" */;
-			productName = SettingsUI;
-		};
 		9F5892022CEB2E2D00798943 /* Network */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Network;
@@ -618,6 +460,10 @@
 		9F58939E2CEDF04200798943 /* Models */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Models;
+		};
+		9FAEE3B92CF09BB400F86CDC /* SettingsUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SettingsUI;
 		};
 		9FD63DDD2CEF1F5B00243D9A /* FeedUI */ = {
 			isa = XCSwiftPackageProductDependency;

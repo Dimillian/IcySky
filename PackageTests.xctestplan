@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "A48D26C9-318A-41CA-A52E-8635099A1F4E",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "AuthTests",
+        "name" : "AuthTests"
+      }
+    }
+  ],
+  "version" : 1
+}
