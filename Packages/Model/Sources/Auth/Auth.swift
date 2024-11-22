@@ -3,11 +3,6 @@ import Foundation
 @preconcurrency import KeychainSwift
 import SwiftUI
 
-public protocol AuthSession {
-  var accessToken: String { get }
-  var refreshToken: String { get }
-}
-
 @Observable
 public final class Auth: @unchecked Sendable {
   let keychain = KeychainSwift()
@@ -38,7 +33,7 @@ public final class Auth: @unchecked Sendable {
     }
   }
 
-  public private(set) var session: AuthSession?
+  public private(set) var session: UserSession?
 
   public func logout() {
     self.authToken = nil
@@ -47,12 +42,6 @@ public final class Auth: @unchecked Sendable {
   }
 
   public init() {}
-  
-  public init(session: AuthSession) {
-    self.session = session
-    self.authToken = session.accessToken
-    self.refreshToken = session.refreshToken
-  }
 
   public func authenticate(handle: String, appPassword: String) async throws {
     let configuration = ATProtocolConfiguration(
@@ -82,8 +71,6 @@ public final class Auth: @unchecked Sendable {
   }
 
 }
-
-extension UserSession: AuthSession { }
 
 extension UserSession: @retroactive Equatable, @unchecked Sendable {
   public static func == (lhs: UserSession, rhs: UserSession) -> Bool {
