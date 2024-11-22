@@ -27,13 +27,12 @@ public struct FeedsListView: View {
       headerView
         .listRowSeparator(.hidden)
 
-      if let error {
-        errorView
-      } else  {
-        ForEach(feeds) { feed in
-          FeedRowView(feed: feed)
-        }
+      errorView
+      
+      ForEach(feeds) { feed in
+        FeedRowView(feed: feed)
       }
+      
     }
     .listStyle(.plain)
     .navigationBarTitleDisplayMode(.inline)

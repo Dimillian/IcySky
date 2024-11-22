@@ -1,5 +1,7 @@
 # IcySky
 
+[![Tuist Preview](https://tuist.dev/Dimillian/IcySky/previews/latest/badge.svg)](https://tuist.dev/Dimillian/IcySky/previews/latest)
+
 GlowSky, RetroSky, IcySky, and maybe more...
 
 Very early SwiftUI Bluesky client.
