@@ -1,0 +1,30 @@
+name: IcySky
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build IcySky
+    runs-on: macos-15
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+      - name: Select Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_16.1.app
+      - name: Skip Xcode Macro Fingerprint Validation
+        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+      - name: Build IcySky
+        run: xcodebuild -scheme IcySky -destination 'platform=iOS Simulator,name=iPhone 16' -configuration "Debug" build
+      - name: Share IcySky
+        run: mise x -- tuist share IcySky --configuration Debug --platforms ios
+        env:
+          TUIST_CONFIG_TOKEN: ${{ secrets.TUIST_CONFIG_TOKEN }}
