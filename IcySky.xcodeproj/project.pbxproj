@@ -16,6 +16,7 @@
 		9F1552F32CEF35C000DD9F6E /* PostUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9F1552F22CEF35C000DD9F6E /* PostUI */; };
 		9F1553012CEF464700DD9F6E /* User in Frameworks */ = {isa = PBXBuildFile; productRef = 9F1553002CEF464700DD9F6E /* User */; };
 		9F15531C2CEF77A500DD9F6E /* Router in Frameworks */ = {isa = PBXBuildFile; productRef = 9F15531B2CEF77A500DD9F6E /* Router */; };
+		9F47EA3C2CF081BD0023F4D0 /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9F47EA3B2CF081BD0023F4D0 /* SettingsUI */; };
 		9F5892032CEB2E2D00798943 /* Network in Frameworks */ = {isa = PBXBuildFile; productRef = 9F5892022CEB2E2D00798943 /* Network */; };
 		9F5892972CEC703B00798943 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 9F5892962CEC703B00798943 /* DesignSystem */; };
 		9F58939D2CEDF04200798943 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 9F58939C2CEDF04200798943 /* Auth */; };
@@ -75,6 +76,7 @@
 				9F1552E62CEF35B200DD9F6E /* Auth in Frameworks */,
 				9FD63DE22CEF20F500243D9A /* AuthUI in Frameworks */,
 				9F1552EA2CEF35B200DD9F6E /* Network in Frameworks */,
+				9F47EA3C2CF081BD0023F4D0 /* SettingsUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +153,7 @@
 				9F1552F22CEF35C000DD9F6E /* PostUI */,
 				9F1553002CEF464700DD9F6E /* User */,
 				9F15531B2CEF77A500DD9F6E /* Router */,
+				9F47EA3B2CF081BD0023F4D0 /* SettingsUI */,
 			);
 			productName = IcySky;
 			productReference = 9F2142232CE9DAA1004167D7 /* IcySky.app */;
@@ -594,6 +597,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9F1552E42CEF35B200DD9F6E /* XCLocalSwiftPackageReference "Packages/Model" */;
 			productName = Router;
+		};
+		9F47EA3B2CF081BD0023F4D0 /* SettingsUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9F1552EB2CEF35C000DD9F6E /* XCLocalSwiftPackageReference "Packages/Features" */;
+			productName = SettingsUI;
 		};
 		9F5892022CEB2E2D00798943 /* Network */ = {
 			isa = XCSwiftPackageProductDependency;

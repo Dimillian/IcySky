@@ -4,7 +4,7 @@ import Foundation
 import SwiftUI
 
 @Observable
-public final class Auth: Sendable {
+public final class Auth: @unchecked Sendable {
   let keychain = KeychainSwift()
 
   private var authToken: String? {
@@ -33,34 +33,47 @@ public final class Auth: Sendable {
     }
   }
 
-  public var session: UserSession? {
-    get async throws {
-      if let refreshToken {
-        let configuration = ATProtocolConfiguration(handle: "", appPassword: "")
-        let session = try await configuration.refreshSession(using: refreshToken)
-        self.authToken = session.accessToken
-        self.refreshToken = session.refreshToken
-        return session
-      }
-      return nil
-    }
-  }
-  
+  public private(set) var session: UserSession?
+
   public func logout() {
     self.authToken = nil
     self.refreshToken = nil
+    self.session = nil
   }
 
-  public init() { }
+  public init() {}
 
-  public func authenticate(handle: String, appPassword: String) async throws -> UserSession {
+  public func authenticate(handle: String, appPassword: String) async throws {
     let configuration = ATProtocolConfiguration(
       handle: handle,
       appPassword: appPassword)
     let session = try await configuration.authenticate()
     self.authToken = session.accessToken
     self.refreshToken = session.refreshToken
-    return session
+    self.session = session
   }
 
+  public func refresh() async -> UserSession? {
+    do {
+      if let refreshToken {
+        let configuration = ATProtocolConfiguration(handle: "", appPassword: "")
+        let session = try await configuration.refreshSession(using: refreshToken)
+        self.authToken = session.accessToken
+        self.refreshToken = session.refreshToken
+        self.session = session
+        return session
+      }
+      return nil
+    } catch {
+      self.session = nil
+      return nil
+    }
+  }
+
+}
+
+extension UserSession: Equatable, @unchecked Sendable {
+  public static func == (lhs: UserSession, rhs: UserSession) -> Bool {
+    lhs.accessToken == rhs.accessToken && lhs.refreshToken == rhs.refreshToken
+  }
 }

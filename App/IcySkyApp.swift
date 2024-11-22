@@ -11,7 +11,9 @@ import VariableBlur
 @main
 struct IcySkyApp: App {
   @State var client: BSkyClient?
+  @State var auth: Auth = .init()
   @State var currentUser: CurrentUser?
+  
   @State var selectedTab: AppTab? = .feed
   @State var isAUthPresented = false
   @State var paths: [AppTab: [RouterDestination]] = [:]
@@ -34,6 +36,7 @@ struct IcySkyApp: App {
           .scrollTargetLayout()
           .environment(client)
           .environment(currentUser)
+          .environment(auth)
         } else {
           ProgressView()
             .containerRelativeFrame([.horizontal, .vertical])
@@ -42,20 +45,20 @@ struct IcySkyApp: App {
       .ignoresSafeArea(.keyboard, edges: .all)
       .scrollDisabled(paths[selectedTab ?? .feed]?.isEmpty == false)
       .sheet(isPresented: $isAUthPresented) {
-        AuthView { session in
-          self.client = BSkyClient(session: session, protoClient: ATProtoKit(session: session))
-          isAUthPresented = false
-        }
+        AuthView()
+          .environment(auth)
       }
       .task {
-        do {
-          if let userSession = try await Auth().session {
-            refreshEnvWith(session: userSession)
-          } else {
-            isAUthPresented = true
-          }
-        } catch {
-          print(error)
+        if await auth.refresh() == nil {
+          isAUthPresented = true
+        }
+      }
+      .onChange(of: auth.session) { old, new in
+        if let newSession = new {
+          refreshEnvWith(session: newSession)
+          isAUthPresented = false
+        } else if old != nil && new == nil {
+          isAUthPresented = true
         }
       }
       .scrollTargetBehavior(.viewAligned)
@@ -83,13 +86,15 @@ struct IcySkyApp: App {
             .offset(y: 40)
             .ignoresSafeArea()
 
-            TabBarView(
-              selectedtab: $selectedTab,
-              selectedTapPath: .init(
-                get: { paths[selectedTab ?? .feed] ?? [] },
-                set: { paths[selectedTab ?? .feed] = $0 }
+            if client != nil {
+              TabBarView(
+                selectedtab: $selectedTab,
+                selectedTapPath: .init(
+                  get: { paths[selectedTab ?? .feed] ?? [] },
+                  set: { paths[selectedTab ?? .feed] = $0 }
+                )
               )
-            )
+            }
           }
         }
       )

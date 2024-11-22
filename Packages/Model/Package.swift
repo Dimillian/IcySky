@@ -38,6 +38,10 @@ let package = Package(
         .product(name: "KeychainSwift", package: "keychain-swift"),
       ]
     ),
+    .testTarget(
+      name: "AuthTests",
+      dependencies: ["Auth"]
+    ),
     .target(
       name: "User",
       dependencies: [

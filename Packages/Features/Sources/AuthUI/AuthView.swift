@@ -1,25 +1,23 @@
+import ATProtoKit
 import Auth
 import DesignSystem
 import Models
-import SwiftUI
 import Network
-import ATProtoKit
+import SwiftUI
 
 public struct AuthView: View {
-  public let onSessionCreated: (UserSession) -> Void
+  @Environment(Auth.self) private var auth
 
   @State private var handle: String = ""
   @State private var appPassword: String = ""
   @State private var error: String? = nil
-  
-  public init(_ onSessionCreated: @escaping (UserSession) -> Void) {
-    self.onSessionCreated = onSessionCreated
-  }
+
+  public init() {}
 
   public var body: some View {
     Form {
       HeaderView(title: "🦋 Bluesky Login")
-        
+
       Section {
         TextField("john@bsky.social", text: $handle)
           .font(.title2)
@@ -32,9 +30,7 @@ public struct AuthView: View {
         Button {
           Task {
             do {
-              let auth = Auth()
-              let session = try await auth.authenticate(handle: handle, appPassword: appPassword)
-              onSessionCreated(session)
+              try await auth.authenticate(handle: handle, appPassword: appPassword)
             } catch {
               self.error = error.localizedDescription
             }
@@ -61,9 +57,7 @@ public struct AuthView: View {
   ScrollView {
     Text("Hello World")
   }
-    .sheet(isPresented: .constant(true)) {
-      AuthView { _ in
-        
-      }
-    }
+  .sheet(isPresented: .constant(true)) {
+    AuthView()
+  }
 }

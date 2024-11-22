@@ -6,6 +6,7 @@ import Network
 import PostUI
 import Router
 import SwiftUI
+import SettingsUI
 
 struct AppTabRootView: View {
   let tab: AppTab
@@ -47,19 +48,7 @@ extension AppTab {
         Text("Notifications view")
       }
     case .settings:
-      ScrollView {
-        VStack(alignment: .leading) {
-          HeaderView(title: "Settings", showBack: false)
-          Button {
-            let auth = Auth()
-            auth.logout()
-          } label: {
-            Text("Signout")
-              .padding()
-          }
-          .buttonStyle(.pill)
-        }
-      }
+      SettingsView()
     }
   }
 }
