@@ -14,7 +14,7 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:",
+        "containerPath" : "container:Packages\/Model",
         "identifier" : "AuthTests",
         "name" : "AuthTests"
       }
