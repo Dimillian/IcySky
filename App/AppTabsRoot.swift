@@ -16,20 +16,22 @@ struct AppTabRootView: View {
   var body: some View {
     @Bindable var router = router
 
-    NavigationStack(path: $router[tab]) {
-      tab.rootView
-        .navigationBarHidden(true)
-        .navigationDestination(for: RouterDestination.self) { destination in
-          switch destination {
-          case .feed(let feed):
-            PostsListView(feed: feed)
-          case .post(let post):
-            PostDetailView(post: post)
+    GeometryReader { _ in
+      NavigationStack(path: $router[tab]) {
+        tab.rootView
+          .navigationBarHidden(true)
+          .navigationDestination(for: RouterDestination.self) { destination in
+            switch destination {
+            case .feed(let feed):
+              PostsListView(feed: feed)
+            case .post(let post):
+              PostDetailView(post: post)
+            }
           }
-        }
-        .environment(\.currentTab, tab)
+          .environment(\.currentTab, tab)
+      }
     }
-    .containerRelativeFrame([.horizontal, .vertical])
+    .ignoresSafeArea()
   }
 }
 
