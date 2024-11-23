@@ -15,8 +15,6 @@ struct IcySkyApp: App {
   @State var currentUser: CurrentUser?
   @State var router: Router = .init()
   
-  @State var isAUthPresented = false
-
   var body: some Scene {
     @Bindable var router = router
     
@@ -37,21 +35,24 @@ struct IcySkyApp: App {
       .environment(currentUser)
       .environment(auth)
       .environment(router)
-      .sheet(isPresented: $isAUthPresented) {
-        AuthView()
-          .environment(auth)
-      }
+      .sheet(item: $router.presentedSheet, content: { presentedSheet in
+        switch presentedSheet {
+        case .auth:
+          AuthView()
+            .environment(auth)
+        }
+      })
       .task {
         if await auth.refresh() == nil {
-          isAUthPresented = true
+          router.presentedSheet = .auth
         }
       }
       .onChange(of: auth.session) { old, new in
         if let newSession = new {
           refreshEnvWith(session: newSession)
-          isAUthPresented = false
+          router.presentedSheet = nil
         } else if old != nil && new == nil {
-          isAUthPresented = true
+          router.presentedSheet = .auth
         }
       }
       .overlay(

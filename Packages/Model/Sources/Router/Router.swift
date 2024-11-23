@@ -10,6 +10,8 @@ public final class Router {
   }
   
   public var selectedTab: AppTab = .feed
+  
+  public var presentedSheet: SheetDestination?
 
   public init() {}
   
