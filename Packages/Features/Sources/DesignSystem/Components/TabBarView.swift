@@ -15,7 +15,7 @@ public struct TabBarView: View {
 
   private var backButtonView: some View {
     Button {
-      router[router.selectedTab ?? .feed].removeLast()
+      router[router.selectedTab].removeLast()
     } label: {
       Image(systemName: "chevron.left")
         .symbolRenderingMode(.palette)

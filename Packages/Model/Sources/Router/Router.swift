@@ -9,23 +9,23 @@ public final class Router {
     set { paths[tab] = newValue }
   }
   
-  public var selectedTab: AppTab? = .feed
+  public var selectedTab: AppTab = .feed
 
   public init() {}
   
   public var selectedTabPath: [RouterDestination] {
-    paths[selectedTab ?? .feed] ?? []
+    paths[selectedTab] ?? []
   }
 
   public func popToRoot(for tab: AppTab? = nil) {
-    paths[tab ?? selectedTab ?? .feed] = []
+    paths[tab ?? selectedTab] = []
   }
 
   public func popNavigation(for tab: AppTab? = nil) {
-    paths[tab ?? selectedTab ?? .feed]?.removeLast()
+    paths[tab ?? selectedTab]?.removeLast()
   }
 
   public func navigateTo(_ destination: RouterDestination, for tab: AppTab? = nil) {
-    paths[tab ?? selectedTab ?? .feed]?.append(destination)
+    paths[tab ?? selectedTab]?.append(destination)
   }
 }
