@@ -14,16 +14,23 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:Packages\/Model",
-        "identifier" : "AuthTests",
-        "name" : "AuthTests"
+        "containerPath" : "container:",
+        "identifier" : "DesignSystemTests",
+        "name" : "DesignSystemTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/Features",
-        "identifier" : "DesignSystemTests",
-        "name" : "DesignSystemTests"
+        "containerPath" : "container:",
+        "identifier" : "FeedUITests",
+        "name" : "FeedUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "AuthTests",
+        "name" : "AuthTests"
       }
     }
   ],
