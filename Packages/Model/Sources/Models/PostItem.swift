@@ -114,6 +114,10 @@ extension AppBskyLexicon.Feed.PostViewDefinition {
   }
 }
 
+extension AppBskyLexicon.Feed.ThreadViewPostDefinition {
+  
+}
+
 extension AppBskyLexicon.Embed.RecordDefinition.ViewRecord {
   public var postItem: PostItem {
     PostItem(

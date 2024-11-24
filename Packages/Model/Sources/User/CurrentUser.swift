@@ -23,7 +23,7 @@ public class CurrentUser {
 
   public func fetchPreferences() async {
     do {
-      let preferences = try await client.protoClient.getPreferences().preference.preferences
+      let preferences = try await client.protoClient.getPreferences().preferences
       for preference in preferences {
         switch preference {
         case .savedFeeds(let feeds):

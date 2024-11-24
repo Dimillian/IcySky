@@ -1,13 +1,13 @@
 {
-  "originHash" : "37205e5a3a68a92e47a328ed308ab6c4f72e628a551b46143006e663b4faa15c",
+  "originHash" : "2d558a9693096b726f7d93e276c7649010c047318282ceac3b956ed3c5356d78",
   "pins" : [
     {
       "identity" : "atprotokit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Dimillian/ATProtoKit",
+      "location" : "https://github.com/MasterJ93/ATProtoKit",
       "state" : {
-        "branch" : "fix-preferences",
-        "revision" : "b7afdedf3c1f2dcdde3b6571180d93a468dd5723"
+        "branch" : "develop",
+        "revision" : "b2027acf40b1947affb4c52db768dd1163c574ac"
       }
     },
     {
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-syntax.git",
       "state" : {
-        "revision" : "0687f71944021d616d34d922343dcef086855920",
-        "version" : "600.0.1"
+        "revision" : "64889f0c732f210a935a0ad7cda38f77f876262d",
+        "version" : "509.1.1"
       }
     },
     {
