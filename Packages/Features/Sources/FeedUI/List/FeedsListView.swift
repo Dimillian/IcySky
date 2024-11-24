@@ -86,6 +86,7 @@ public struct FeedsListView: View {
   }
 }
 
+// MARK: - Network
 extension FeedsListView {
   private func fetchSuggestedFeed() async {
     error = nil

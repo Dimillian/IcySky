@@ -141,3 +141,23 @@ extension AppBskyLexicon.Embed.RecordDefinition.ViewRecord {
     )
   }
 }
+
+extension PostItem {
+  @MainActor public static var placeholders: [PostItem] = Array(
+    repeating: (), count: 10).map{
+      .init(uri: UUID().uuidString,
+                       indexedAt: Date(),
+                       author: .init(did: "placeholder",
+                                     handle: "placeholder@bsky",
+                                     displayName: "Placeholder Name",
+                                     avatarImageURL: nil),
+                       content: "Some content some content some content\nSome content some content some content\nsomecontent",
+                       replyCount: 0,
+                       repostCount: 0,
+                       likeCount: 0,
+                       isLiked: false,
+                       isReposted: false,
+                       embed: nil)
+    }
+  
+}

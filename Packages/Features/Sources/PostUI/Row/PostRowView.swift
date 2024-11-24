@@ -76,7 +76,7 @@ struct PostRowView: View {
   }
 
   private var authorView: some View {
-    HStack(alignment: .center) {
+    HStack(alignment: .firstTextBaseline) {
       if isQuote {
         avatarView
       }
@@ -117,7 +117,7 @@ struct PostRowView: View {
   }
 
   private var actionsView: some View {
-    HStack(spacing: 16) {
+    HStack(alignment: .firstTextBaseline, spacing: 16) {
       Button(action: {}) {
         Label("\(post.replyCount)", systemImage: "bubble")
       }
