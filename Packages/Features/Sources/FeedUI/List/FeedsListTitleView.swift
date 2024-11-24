@@ -1,13 +1,25 @@
 import Network
 import SwiftUI
 
-struct FeedsListTitleView: View {
+public struct FeedsListTitleView: View {
   @Binding var filter: FeedsListFilter
   @Binding var searchText: String
   @Binding var isInSearch: Bool
   var isSearchFocused: FocusState<Bool>.Binding
+  
+  public init(
+    filter: Binding<FeedsListFilter>,
+    searchText: Binding<String>,
+    isInSearch: Binding<Bool>,
+    isSearchFocused: FocusState<Bool>.Binding
+  ) {
+    self._filter = filter
+    self._searchText = searchText
+    self._isInSearch = isInSearch
+    self.isSearchFocused = isSearchFocused
+  }
 
-  var body: some View {
+  public var body: some View {
     HStack(alignment: .center) {
       if !isInSearch {
         Menu {

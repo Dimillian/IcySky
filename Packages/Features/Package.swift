@@ -32,6 +32,12 @@ let package = Package(
       name: "FeedUI",
       dependencies: baseDeps
     ),
+    .testTarget(
+      name: "FeedUITests",
+      dependencies: [
+        "FeedUI",
+        .product(name: "ViewInspector", package: "ViewInspector")]
+    ),
     .target(
       name: "PostUI",
       dependencies: baseDeps
@@ -53,7 +59,9 @@ let package = Package(
     ),
     .testTarget(
       name: "DesignSystemTests",
-      dependencies: ["DesignSystem", .product(name: "ViewInspector", package: "ViewInspector")]
+      dependencies: [
+        "DesignSystem",
+        .product(name: "ViewInspector", package: "ViewInspector")]
     ),
   ]
 )

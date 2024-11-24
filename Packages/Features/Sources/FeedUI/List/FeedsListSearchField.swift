@@ -1,12 +1,22 @@
 import SwiftUI
 
-struct FeedsListSearchField: View {
+public struct FeedsListSearchField: View {
 
   @Binding var searchText: String
   @Binding var isInSearch: Bool
   var isSearchFocused: FocusState<Bool>.Binding
 
-  var body: some View {
+  public init(
+    searchText: Binding<String>,
+    isInSearch: Binding<Bool>,
+    isSearchFocused: FocusState<Bool>.Binding
+  ) {
+    _searchText = searchText
+    _isInSearch = isInSearch
+    self.isSearchFocused = isSearchFocused
+  }
+
+  public var body: some View {
     HStack {
       HStack {
         Image(systemName: "magnifyingglass")
