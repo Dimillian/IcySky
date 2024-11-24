@@ -22,14 +22,12 @@ public struct PostDetailView: View {
 
       PostRowView(post: post)
         .environment(\.isFocused, true)
-      
+
       ForEach(replies) { reply in
         PostRowView(post: reply)
       }
-      
     }
-    .listStyle(.plain)
-    .navigationBarHidden(true)
+    .screenContainer()
     .task {
       await fetchThread()
     }
@@ -37,25 +35,35 @@ public struct PostDetailView: View {
 
   private func fetchThread() async {
     do {
-      let thread = try await client.protoClient.getPostThread(from: post.uri, shouldAuthenticate: true)
+      let thread = try await client.protoClient.getPostThread(
+        from: post.uri, shouldAuthenticate: true)
       switch thread.thread {
       case .threadViewPost(let threadViewPost):
         self.post = threadViewPost.post.postItem
-        if let replies = threadViewPost.replies {
-          for reply in replies {
-            switch reply {
-            case .threadViewPost(let reply):
-              self.replies.append(reply.post.postItem)
-            default:
-              break
-            }
-          }
-        }
+        processReplies(from: threadViewPost, level: 0)
       default:
         break
       }
     } catch {
       print(error)
+    }
+  }
+
+  private func processReplies(from threadViewPost: AppBskyLexicon.Feed.ThreadViewPostDefinition, level: Int) {
+    if let replies = threadViewPost.replies {
+      for reply in replies {
+        switch reply {
+        case .threadViewPost(let reply):
+          var postItem = reply.post.postItem
+          if reply.replies?.isEmpty == false {
+            postItem.hasReply = true
+          }
+          self.replies.append(postItem)
+          processReplies(from: reply, level: level + 1)
+        default:
+          break
+        }
+      }
     }
   }
 }

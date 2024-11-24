@@ -22,15 +22,15 @@
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "FeedUITests",
-        "name" : "FeedUITests"
+        "identifier" : "AuthTests",
+        "name" : "AuthTests"
       }
     },
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "AuthTests",
-        "name" : "AuthTests"
+        "identifier" : "FeedUITests",
+        "name" : "FeedUITests"
       }
     }
   ],

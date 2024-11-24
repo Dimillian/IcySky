@@ -19,6 +19,8 @@ public struct PostItem: Codable, Hashable, Identifiable, Equatable {
   public let isReposted: Bool
   public let embed: ATUnion.EmbedViewUnion?
 
+  public var hasReply: Bool = false
+
   public struct Author: Codable, Hashable {
     public let did: String
     public let handle: String
@@ -115,7 +117,7 @@ extension AppBskyLexicon.Feed.PostViewDefinition {
 }
 
 extension AppBskyLexicon.Feed.ThreadViewPostDefinition {
-  
+
 }
 
 extension AppBskyLexicon.Embed.RecordDefinition.ViewRecord {

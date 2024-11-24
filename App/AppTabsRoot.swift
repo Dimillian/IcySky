@@ -23,7 +23,7 @@ struct AppTabRootView: View {
           .navigationDestination(for: RouterDestination.self) { destination in
             switch destination {
             case .feed(let feed):
-              PostsListView(feed: feed)
+              PostsFeedView(feed: feed)
             case .post(let post):
               PostDetailView(post: post)
             }

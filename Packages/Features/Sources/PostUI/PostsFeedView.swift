@@ -4,7 +4,7 @@ import Models
 import Network
 import SwiftUI
 
-public struct PostsListView: View {
+public struct PostsFeedView: View {
   @Environment(BSkyClient.self) var client
   @Environment(\.dismiss) var dismiss
 
@@ -35,8 +35,7 @@ public struct PostsListView: View {
         }
       }
     }
-    .navigationBarHidden(true)
-    .listStyle(.plain)
+    .screenContainer()
     .task {
       await loadFeed()
     }

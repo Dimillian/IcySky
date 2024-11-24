@@ -15,7 +15,7 @@ public struct FeedsListView: View {
 
   @State var isInSearch: Bool = false
   @State var searchText: String = ""
-  
+
   @State var error: Error?
 
   @FocusState var isSearchFocused: Bool
@@ -28,16 +28,13 @@ public struct FeedsListView: View {
         .listRowSeparator(.hidden)
 
       errorView
-      
+
       ForEach(feeds) { feed in
         FeedRowView(feed: feed)
       }
-      
+
     }
-    .listStyle(.plain)
-    .navigationBarTitleDisplayMode(.inline)
-    .toolbarVisibility(.hidden, for: .navigationBar)
-    .scrollContentBackground(.hidden)
+    .screenContainer()
     .task(id: filter) {
       guard !isInSearch else { return }
       switch filter {
@@ -67,7 +64,7 @@ public struct FeedsListView: View {
       Task { await fetchSuggestedFeed() }
     }
   }
-  
+
   @ViewBuilder
   private var errorView: some View {
     if let error {
@@ -105,11 +102,12 @@ extension FeedsListView {
   private func fetchMyFeeds() async {
     guard let savedFeeds = currentUser.savedFeeds else { return }
     do {
-      let feeds = try await client.protoClient.getFeedGenerators(filter == .savedFeeds ? savedFeeds.saved : savedFeeds.pinned)
+      let feeds = try await client.protoClient.getFeedGenerators(
+        filter == .savedFeeds ? savedFeeds.saved : savedFeeds.pinned)
       withAnimation {
         self.feeds = feeds.feeds.map { $0.feedItem }
       }
-    } catch { }
+    } catch {}
   }
 
   private func searchFeed(query: String) async {
@@ -119,7 +117,9 @@ extension FeedsListView {
       withAnimation {
         self.feeds = feeds.feeds.map { $0.feedItem }
       }
-    } catch { }
+    } catch {
+      print(error)
+    }
   }
 }
 

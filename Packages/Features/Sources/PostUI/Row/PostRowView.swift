@@ -1,8 +1,8 @@
 import DesignSystem
 import Models
 import Network
-import SwiftUI
 import Router
+import SwiftUI
 
 extension EnvironmentValues {
   @Entry public var isQuote: Bool = false
@@ -21,10 +21,15 @@ struct PostRowView: View {
         .listRowSeparator(.hidden)
     } else {
       HStack(alignment: .top, spacing: 8) {
-        avatarView
+        VStack(spacing: 0) {
+          avatarView
+          threadLineView
+        }
         mainView
+          .padding(.bottom, 18)
       }
       .listRowSeparator(.hidden)
+      .listRowInsets(.init(top: 0, leading: 18, bottom: 0, trailing: 18))
     }
   }
 
@@ -62,7 +67,7 @@ struct PostRowView: View {
       Circle()
         .stroke(
           LinearGradient(
-            colors: [.shadowPrimary.opacity(0.5), .indigo.opacity(0.5)],
+            colors: post.hasReply ? [.purple, .indigo] : [.shadowPrimary.opacity(0.5), .indigo.opacity(0.5)],
             startPoint: .topLeading,
             endPoint: .bottomTrailing),
           lineWidth: 1)
@@ -94,6 +99,21 @@ struct PostRowView: View {
   private var bodyView: some View {
     Text(post.content)
       .font(.body)
+  }
+  
+  @ViewBuilder
+  private var threadLineView: some View {
+    if post.hasReply {
+      Rectangle()
+        .frame(width: 1)
+        .frame(maxHeight: .infinity)
+        .foregroundStyle(
+          LinearGradient(
+            colors: [.indigo, .purple],
+            startPoint: .top,
+            endPoint: .bottom
+          ))
+    }
   }
 
   private var actionsView: some View {

@@ -1,6 +1,10 @@
 import Router
 import SwiftUI
 
+public extension CGFloat {
+  static let tabBarHeight: CGFloat = 70
+}
+
 public struct TabBarView: View {
   @Environment(Router.self) var router
 
