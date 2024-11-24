@@ -25,6 +25,7 @@ let package = Package(
   dependencies: [
     .package(name: "Model", path: "../Model"),
     .package(url: "https://github.com/nikstar/VariableBlur", from: "1.2.0"),
+    .package(url: "https://github.com/nalexn/ViewInspector", from: "0.10.0"),
   ],
   targets: [
     .target(
@@ -49,6 +50,10 @@ let package = Package(
         .product(name: "VariableBlur", package: "VariableBlur"),
         .product(name: "Router", package: "Model"),
       ]
+    ),
+    .testTarget(
+      name: "DesignSystemTests",
+      dependencies: ["DesignSystem", .product(name: "ViewInspector", package: "ViewInspector")]
     ),
   ]
 )

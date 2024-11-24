@@ -18,6 +18,13 @@
         "identifier" : "AuthTests",
         "name" : "AuthTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/Features",
+        "identifier" : "DesignSystemTests",
+        "name" : "DesignSystemTests"
+      }
     }
   ],
   "version" : 1

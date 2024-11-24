@@ -14,6 +14,7 @@ public struct HeaderView: View {
     HStack {
       if showBack {
         Image(systemName: "chevron.backward")
+          .id("back")
       }
       Text(title)
         .lineLimit(1)
