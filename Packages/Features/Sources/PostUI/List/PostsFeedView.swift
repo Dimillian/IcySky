@@ -30,7 +30,6 @@ public struct PostsFeedView: View {
               where: #Predicate { feed in
                 feed.uri == uri
               })
-            try modelContext.save()
             modelContext.insert(
               RecentFeedItem(
                 uri: uri,
@@ -39,7 +38,8 @@ public struct PostsFeedView: View {
                 lastViewedAt: Date()
               )
             )
-          } catch { }
+            try modelContext.save()
+          } catch {}
         }
       }
   }

@@ -27,9 +27,12 @@ struct RecentlyViewedFeedRowView: View {
               .clipShape(RoundedRectangle(cornerRadius: 8))
               .shadow(color: .shadowPrimary.opacity(0.7), radius: 2)
           default:
-            RoundedRectangle(cornerRadius: 8)
-              .fill(.gray.opacity(0.2))
+            Image(systemName: "antenna.radiowaves.left.and.right")
+              .imageScale(.medium)
+              .foregroundStyle(.white)
               .frame(width: 32, height: 32)
+              .background(RoundedRectangle(cornerRadius: 8).fill(Color.blueskyBackground))
+              .clipShape(RoundedRectangle(cornerRadius: 8))
               .shadow(color: .shadowPrimary.opacity(0.7), radius: 2)
           }
         }
