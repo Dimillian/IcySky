@@ -16,6 +16,7 @@ public struct FeedsListView: View {
   @State var feeds: [FeedItem] = []
   @State var filter: FeedsListFilter = .suggested
 
+  @State var isRecentFeedExpanded: Bool = true
   @Query(recentFeedItemsDescriptor) var recentFeedItems: [RecentFeedItem]
 
   @State var isInSearch: Bool = false
@@ -30,33 +31,9 @@ public struct FeedsListView: View {
   public var body: some View {
     List {
       headerView
-        .listRowSeparator(.hidden)
-        .padding(.bottom, 8)
-
       errorView
-
-      if !isInSearch {
-        Section {
-          TimelineFeedRowView()
-          ForEach(recentFeedItems) { item in
-            RecentlyViewedFeedRowView(item: item)
-          }
-          .onDelete { indexSet in
-            for index in indexSet {
-              modelContext.delete(recentFeedItems[index])
-            }
-          }
-
-          dividerView
-        }
-      }
-
-      Section {
-        ForEach(feeds) { feed in
-          FeedRowView(feed: feed)
-        }
-      }
-
+      recentViewedSection
+      feedsSection
     }
     .screenContainer()
     .scrollDismissesKeyboard(.immediately)
@@ -87,6 +64,48 @@ public struct FeedsListView: View {
     .onChange(of: isInSearch, initial: false) {
       guard !isInSearch else { return }
       Task { await fetchSuggestedFeed() }
+    }
+    .listRowSeparator(.hidden)
+  }
+
+  @ViewBuilder
+  private var recentViewedSection: some View {
+    if !isInSearch {
+      Section(
+        content: {
+          if isRecentFeedExpanded {
+            TimelineFeedRowView()
+            ForEach(recentFeedItems) { item in
+              RecentlyViewedFeedRowView(item: item)
+            }
+            .onDelete { indexSet in
+              for index in indexSet {
+                modelContext.delete(recentFeedItems[index])
+              }
+            }
+            dividerView
+          }
+        },
+        header: {
+          Label(
+            "Recently Viewed",
+            systemImage: isRecentFeedExpanded ? "chevron.down" : "chevron.right"
+          )
+          .onTapGesture {
+            withAnimation {
+              isRecentFeedExpanded.toggle()
+            }
+          }
+        }
+      )
+    }
+  }
+
+  private var feedsSection: some View {
+    Section {
+      ForEach(feeds) { feed in
+        FeedRowView(feed: feed)
+      }
     }
   }
 
@@ -134,7 +153,7 @@ extension FeedsListView {
       SortDescriptor(\.lastViewedAt, order: .reverse)
     ]
     )
-    descriptor.fetchLimit = 5
+    descriptor.fetchLimit = 4
     return descriptor
   }
 }
