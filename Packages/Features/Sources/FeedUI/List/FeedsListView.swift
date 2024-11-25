@@ -3,7 +3,6 @@ import DesignSystem
 import Models
 import Network
 import Router
-import SwiftData
 import SwiftUI
 import User
 import VariableBlur
@@ -11,13 +10,11 @@ import VariableBlur
 public struct FeedsListView: View {
   @Environment(BSkyClient.self) var client
   @Environment(CurrentUser.self) var currentUser
-  @Environment(\.modelContext) var modelContext
 
   @State var feeds: [FeedItem] = []
   @State var filter: FeedsListFilter = .suggested
 
   @State var isRecentFeedExpanded: Bool = true
-  @Query(recentFeedItemsDescriptor) var recentFeedItems: [RecentFeedItem]
 
   @State var isInSearch: Bool = false
   @State var searchText: String = ""
@@ -31,8 +28,14 @@ public struct FeedsListView: View {
   public var body: some View {
     List {
       headerView
-      errorView
-      recentViewedSection
+      if let error {
+        FeedsListErrorView(error: error) {
+          await fetchSuggestedFeed()
+        }
+      }
+      if !isInSearch {
+        FeedsListRecentSection(isRecentFeedExpanded: $isRecentFeedExpanded)
+      }
       feedsSection
     }
     .screenContainer()
@@ -56,9 +59,7 @@ public struct FeedsListView: View {
       isSearchFocused: $isSearchFocused
     )
     .task(id: searchText) {
-      guard !searchText.isEmpty else {
-        return
-      }
+      guard !searchText.isEmpty else { return }
       await searchFeed(query: searchText)
     }
     .onChange(of: isInSearch, initial: false) {
@@ -68,94 +69,12 @@ public struct FeedsListView: View {
     .listRowSeparator(.hidden)
   }
 
-  @ViewBuilder
-  private var recentViewedSection: some View {
-    if !isInSearch {
-      HStack {
-        Image(systemName: "chevron.right")
-          .rotationEffect(.degrees(isRecentFeedExpanded ? 90 : 0))
-        Text("Recently Viewed")
-      }
-      .font(.subheadline)
-      .fontWeight(.semibold)
-      .foregroundStyle(.secondary)
-      .listRowSeparator(.hidden)
-      .onTapGesture {
-        withAnimation {
-          isRecentFeedExpanded.toggle()
-        }
-      }
-      Section {
-        if isRecentFeedExpanded {
-          TimelineFeedRowView()
-          ForEach(recentFeedItems) { item in
-            RecentlyViewedFeedRowView(item: item)
-          }
-          .onDelete { indexSet in
-            for index in indexSet {
-              modelContext.delete(recentFeedItems[index])
-            }
-          }
-          dividerView
-        }
-      }
-    }
-  }
-
   private var feedsSection: some View {
     Section {
       ForEach(feeds) { feed in
         FeedRowView(feed: feed)
       }
     }
-  }
-
-  private var dividerView: some View {
-    HStack {
-      Rectangle()
-        .fill(
-          LinearGradient(
-            colors: [.indigo, .purple],
-            startPoint: .leading,
-            endPoint: .trailing)
-        )
-        .frame(height: 1)
-        .frame(maxWidth: .infinity)
-    }
-    .listRowSeparator(.hidden)
-    .listRowInsets(.init())
-  }
-
-  @ViewBuilder
-  private var errorView: some View {
-    if let error {
-      VStack {
-        Text("Error: \(error.localizedDescription)")
-          .foregroundColor(.red)
-        Button {
-          Task {
-            await fetchSuggestedFeed()
-          }
-        } label: {
-          Text("Retry")
-            .padding()
-        }
-        .buttonStyle(.pill)
-      }
-      .listRowSeparator(.hidden)
-    }
-  }
-}
-
-// MARK: - SwiftData
-extension FeedsListView {
-  static var recentFeedItemsDescriptor: FetchDescriptor<RecentFeedItem> {
-    var descriptor = FetchDescriptor<RecentFeedItem>(sortBy: [
-      SortDescriptor(\.lastViewedAt, order: .reverse)
-    ]
-    )
-    descriptor.fetchLimit = 4
-    return descriptor
   }
 }
 
@@ -175,7 +94,8 @@ extension FeedsListView {
 
   private func fetchMyFeeds() async {
     do {
-      let feeds = try await client.protoClient.getFeedGenerators(currentUser.savedFeeds.map{ $0.value })
+      let feeds = try await client.protoClient.getFeedGenerators(
+        currentUser.savedFeeds.map { $0.value })
       withAnimation {
         self.feeds = feeds.feeds.map { $0.feedItem }
       }
