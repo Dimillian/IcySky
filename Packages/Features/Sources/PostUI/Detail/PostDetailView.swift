@@ -43,7 +43,9 @@ public struct PostDetailView: View {
       .screenContainer()
       .task {
         await fetchThread()
-        scrollToId = "focusedPost"
+        if !parents.isEmpty {
+          scrollToId = "focusedPost"
+        }
       }
       .onChange(of: scrollToId) {
         if let scrollToId {

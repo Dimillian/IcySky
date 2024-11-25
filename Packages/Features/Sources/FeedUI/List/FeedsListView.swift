@@ -42,7 +42,7 @@ public struct FeedsListView: View {
       switch filter {
       case .suggested:
         await fetchSuggestedFeed()
-      case .savedFeeds, .pinned:
+      case .myFeeds:
         await fetchMyFeeds()
       }
     }
@@ -71,33 +71,34 @@ public struct FeedsListView: View {
   @ViewBuilder
   private var recentViewedSection: some View {
     if !isInSearch {
-      Section(
-        content: {
-          if isRecentFeedExpanded {
-            TimelineFeedRowView()
-            ForEach(recentFeedItems) { item in
-              RecentlyViewedFeedRowView(item: item)
-            }
-            .onDelete { indexSet in
-              for index in indexSet {
-                modelContext.delete(recentFeedItems[index])
-              }
-            }
-            dividerView
-          }
-        },
-        header: {
-          Label(
-            "Recently Viewed",
-            systemImage: isRecentFeedExpanded ? "chevron.down" : "chevron.right"
-          )
-          .onTapGesture {
-            withAnimation {
-              isRecentFeedExpanded.toggle()
-            }
-          }
+      HStack {
+        Image(systemName: "chevron.right")
+          .rotationEffect(.degrees(isRecentFeedExpanded ? 90 : 0))
+        Text("Recently Viewed")
+      }
+      .font(.subheadline)
+      .fontWeight(.semibold)
+      .foregroundStyle(.secondary)
+      .listRowSeparator(.hidden)
+      .onTapGesture {
+        withAnimation {
+          isRecentFeedExpanded.toggle()
         }
-      )
+      }
+      Section {
+        if isRecentFeedExpanded {
+          TimelineFeedRowView()
+          ForEach(recentFeedItems) { item in
+            RecentlyViewedFeedRowView(item: item)
+          }
+          .onDelete { indexSet in
+            for index in indexSet {
+              modelContext.delete(recentFeedItems[index])
+            }
+          }
+          dividerView
+        }
+      }
     }
   }
 
@@ -173,14 +174,14 @@ extension FeedsListView {
   }
 
   private func fetchMyFeeds() async {
-    guard let savedFeeds = currentUser.savedFeeds else { return }
     do {
-      let feeds = try await client.protoClient.getFeedGenerators(
-        filter == .savedFeeds ? savedFeeds.saved : savedFeeds.pinned)
+      let feeds = try await client.protoClient.getFeedGenerators(currentUser.savedFeeds.map{ $0.value })
       withAnimation {
         self.feeds = feeds.feeds.map { $0.feedItem }
       }
-    } catch {}
+    } catch {
+      print(error)
+    }
   }
 
   private func searchFeed(query: String) async {

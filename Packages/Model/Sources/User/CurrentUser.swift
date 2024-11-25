@@ -8,7 +8,7 @@ public class CurrentUser {
   public let client: BSkyClient
 
   public private(set) var profile: AppBskyLexicon.Actor.ProfileViewDetailedDefinition?
-  public private(set) var savedFeeds: AppBskyLexicon.Actor.SavedFeedsPreferencesDefinition?
+  public private(set) var savedFeeds: [AppBskyLexicon.Actor.SavedFeed] = []
 
   public init(client: BSkyClient) {
     self.client = client
@@ -20,6 +20,7 @@ public class CurrentUser {
   }
 
   public func refreshCurrentUser() async {
+    await fetchProfile()
     await fetchPreferences()
   }
   
@@ -36,7 +37,9 @@ public class CurrentUser {
       let preferences = try await client.protoClient.getPreferences().preferences
       for preference in preferences {
         switch preference {
-        case .savedFeeds(let feeds):
+        case .savedFeedsVersion2(let feeds):
+          var feeds = feeds.items
+          feeds.removeAll(where: { $0.value == "following"})
           self.savedFeeds = feeds
         default:
           break

@@ -17,8 +17,6 @@ struct IcySkyApp: App {
   @State var router: Router = .init()
 
   var body: some Scene {
-    @Bindable var router = router
-
     WindowGroup {
       TabView(selection: $router.selectedTab) {
         if client != nil && currentUser != nil {

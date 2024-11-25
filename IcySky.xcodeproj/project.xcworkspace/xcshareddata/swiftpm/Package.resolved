@@ -1,5 +1,5 @@
 {
-  "originHash" : "3bc05e95b69742072e775dc6308bc6c4782949bf33e94229acf20f9c710c7286",
+  "originHash" : "9ac06be7ae7f8f8aef52ec90b389ab7cb9d8262eafdb10a92352b2b2be3ddb66",
   "pins" : [
     {
       "identity" : "atprotokit",
@@ -7,7 +7,7 @@
       "location" : "https://github.com/MasterJ93/ATProtoKit",
       "state" : {
         "branch" : "develop",
-        "revision" : "b2027acf40b1947affb4c52db768dd1163c574ac"
+        "revision" : "d82a9b89584c129cc5afb2bb08b6913b4a1536a7"
       }
     },
     {
