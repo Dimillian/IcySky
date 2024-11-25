@@ -9,27 +9,47 @@ public struct PostDetailView: View {
   @Environment(BSkyClient.self) var client
 
   @State var post: PostItem
+  @State var parents: [PostItem] = []
   @State var replies: [PostItem] = []
+
+  @State private var scrollToId: String?
 
   public init(post: PostItem) {
     self.post = post
   }
 
   public var body: some View {
-    List {
-      HeaderView(title: "Post")
-        .padding(.bottom)
+    ScrollViewReader { proxy in
+      List {
+        HeaderView(title: "Post")
+          .padding(.bottom)
 
-      PostRowView(post: post)
-        .environment(\.isFocused, true)
+        ForEach(parents) { parent in
+          PostRowView(post: parent)
+        }
 
-      ForEach(replies) { reply in
-        PostRowView(post: reply)
+        PostRowView(post: post)
+          .environment(\.isFocused, true)
+          .id("focusedPost")
+
+        ForEach(replies) { reply in
+          PostRowView(post: reply)
+        }
+
+        VStack {}
+          .frame(height: 300)
+          .listRowSeparator(.hidden)
       }
-    }
-    .screenContainer()
-    .task {
-      await fetchThread()
+      .screenContainer()
+      .task {
+        await fetchThread()
+        scrollToId = "focusedPost"
+      }
+      .onChange(of: scrollToId) {
+        if let scrollToId {
+          proxy.scrollTo(scrollToId, anchor: .top)
+        }
+      }
     }
   }
 
@@ -40,7 +60,8 @@ public struct PostDetailView: View {
       switch thread.thread {
       case .threadViewPost(let threadViewPost):
         self.post = threadViewPost.post.postItem
-        processReplies(from: threadViewPost, level: 0)
+        processParents(from: threadViewPost)
+        processReplies(from: threadViewPost)
       default:
         break
       }
@@ -49,7 +70,21 @@ public struct PostDetailView: View {
     }
   }
 
-  private func processReplies(from threadViewPost: AppBskyLexicon.Feed.ThreadViewPostDefinition, level: Int) {
+  private func processParents(from threadViewPost: AppBskyLexicon.Feed.ThreadViewPostDefinition) {
+    if let parent = threadViewPost.parent {
+      switch parent {
+      case .threadViewPost(let post):
+        var item = post.post.postItem
+        item.hasReply = true
+        self.parents.append(item)
+        processParents(from: post)
+      default:
+        break
+      }
+    }
+  }
+
+  private func processReplies(from threadViewPost: AppBskyLexicon.Feed.ThreadViewPostDefinition) {
     if let replies = threadViewPost.replies {
       for reply in replies {
         switch reply {
@@ -59,7 +94,7 @@ public struct PostDetailView: View {
             postItem.hasReply = true
           }
           self.replies.append(postItem)
-          processReplies(from: reply, level: level + 1)
+          processReplies(from: reply)
         default:
           break
         }

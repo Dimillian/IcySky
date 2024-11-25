@@ -3,19 +3,22 @@ import DesignSystem
 import Models
 import Network
 import SwiftUI
+import User
 
 public struct PostsFeedView: View {
   @Environment(BSkyClient.self) var client
+  @Environment(CurrentUser.self) var currentUser
+  
   @Environment(\.dismiss) var dismiss
 
   enum ViewState {
+    case uninitialized
     case loading
     case loaded(posts: [PostItem], cursor: String?)
     case error(Error)
   }
 
-  @State private var state: ViewState = .loading
-  @State private var viewDidLoad = false
+  @State private var state: ViewState = .uninitialized
 
   let feed: FeedItem
 
@@ -29,7 +32,7 @@ public struct PostsFeedView: View {
         .padding(.bottom)
 
       switch state {
-      case .loading:
+      case .loading, .uninitialized:
         placeholderView
       case let .loaded(posts, cursor):
         ForEach(posts) { post in
@@ -44,9 +47,10 @@ public struct PostsFeedView: View {
     }
     .screenContainer()
     .task {
-      guard !viewDidLoad else { return }
-      viewDidLoad = true
-      await loadFeed()
+      if case .uninitialized = state {
+        state = .loading
+        await loadFeed()
+      }
     }
     .refreshable {
       state = .loading
@@ -77,7 +81,7 @@ extension PostsFeedView {
   private func loadFeed() async {
     do {
       switch state {
-      case .loading, .error:
+      case .uninitialized, .loading, .error:
         let feed = try await client.protoClient.getFeed(feed.uri, cursor: nil)
         state = .loaded(posts: processFeed(feed.feed), cursor: feed.cursor)
       case let .loaded(posts, cursor):

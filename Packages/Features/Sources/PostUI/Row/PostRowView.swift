@@ -3,6 +3,7 @@ import Models
 import Network
 import Router
 import SwiftUI
+import User
 
 extension EnvironmentValues {
   @Entry public var isQuote: Bool = false
@@ -196,7 +197,8 @@ struct PostRowView: View {
           likeCount: 38,
           isLiked: false,
           isReposted: false,
-          embed: nil))
+          embed: nil,
+          replyRef: nil))
       PostRowView(
         post: .init(
           uri: "",
@@ -212,7 +214,8 @@ struct PostRowView: View {
           likeCount: 38,
           isLiked: true,
           isReposted: false,
-          embed: nil))
+          embed: nil,
+          replyRef: nil))
       PostRowView(
         post: .init(
           uri: "",
@@ -228,7 +231,8 @@ struct PostRowView: View {
           likeCount: 38,
           isLiked: true,
           isReposted: true,
-          embed: nil))
+          embed: nil,
+          replyRef: nil))
     }
     .listStyle(.plain)
   }

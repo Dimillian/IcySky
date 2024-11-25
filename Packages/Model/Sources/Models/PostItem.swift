@@ -1,12 +1,13 @@
 import ATProtoKit
 import Foundation
 
-public struct PostItem: Codable, Hashable, Identifiable, Equatable {
+public struct PostItem: Hashable, Identifiable, Equatable {
   public func hash(into hasher: inout Hasher) {
     hasher.combine(uri)
   }
 
-  public var id: String { uri }
+  public var id: String { uri + uuid.uuidString }
+  private let uuid = UUID()
   public let uri: String
   public let indexedAt: Date
   public let indexAtFormatted: String
@@ -18,6 +19,7 @@ public struct PostItem: Codable, Hashable, Identifiable, Equatable {
   public let isLiked: Bool
   public let isReposted: Bool
   public let embed: ATUnion.EmbedViewUnion?
+  public let replyRef: AppBskyLexicon.Feed.PostRecord.ReplyReference?
 
   public var hasReply: Bool = false
 
@@ -50,7 +52,8 @@ public struct PostItem: Codable, Hashable, Identifiable, Equatable {
     likeCount: Int,
     isLiked: Bool,
     isReposted: Bool,
-    embed: ATUnion.EmbedViewUnion?
+    embed: ATUnion.EmbedViewUnion?,
+    replyRef: AppBskyLexicon.Feed.PostRecord.ReplyReference?
   ) {
     self.uri = uri
     self.indexedAt = indexedAt
@@ -63,12 +66,22 @@ public struct PostItem: Codable, Hashable, Identifiable, Equatable {
     self.isReposted = isReposted
     self.embed = embed
     self.indexAtFormatted = indexedAt.relativeFormatted
+    self.replyRef = replyRef
   }
 }
 
 extension ATUnion.EmbedViewUnion: @retroactive Equatable {
   public static func == (lhs: Self, rhs: Self) -> Bool {
     (try? lhs.toJsonData()) == (try? rhs.toJsonData())
+  }
+}
+
+extension AppBskyLexicon.Feed.PostRecord.ReplyReference: @retroactive Equatable {
+  public static func == (lhs: Self, rhs: Self) -> Bool {
+    lhs.parent.cidHash == rhs.parent.cidHash &&
+    lhs.parent.recordURI == rhs.parent.recordURI &&
+    lhs.root.cidHash == rhs.root.cidHash &&
+    lhs.root.recordURI == rhs.root.recordURI
   }
 }
 
@@ -89,7 +102,8 @@ extension AppBskyLexicon.Feed.FeedViewPostDefinition {
       likeCount: post.likeCount ?? 0,
       isLiked: post.viewer?.likeURI != nil,
       isReposted: post.viewer?.repostURI != nil,
-      embed: post.embed
+      embed: post.embed,
+      replyRef: post.record.getRecord(ofType: AppBskyLexicon.Feed.PostRecord.self)?.reply
     )
   }
 }
@@ -111,7 +125,8 @@ extension AppBskyLexicon.Feed.PostViewDefinition {
       likeCount: likeCount ?? 0,
       isLiked: viewer?.likeURI != nil,
       isReposted: viewer?.repostURI != nil,
-      embed: embed
+      embed: embed,
+      replyRef: record.getRecord(ofType: AppBskyLexicon.Feed.PostRecord.self)?.reply
     )
   }
 }
@@ -137,7 +152,8 @@ extension AppBskyLexicon.Embed.RecordDefinition.ViewRecord {
       likeCount: likeCount ?? 0,
       isLiked: false,
       isReposted: false,
-      embed: embeds?.first
+      embed: embeds?.first,
+      replyRef: value.getRecord(ofType: AppBskyLexicon.Feed.PostRecord.self)?.reply
     )
   }
 }
@@ -157,7 +173,8 @@ extension PostItem {
                        likeCount: 0,
                        isLiked: false,
                        isReposted: false,
-                       embed: nil)
+                       embed: nil,
+                       replyRef: nil)
     }
   
 }
