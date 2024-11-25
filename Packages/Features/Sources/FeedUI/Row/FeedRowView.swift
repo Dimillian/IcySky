@@ -9,7 +9,13 @@ struct FeedRowView: View {
   let feed: FeedItem
 
   var body: some View {
-    NavigationLink(value: RouterDestination.feed(feed)) {
+    NavigationLink(
+      value: RouterDestination.feed(
+        uri: feed.uri,
+        name: feed.displayName,
+        avatarImageURL: feed.avatarImageURL
+      )
+    ) {
       VStack(alignment: .leading, spacing: 12) {
         headerView
         if let description = feed.description {

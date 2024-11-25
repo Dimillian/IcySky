@@ -2,6 +2,8 @@
 import DesignSystem
 import Models
 import Network
+import Router
+import SwiftData
 import SwiftUI
 import User
 import VariableBlur
@@ -9,9 +11,12 @@ import VariableBlur
 public struct FeedsListView: View {
   @Environment(BSkyClient.self) var client
   @Environment(CurrentUser.self) var currentUser
+  @Environment(\.modelContext) var modelContext
 
   @State var feeds: [FeedItem] = []
   @State var filter: FeedsListFilter = .suggested
+
+  @Query(recentFeedItemsDescriptor) var recentFeedItems: [RecentFeedItem]
 
   @State var isInSearch: Bool = false
   @State var searchText: String = ""
@@ -26,15 +31,35 @@ public struct FeedsListView: View {
     List {
       headerView
         .listRowSeparator(.hidden)
+        .padding(.bottom, 8)
 
       errorView
 
-      ForEach(feeds) { feed in
-        FeedRowView(feed: feed)
+      if !isInSearch {
+        Section {
+          TimelineFeedRowView()
+          ForEach(recentFeedItems) { item in
+            RecentlyViewedFeedRowView(item: item)
+          }
+          .onDelete { indexSet in
+            for index in indexSet {
+              modelContext.delete(recentFeedItems[index])
+            }
+          }
+
+          dividerView
+        }
+      }
+
+      Section {
+        ForEach(feeds) { feed in
+          FeedRowView(feed: feed)
+        }
       }
 
     }
     .screenContainer()
+    .scrollDismissesKeyboard(.immediately)
     .task(id: filter) {
       guard !isInSearch else { return }
       switch filter {
@@ -65,6 +90,22 @@ public struct FeedsListView: View {
     }
   }
 
+  private var dividerView: some View {
+    HStack {
+      Rectangle()
+        .fill(
+          LinearGradient(
+            colors: [.indigo, .purple],
+            startPoint: .leading,
+            endPoint: .trailing)
+        )
+        .frame(height: 1)
+        .frame(maxWidth: .infinity)
+    }
+    .listRowSeparator(.hidden)
+    .listRowInsets(.init())
+  }
+
   @ViewBuilder
   private var errorView: some View {
     if let error {
@@ -83,6 +124,18 @@ public struct FeedsListView: View {
       }
       .listRowSeparator(.hidden)
     }
+  }
+}
+
+// MARK: - SwiftData
+extension FeedsListView {
+  static var recentFeedItemsDescriptor: FetchDescriptor<RecentFeedItem> {
+    var descriptor = FetchDescriptor<RecentFeedItem>(sortBy: [
+      SortDescriptor(\.lastViewedAt, order: .reverse)
+    ]
+    )
+    descriptor.fetchLimit = 5
+    return descriptor
   }
 }
 

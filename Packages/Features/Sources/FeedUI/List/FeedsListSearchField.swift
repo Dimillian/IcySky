@@ -29,9 +29,11 @@ public struct FeedsListSearchField: View {
       .pillStyle()
       if isInSearch {
         Button {
-          isInSearch.toggle()
-          isSearchFocused.wrappedValue = false
-          searchText = ""
+          withAnimation {
+            isInSearch.toggle()
+            isSearchFocused.wrappedValue = false
+            searchText = ""
+          }
         } label: {
           Image(systemName: "xmark")
             .frame(width: 50, height: 50)

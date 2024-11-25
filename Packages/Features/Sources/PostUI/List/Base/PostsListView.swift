@@ -5,30 +5,13 @@ import Network
 import SwiftUI
 import User
 
-public struct PostsFeedView: View {
-  @Environment(BSkyClient.self) var client
-  @Environment(CurrentUser.self) var currentUser
-  
-  @Environment(\.dismiss) var dismiss
-
-  enum ViewState {
-    case uninitialized
-    case loading
-    case loaded(posts: [PostItem], cursor: String?)
-    case error(Error)
-  }
-
-  @State private var state: ViewState = .uninitialized
-
-  let feed: FeedItem
-
-  public init(feed: FeedItem) {
-    self.feed = feed
-  }
+public struct PostListView: View {
+  let datasource: PostsListViewDatasource
+  @State private var state: PostsListViewState = .uninitialized
 
   public var body: some View {
     List {
-      HeaderView(title: feed.displayName)
+      HeaderView(title: datasource.title)
         .padding(.bottom)
 
       switch state {
@@ -49,12 +32,12 @@ public struct PostsFeedView: View {
     .task {
       if case .uninitialized = state {
         state = .loading
-        await loadFeed()
+        state = await datasource.loadPosts(with: state)
       }
     }
     .refreshable {
       state = .loading
-      await loadFeed()
+      state = await datasource.loadPosts(with: state)
     }
   }
 
@@ -63,7 +46,7 @@ public struct PostsFeedView: View {
       ProgressView()
     }
     .task {
-      await loadFeed()
+      state = await datasource.loadPosts(with: state)
     }
   }
 
@@ -76,27 +59,10 @@ public struct PostsFeedView: View {
   }
 }
 
-// MARK: - Network
-extension PostsFeedView {
-  private func loadFeed() async {
-    do {
-      switch state {
-      case .uninitialized, .loading, .error:
-        let feed = try await client.protoClient.getFeed(feed.uri, cursor: nil)
-        state = .loaded(posts: processFeed(feed.feed), cursor: feed.cursor)
-      case let .loaded(posts, cursor):
-        let feed = try await client.protoClient.getFeed(feed.uri, cursor: cursor)
-        state = .loaded(posts: posts + processFeed(feed.feed), cursor: feed.cursor)
-      }
-    } catch {
-      state = .error(error)
-    }
-  }
-}
-
 // MARK: - Data
-extension PostsFeedView {
-  private func processFeed(_ feed: [AppBskyLexicon.Feed.FeedViewPostDefinition]) -> [PostItem] {
+extension PostListView {
+  public static func processFeed(_ feed: [AppBskyLexicon.Feed.FeedViewPostDefinition]) -> [PostItem]
+  {
     var postItems: [PostItem] = []
 
     func insert(post: AppBskyLexicon.Feed.PostViewDefinition, hasReply: Bool) {

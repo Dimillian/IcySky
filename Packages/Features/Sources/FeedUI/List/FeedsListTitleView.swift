@@ -6,7 +6,7 @@ public struct FeedsListTitleView: View {
   @Binding var searchText: String
   @Binding var isInSearch: Bool
   var isSearchFocused: FocusState<Bool>.Binding
-  
+
   public init(
     filter: Binding<FeedsListFilter>,
     searchText: Binding<String>,
@@ -56,21 +56,26 @@ public struct FeedsListTitleView: View {
           }
         }
         .buttonStyle(.plain)
-        .transition(.asymmetric(insertion: .move(edge: .trailing),
-                                removal: .move(edge: .leading))
+        .transition(
+          .asymmetric(
+            insertion: .move(edge: .trailing),
+            removal: .move(edge: .leading)
+          )
           .combined(with: .opacity))
 
         Spacer()
       }
-      
+
       FeedsListSearchField(
         searchText: $searchText,
         isInSearch: $isInSearch,
         isSearchFocused: isSearchFocused
       )
       .onTapGesture {
-        isInSearch.toggle()
-        isSearchFocused.wrappedValue = true
+        withAnimation {
+          isInSearch.toggle()
+          isSearchFocused.wrappedValue = true
+        }
       }
     }
     .animation(.smooth, value: isInSearch)
