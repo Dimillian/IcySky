@@ -21,6 +21,7 @@ public struct AuthView: View {
       Section {
         TextField("john@bsky.social", text: $handle)
           .font(.title2)
+          .textInputAutocapitalization(.never)
         SecureField("App Password", text: $appPassword)
           .font(.title2)
       }
