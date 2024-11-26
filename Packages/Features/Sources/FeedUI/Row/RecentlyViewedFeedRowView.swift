@@ -5,10 +5,14 @@ import Network
 import Router
 import SwiftUI
 
-struct RecentlyViewedFeedRowView: View {
-  let item: RecentFeedItem
+public struct RecentlyViewedFeedRowView: View {
+  public let item: RecentFeedItem
 
-  var body: some View {
+  public init(item: RecentFeedItem) {
+    self.item = item
+  }
+
+  public var body: some View {
     NavigationLink(
       value: RouterDestination.feed(
         uri: item.uri,

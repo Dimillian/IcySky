@@ -3,6 +3,7 @@ import DesignSystem
 import FeedUI
 import Models
 import Network
+import NotificationsUI
 import PostUI
 import Router
 import SettingsUI
@@ -53,9 +54,7 @@ extension AppTab {
         Text("Messages view")
       }
     case .notification:
-      HStack {
-        Text("Notifications view")
-      }
+      NotificationsListView()
     case .settings:
       SettingsView()
     }

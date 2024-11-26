@@ -20,6 +20,7 @@ let package = Package(
     .library(name: "PostUI", targets: ["PostUI"]),
     .library(name: "AuthUI", targets: ["AuthUI"]),
     .library(name: "SettingsUI", targets: ["SettingsUI"]),
+    .library(name: "NotificationsUI", targets: ["NotificationsUI"]),
     .library(name: "DesignSystem", targets: ["DesignSystem"]),
   ],
   dependencies: [
@@ -36,11 +37,12 @@ let package = Package(
       name: "FeedUITests",
       dependencies: [
         "FeedUI",
-        .product(name: "ViewInspector", package: "ViewInspector")]
+        .product(name: "ViewInspector", package: "ViewInspector"),
+      ]
     ),
     .target(
       name: "PostUI",
-      dependencies: baseDeps
+      dependencies: baseDeps + ["FeedUI"]
     ),
     .target(
       name: "AuthUI",
@@ -48,6 +50,10 @@ let package = Package(
     ),
     .target(
       name: "SettingsUI",
+      dependencies: baseDeps
+    ),
+    .target(
+      name: "NotificationsUI",
       dependencies: baseDeps
     ),
     .target(
@@ -61,7 +67,8 @@ let package = Package(
       name: "DesignSystemTests",
       dependencies: [
         "DesignSystem",
-        .product(name: "ViewInspector", package: "ViewInspector")]
+        .product(name: "ViewInspector", package: "ViewInspector"),
+      ]
     ),
   ]
 )
