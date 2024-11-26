@@ -21,6 +21,7 @@ public struct AuthView: View {
       Section {
         TextField("john@bsky.social", text: $handle)
           .font(.title2)
+          .textInputAutocapitalization(.never)
         SecureField("App Password", text: $appPassword)
           .font(.title2)
       }
@@ -54,10 +55,12 @@ public struct AuthView: View {
 }
 
 #Preview {
+  @Previewable @State var auth: Auth = .init()
   ScrollView {
     Text("Hello World")
   }
   .sheet(isPresented: .constant(true)) {
     AuthView()
+      .environment(auth)
   }
 }
