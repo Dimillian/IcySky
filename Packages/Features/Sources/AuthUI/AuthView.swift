@@ -54,10 +54,12 @@ public struct AuthView: View {
 }
 
 #Preview {
+  @Previewable @State var auth: Auth = .init()
   ScrollView {
     Text("Hello World")
   }
   .sheet(isPresented: .constant(true)) {
     AuthView()
+      .environment(auth)
   }
 }
