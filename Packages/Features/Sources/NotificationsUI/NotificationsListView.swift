@@ -15,7 +15,7 @@ public struct NotificationsListView: View {
   public var body: some View {
     NavigationStack {
       List {
-        HeaderView(title: "Notifications")
+        HeaderView(title: "Notifications", showBack: false)
           .padding(.bottom)
         ForEach(notifications, id: \.notificationURI) { notification in
           Text(notification.notificationReason.rawValue)

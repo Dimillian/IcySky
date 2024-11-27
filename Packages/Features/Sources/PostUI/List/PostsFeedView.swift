@@ -23,25 +23,27 @@ public struct PostsFeedView: View {
   public var body: some View {
     PostListView(datasource: self)
       .onAppear {
-        withAnimation {
-          do {
-            try modelContext.delete(
-              model: RecentFeedItem.self,
-              where: #Predicate { feed in
-                feed.uri == uri
-              })
-            modelContext.insert(
-              RecentFeedItem(
-                uri: uri,
-                name: name,
-                avatarImageURL: avatarImageURL,
-                lastViewedAt: Date()
-              )
-            )
-            try modelContext.save()
-          } catch {}
-        }
+        updateRecentlyViewed()
       }
+  }
+  
+  private func updateRecentlyViewed() {
+    do {
+      try modelContext.delete(
+        model: RecentFeedItem.self,
+        where: #Predicate { feed in
+          feed.uri == uri
+        })
+      modelContext.insert(
+        RecentFeedItem(
+          uri: uri,
+          name: name,
+          avatarImageURL: avatarImageURL,
+          lastViewedAt: Date()
+        )
+      )
+      try modelContext.save()
+    } catch {}
   }
 }
 

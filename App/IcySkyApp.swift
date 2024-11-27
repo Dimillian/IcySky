@@ -15,6 +15,9 @@ struct IcySkyApp: App {
   @State var auth: Auth = .init()
   @State var currentUser: CurrentUser?
   @State var router: Router = .init()
+  @State var isLoadingInitialSession: Bool = true
+
+  @Environment(\.scenePhase) var scenePhase
 
   var body: some Scene {
     WindowGroup {
@@ -45,17 +48,23 @@ struct IcySkyApp: App {
           }
         }
       )
-      .task {
-        if await auth.refresh() == nil {
+      .task(id: auth.session) {
+        if let newSession = auth.session {
+          await refreshEnvWith(session: newSession)
+          if router.presentedSheet == .auth {
+            router.presentedSheet = nil
+          }
+        } else if auth.session == nil && !isLoadingInitialSession {
           router.presentedSheet = .auth
         }
+        isLoadingInitialSession = false
       }
-      .onChange(of: auth.session) { old, new in
-        if let newSession = new {
-          refreshEnvWith(session: newSession)
-          router.presentedSheet = nil
-        } else if old != nil && new == nil {
-          router.presentedSheet = .auth
+      .task(id: scenePhase) {
+        if scenePhase == .active {
+          await auth.refresh()
+          if auth.session == nil {
+            router.presentedSheet = .auth
+          }
         }
       }
       .overlay(
@@ -120,9 +129,9 @@ struct IcySkyApp: App {
     }
   }
 
-  private func refreshEnvWith(session: UserSession) {
+  private func refreshEnvWith(session: UserSession) async {
     let client = BSkyClient(session: session, protoClient: ATProtoKit(session: session))
     self.client = client
-    self.currentUser = CurrentUser(client: client)
+    self.currentUser = await CurrentUser(client: client)
   }
 }

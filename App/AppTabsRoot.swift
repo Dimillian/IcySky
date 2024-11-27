@@ -21,16 +21,7 @@ struct AppTabRootView: View {
       NavigationStack(path: $router[tab]) {
         tab.rootView
           .navigationBarHidden(true)
-          .navigationDestination(for: RouterDestination.self) { destination in
-            switch destination {
-            case .feed(let uri, let name, let avatarImageURL):
-              PostsFeedView(uri: uri, name: name, avatarImageURL: avatarImageURL)
-            case .post(let post):
-              PostDetailView(post: post)
-            case .timeline:
-              PostsTimelineView()
-            }
-          }
+          .withAppRouter()
           .environment(\.currentTab, tab)
       }
     }

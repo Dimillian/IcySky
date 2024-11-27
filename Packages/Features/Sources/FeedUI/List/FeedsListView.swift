@@ -66,6 +66,16 @@ public struct FeedsListView: View {
       guard !isInSearch else { return }
       Task { await fetchSuggestedFeed() }
     }
+    .onChange(of: currentUser.savedFeeds.count) {
+      switch filter {
+      case .suggested:
+        feeds = feeds.filter { feed in
+          !currentUser.savedFeeds.contains { $0.value == feed.uri }
+        }
+      case .myFeeds:
+        Task { await fetchMyFeeds() }
+      }
+    }
     .listRowSeparator(.hidden)
   }
 
@@ -83,9 +93,11 @@ extension FeedsListView {
   private func fetchSuggestedFeed() async {
     error = nil
     do {
-      let feeds = try await client.protoClient.getSuggestedFeeds()
+      let feeds = try await client.protoClient.getPopularFeedGenerators(matching: nil)
       withAnimation {
-        self.feeds = feeds.feeds.map { $0.feedItem }
+        self.feeds = feeds.feeds.map { $0.feedItem }.filter { feed in
+          !currentUser.savedFeeds.contains { $0.value == feed.uri }
+        }
       }
     } catch {
       self.error = error

@@ -53,7 +53,7 @@ public final class Auth: @unchecked Sendable {
     self.session = session
   }
 
-  public func refresh() async -> UserSession? {
+  public func refresh() async {
     do {
       if let refreshToken {
         let configuration = ATProtocolConfiguration(handle: "", appPassword: "")
@@ -61,12 +61,9 @@ public final class Auth: @unchecked Sendable {
         self.authToken = session.accessToken
         self.refreshToken = session.refreshToken
         self.session = session
-        return session
       }
-      return nil
     } catch {
       self.session = nil
-      return nil
     }
   }
 
