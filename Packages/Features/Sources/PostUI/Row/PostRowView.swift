@@ -10,7 +10,7 @@ extension EnvironmentValues {
   @Entry public var isFocused: Bool = false
 }
 
-struct PostRowView: View {
+public struct PostRowView: View {
   @Environment(\.isQuote) var isQuote
   @Environment(\.isFocused) var isFocused
   @Environment(\.sizeCategory) var sizeCategory
@@ -19,31 +19,32 @@ struct PostRowView: View {
 
   let post: PostItem
 
-  var body: some View {
-    if isQuote {
-      mainView
-        .listRowSeparator(.hidden)
-    } else {
-      HStack(alignment: .top, spacing: 8) {
+  public init(post: PostItem) {
+    self.post = post
+  }
+
+  public var body: some View {
+    HStack(alignment: .top, spacing: 8) {
+      if !isQuote {
         VStack(spacing: 0) {
           avatarView
           threadLineView
         }
-        mainView
-          .padding(.bottom, 18)
       }
-      .listRowSeparator(.hidden)
-      .listRowInsets(.init(top: 0, leading: 18, bottom: 0, trailing: 18))
+      mainView
+        .padding(.bottom, 18)
     }
+    .listRowSeparator(.hidden)
+    .listRowInsets(.init(top: 0, leading: 18, bottom: 0, trailing: 18))
   }
 
   private var mainView: some View {
     VStack(alignment: .leading, spacing: 8) {
       authorView
-      bodyView
+      PostRowBodyView(post: post)
       PostRowEmbedView(post: post)
       if !isQuote {
-        actionsView
+        PostRowActionsView(post: post)
       }
     }
     .contentShape(Rectangle())
@@ -81,7 +82,7 @@ struct PostRowView: View {
   }
 
   private var authorView: some View {
-    HStack(alignment: .firstTextBaseline) {
+    HStack(alignment: isQuote ? .center : .firstTextBaseline) {
       if isQuote {
         avatarView
       }
@@ -101,12 +102,6 @@ struct PostRowView: View {
   }
 
   @ViewBuilder
-  private var bodyView: some View {
-    Text(post.content)
-      .font(isFocused ? .system(size: UIFontMetrics.default.scaledValue(for: 20)) : .body)
-  }
-
-  @ViewBuilder
   private var threadLineView: some View {
     if post.hasReply {
       Rectangle()
@@ -119,67 +114,6 @@ struct PostRowView: View {
             endPoint: .bottom
           ))
     }
-  }
-
-  private var actionsView: some View {
-    HStack(alignment: .firstTextBaseline, spacing: 16) {
-      Button(action: {}) {
-        Label("\(post.replyCount)", systemImage: "bubble")
-      }
-      .buttonStyle(.plain)
-      .foregroundStyle(
-        LinearGradient(
-          colors: [.indigo, .purple],
-          startPoint: .top,
-          endPoint: .bottom
-        )
-      )
-
-      Button(action: {}) {
-        Label("\(post.repostCount)", systemImage: "quote.bubble")
-      }
-      .buttonStyle(.plain)
-      .symbolVariant(post.isReposted ? .fill : .none)
-      .foregroundStyle(
-        LinearGradient(
-          colors: [.purple, .indigo],
-          startPoint: .top,
-          endPoint: .bottom
-        )
-      )
-
-      Button(action: {}) {
-        Label("\(post.likeCount)", systemImage: "heart")
-      }
-      .buttonStyle(.plain)
-      .symbolVariant(post.isLiked ? .fill : .none)
-      .foregroundStyle(
-        LinearGradient(
-          colors: [.red, .purple],
-          startPoint: .topLeading,
-          endPoint: .bottomTrailing
-        )
-      )
-
-      Spacer()
-
-      Button(action: {}) {
-        Image(systemName: "ellipsis")
-      }
-      .buttonStyle(.plain)
-      .foregroundStyle(
-        LinearGradient(
-          colors: [.indigo, .purple],
-          startPoint: .leading,
-          endPoint: .trailing
-        )
-      )
-    }
-    .buttonStyle(.plain)
-    .labelStyle(.customSpacing(4))
-    .font(.callout)
-    .padding(.top, 8)
-    .padding(.bottom, 16)
   }
 }
 
@@ -220,7 +154,7 @@ struct PostRowView: View {
           isReposted: false,
           embed: nil,
           replyRef: nil))
-      PostRowView(
+      PostRowEmbedQuoteView(
         post: .init(
           uri: "",
           indexedAt: Date(),
@@ -239,5 +173,6 @@ struct PostRowView: View {
           replyRef: nil))
     }
     .listStyle(.plain)
+    .environment(Router())
   }
 }

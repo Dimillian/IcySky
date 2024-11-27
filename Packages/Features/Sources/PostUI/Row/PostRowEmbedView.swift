@@ -3,10 +3,14 @@ import DesignSystem
 import Models
 import SwiftUI
 
-struct PostRowEmbedView: View {
+public struct PostRowEmbedView: View {
   let post: PostItem
 
-  var body: some View {
+  public init(post: PostItem) {
+    self.post = post
+  }
+
+  public var body: some View {
     if let embed = post.embed {
       switch embed {
       case .embedImagesView(let images):

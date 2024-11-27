@@ -11,7 +11,8 @@ struct PostRowImagesView: View {
   var body: some View {
     ForEach(images.images, id: \.self.thumbnailImageURL) { image in
       makeImageView(image: image)
-        .frame(maxWidth: isQuote ? 100 : nil)
+        .frame(maxWidth: isQuote ? 80 : nil)
+        .frame(maxHeight: isQuote ? 80 : nil)
     }
   }
 

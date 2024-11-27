@@ -54,7 +54,7 @@ let package = Package(
     ),
     .target(
       name: "NotificationsUI",
-      dependencies: baseDeps
+      dependencies: baseDeps + ["PostUI"]
     ),
     .target(
       name: "DesignSystem",
