@@ -1,13 +1,13 @@
 {
-  "originHash" : "8e865ac5b92b51d86162a48a379da9eab5e389a2eecbe872b66cb60099827fdf",
+  "originHash" : "275a962b5ea9fc3367fd41553d9d267229118195b4661a203e6be78045890bc4",
   "pins" : [
     {
       "identity" : "atprotokit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/MasterJ93/ATProtoKit",
       "state" : {
-        "revision" : "08923750931951495bbb55371dbbb06cb90f5e13",
-        "version" : "0.20.0"
+        "branch" : "main",
+        "revision" : "ca2ea402e498273fce3e181ed767019f51305280"
       }
     },
     {

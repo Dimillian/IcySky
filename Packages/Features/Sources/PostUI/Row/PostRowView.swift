@@ -12,6 +12,9 @@ extension EnvironmentValues {
 
 struct PostRowView: View {
   @Environment(\.isQuote) var isQuote
+  @Environment(\.isFocused) var isFocused
+  @Environment(\.sizeCategory) var sizeCategory
+
   @Environment(Router.self) var router
 
   let post: PostItem
@@ -68,7 +71,8 @@ struct PostRowView: View {
       Circle()
         .stroke(
           LinearGradient(
-            colors: post.hasReply ? [.purple, .indigo] : [.shadowPrimary.opacity(0.5), .indigo.opacity(0.5)],
+            colors: post.hasReply
+              ? [.purple, .indigo] : [.shadowPrimary.opacity(0.5), .indigo.opacity(0.5)],
             startPoint: .topLeading,
             endPoint: .bottomTrailing),
           lineWidth: 1)
@@ -99,9 +103,9 @@ struct PostRowView: View {
   @ViewBuilder
   private var bodyView: some View {
     Text(post.content)
-      .font(.body)
+      .font(isFocused ? .system(size: UIFontMetrics.default.scaledValue(for: 20)) : .body)
   }
-  
+
   @ViewBuilder
   private var threadLineView: some View {
     if post.hasReply {
