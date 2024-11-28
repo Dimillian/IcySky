@@ -2,6 +2,7 @@ import ATProtoKit
 import Foundation
 import Models
 import Network
+import SwiftUI
 
 @MainActor
 struct NotificationsGroup: Identifiable {
@@ -23,9 +24,15 @@ struct NotificationsGroup: Identifiable {
     // Sort notifications by date
     let sortedNotifications = notifications.sorted { $0.indexedAt > $1.indexedAt }
 
-    let subjectURI = sortedNotifications.filter { $0.notificationReason != .follow }.compactMap {
-      $0.notificationReason == .reply ? $0.notificationURI : $0.reasonSubjectURI
-    }
+    let subjectURI =
+      Array(
+        Set(
+          sortedNotifications
+            .filter { $0.notificationReason != .follow }
+            .compactMap {
+              $0.notificationReason.shouldGroup ? $0.reasonSubjectURI : $0.notificationURI
+            }
+        ))
     var postItems: [PostItem] = []
     do {
       postItems = try await client.protoClient.getPosts(subjectURI).posts.map { $0.postItem }
@@ -48,7 +55,7 @@ struct NotificationsGroup: Identifiable {
             timestamp: notification.indexedAt,
             type: reason,
             notifications: [notification],
-            postItem: postItems.first(where: { $0.uri == notification.reasonSubjectURI })
+            postItem: postItems.first(where: { $0.uri == notification.notificationURI })
           ))
       }
     }
@@ -79,6 +86,26 @@ extension AppBskyLexicon.Notification.Notification.Reason {
       return true
     case .reply, .repost, .mention, .quote, .starterpackjoined:
       return false
+    }
+  }
+
+  var iconName: String {
+    switch self {
+    case .like: return "heart.fill"
+    case .follow: return "person.fill.badge.plus"
+    case .repost: return "arrowshape.turn.up.right"
+    case .mention: return "at"
+    case .quote: return "quote.opening"
+    case .reply: return "arrowshape.turn.up.left"
+    case .starterpackjoined: return "star"
+    }
+  }
+
+  var color: Color {
+    switch self {
+    case .like: return .pink
+    case .follow: return .blue
+    default: return .secondary
     }
   }
 }

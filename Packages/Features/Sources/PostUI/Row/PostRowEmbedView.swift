@@ -4,6 +4,8 @@ import Models
 import SwiftUI
 
 public struct PostRowEmbedView: View {
+  @Environment(\.isQuote) var isQuote
+
   let post: PostItem
 
   public init(post: PostItem) {
@@ -16,11 +18,19 @@ public struct PostRowEmbedView: View {
       case .embedImagesView(let images):
         PostRowImagesView(images: images)
       case .embedExternalView(let externalView):
-        PostRowEmbedExternalView(externalView: externalView)
+        if isQuote {
+          EmptyView()
+        } else {
+          PostRowEmbedExternalView(externalView: externalView)
+        }
       case .embedRecordView(let record):
         switch record.record {
         case .viewRecord(let post):
-          PostRowEmbedQuoteView(post: post.postItem)
+          if isQuote {
+            EmptyView()
+          } else {
+            PostRowEmbedView(post: post.postItem)
+          }
         default:
           EmptyView()
         }

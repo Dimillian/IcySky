@@ -11,12 +11,24 @@ struct SingleNotificationRow: View {
   var body: some View {
     HStack(alignment: .top) {
       AsyncImage(url: notification.notificationAuthor.avatarImageURL) { image in
-        image.resizable()
+        image
+          .resizable()
+          .scaledToFit()
+          .clipShape(Circle())
       } placeholder: {
         Color.gray
       }
-      .frame(width: 40, height: 40)
-      .clipShape(Circle())
+      .frame(width: 30, height: 30)
+      .overlay {
+        Circle()
+          .stroke(
+            LinearGradient(
+              colors: [.shadowPrimary.opacity(0.5), .indigo.opacity(0.5)],
+              startPoint: .topLeading,
+              endPoint: .bottomTrailing),
+            lineWidth: 1)
+      }
+      .shadow(color: .shadowPrimary.opacity(0.3), radius: 2)
 
       VStack(alignment: .leading) {
         Text(
@@ -27,7 +39,12 @@ struct SingleNotificationRow: View {
           .foregroundStyle(.secondary)
 
         if let postItem {
-          PostRowView(post: postItem)
+          VStack(alignment: .leading, spacing: 8) {
+            PostRowBodyView(post: postItem)
+            PostRowEmbedView(post: postItem)
+            PostRowActionsView(post: postItem)
+          }
+          .padding(.top, 8)
         }
       }
 

@@ -11,8 +11,7 @@ struct PostRowImagesView: View {
   var body: some View {
     ForEach(images.images, id: \.self.thumbnailImageURL) { image in
       makeImageView(image: image)
-        .frame(maxWidth: isQuote ? 80 : nil)
-        .frame(maxHeight: isQuote ? 80 : nil)
+        .frame(maxWidth: isQuote ? 100 : nil)
     }
   }
 
@@ -23,8 +22,8 @@ struct PostRowImagesView: View {
     GeometryReader { geometry in
       let maxWidth = geometry.size.width
       let aspectRatio = width / height
-      let displayWidth = min(maxWidth, width)
-      let displayHeight = displayWidth / aspectRatio
+      let displayWidth = isQuote ? 80 : min(maxWidth, width)
+      let displayHeight = isQuote ? 80 : displayWidth / aspectRatio
 
       AsyncImage(url: image.thumbnailImageURL) { phase in
         switch phase {
@@ -42,6 +41,6 @@ struct PostRowImagesView: View {
       .frame(width: displayWidth, height: displayHeight)
       .glowingRoundedRectangle()
     }
-    .aspectRatio(width / height, contentMode: .fit)
+    .aspectRatio(isQuote ? 1 : width / height, contentMode: .fit)
   }
 }
