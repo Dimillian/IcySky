@@ -1,4 +1,5 @@
 import ATProtoKit
+import DesignSystem
 import PostUI
 import Router
 import SwiftUI
@@ -21,12 +22,12 @@ struct GroupedNotificationRow: View {
         ZStack(alignment: .bottomTrailing) {
           postView
           avatarsView
-            .offset(x: group.postItem == nil ? 0 : 6, y: 20)
+            .offset(x: group.postItem == nil ? 0 : 6, y: 24)
           NotificationIconView(
             icon: group.type.iconName,
             color: group.type.color
           )
-          .offset(x: 6, y: 14)
+          .offset(x: 6, y: 18)
         }
       } else {
         ZStack(alignment: .bottomTrailing) {
@@ -53,20 +54,17 @@ struct GroupedNotificationRow: View {
   @ViewBuilder
   private var postView: some View {
     if let post = group.postItem {
-      HStack {
-        VStack(alignment: .leading, spacing: 8) {
-          PostRowBodyView(post: post)
-            .foregroundStyle(.secondary)
-            .lineLimit(2)
-          PostRowEmbedView(post: post)
-        }
+      HStack(alignment: .top) {
+        PostRowBodyView(post: post)
+          .foregroundStyle(.secondary)
         Spacer()
+        PostRowEmbedView(post: post)
       }
       .environment(\.isQuote, true)
       .padding(8)
-      .background(.thinMaterial)
-      .overlay {
+      .background {
         RoundedRectangle(cornerRadius: 8)
+          .fill(.thinMaterial)
           .stroke(
             LinearGradient(
               colors: [group.type.color, .indigo],
@@ -76,7 +74,6 @@ struct GroupedNotificationRow: View {
           )
           .shadow(color: group.type.color.opacity(0.5), radius: 3)
       }
-      .clipShape(RoundedRectangle(cornerRadius: 8))
       .contentShape(Rectangle())
       .onTapGesture {
         router.navigateTo(RouterDestination.post(post))
@@ -91,7 +88,7 @@ struct GroupedNotificationRow: View {
           image.resizable()
         } placeholder: {
           Circle()
-            .fill(.secondary)
+            .fill(Color.blueskyBackground)
         }
         .frame(width: 30, height: 30)
         .clipShape(Circle())

@@ -9,9 +9,24 @@ struct PostRowImagesView: View {
   let images: AppBskyLexicon.Embed.ImagesDefinition.View
 
   var body: some View {
-    ForEach(images.images, id: \.self.thumbnailImageURL) { image in
-      makeImageView(image: image)
-        .frame(maxWidth: isQuote ? 100 : nil)
+    if isQuote {
+      ZStack(alignment: .topLeading) {
+        ForEach(images.images.indices, id: \.self) { index in
+          makeImageView(image: images.images[images.images.count - 1 - index])
+            .frame(maxWidth: 100)
+            .rotationEffect(.degrees(Double(index) * 10))
+            .offset(
+              x: 5 * CGFloat(index),
+              y: images.images.count == 1 ? 0 : 10
+            )
+        }
+      }
+      .zIndex(1000)
+    } else {
+      ForEach(images.images, id: \.self.thumbnailImageURL) { image in
+        makeImageView(image: image)
+          .frame(maxWidth: nil)
+      }
     }
   }
 
@@ -22,23 +37,24 @@ struct PostRowImagesView: View {
     GeometryReader { geometry in
       let maxWidth = geometry.size.width
       let aspectRatio = width / height
-      let displayWidth = isQuote ? 80 : min(maxWidth, width)
-      let displayHeight = isQuote ? 80 : displayWidth / aspectRatio
+      let displayWidth = isQuote ? 100 : min(maxWidth, width)
+      let displayHeight = isQuote ? 100 : displayWidth / aspectRatio
 
       AsyncImage(url: image.thumbnailImageURL) { phase in
         switch phase {
         case .success(let image):
           image
             .resizable()
+            .scaledToFill()
             .frame(width: displayWidth, height: displayHeight)
-            .scaledToFit()
+            .aspectRatio(contentMode: .fit)
         default:
           RoundedRectangle(cornerRadius: 8)
             .fill(.thinMaterial)
             .frame(width: displayWidth, height: displayHeight)
         }
       }
-      .frame(width: displayWidth, height: displayHeight)
+
       .glowingRoundedRectangle()
     }
     .aspectRatio(isQuote ? 1 : width / height, contentMode: .fit)
