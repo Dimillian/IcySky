@@ -112,7 +112,8 @@ public struct PostRowView: View {
             colors: [.indigo, .purple],
             startPoint: .top,
             endPoint: .bottom
-          ))
+          )
+          .shadow(.drop(color: .indigo, radius: 3)))
     }
   }
 }

@@ -29,7 +29,7 @@ public struct PostRowEmbedView: View {
           if isQuote {
             EmptyView()
           } else {
-            PostRowEmbedView(post: post.postItem)
+            PostRowEmbedQuoteView(post: post.postItem)
           }
         default:
           EmptyView()

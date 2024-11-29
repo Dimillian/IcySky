@@ -25,6 +25,7 @@ struct PostRowEmbedQuoteView: View {
           .shadow(color: .shadowPrimary.opacity(0.3), radius: 1)
       }
       .clipShape(RoundedRectangle(cornerRadius: 8))
+      .shadow(color: .indigo.opacity(0.3), radius: 2)
       .onTapGesture {
         router.navigateTo(.post(post))
       }
