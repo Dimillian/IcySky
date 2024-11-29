@@ -17,11 +17,10 @@ struct PostRowImagesView: View {
             .rotationEffect(.degrees(Double(index) * 10))
             .offset(
               x: 5 * CGFloat(index),
-              y: images.images.count == 1 ? 0 : 10
+              y: images.images.count <= 2 ? 0 : 10
             )
         }
       }
-      .zIndex(1000)
     } else {
       ForEach(images.images, id: \.self.thumbnailImageURL) { image in
         makeImageView(image: image)
