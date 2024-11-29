@@ -24,18 +24,16 @@ struct NotificationsGroup: Identifiable {
     // Sort notifications by date
     let sortedNotifications = notifications.sorted { $0.indexedAt > $1.indexedAt }
 
-    let subjectURI =
+    let postsURIs =
       Array(
         Set(
           sortedNotifications
             .filter { $0.notificationReason != .follow }
-            .compactMap {
-              $0.notificationReason.shouldGroup ? $0.reasonSubjectURI : $0.notificationURI
-            }
+            .compactMap { $0.postURI }
         ))
     var postItems: [PostItem] = []
     do {
-      postItems = try await client.protoClient.getPosts(subjectURI).posts.map { $0.postItem }
+      postItems = try await client.protoClient.getPosts(postsURIs).posts.map { $0.postItem }
     } catch {
       postItems = []
     }
@@ -55,7 +53,7 @@ struct NotificationsGroup: Identifiable {
             timestamp: notification.indexedAt,
             type: reason,
             notifications: [notification],
-            postItem: postItems.first(where: { $0.uri == notification.notificationURI })
+            postItem: postItems.first(where: { $0.uri == notification.postURI })
           ))
       }
     }
@@ -69,7 +67,7 @@ struct NotificationsGroup: Identifiable {
             timestamp: notifications[0].indexedAt,
             type: reason,
             notifications: notifications,
-            postItem: postItems.first(where: { $0.uri == subjectURI })
+            postItem: postItems.first(where: { $0.uri == notifications[0].postURI })
           ))
       }
     }
@@ -79,12 +77,22 @@ struct NotificationsGroup: Identifiable {
   }
 }
 
+extension AppBskyLexicon.Notification.Notification {
+  fileprivate var postURI: String? {
+    switch notificationReason {
+    case .follow, .starterpackjoined: return nil
+    case .like, .repost: return reasonSubjectURI
+    case .reply, .mention, .quote: return notificationURI
+    }
+  }
+}
+
 extension AppBskyLexicon.Notification.Notification.Reason {
   fileprivate var shouldGroup: Bool {
     switch self {
-    case .like, .follow:
+    case .like, .follow, .repost:
       return true
-    case .reply, .repost, .mention, .quote, .starterpackjoined:
+    case .reply, .mention, .quote, .starterpackjoined:
       return false
     }
   }
@@ -93,10 +101,10 @@ extension AppBskyLexicon.Notification.Notification.Reason {
     switch self {
     case .like: return "heart.fill"
     case .follow: return "person.fill.badge.plus"
-    case .repost: return "arrowshape.turn.up.right"
+    case .repost: return "quote.opening"
     case .mention: return "at"
     case .quote: return "quote.opening"
-    case .reply: return "arrowshape.turn.up.left"
+    case .reply: return "arrowshape.turn.up.left.fill"
     case .starterpackjoined: return "star"
     }
   }
@@ -105,7 +113,11 @@ extension AppBskyLexicon.Notification.Notification.Reason {
     switch self {
     case .like: return .pink
     case .follow: return .blue
-    default: return .secondary
+    case .repost: return .green
+    case .mention: return .purple
+    case .quote: return .orange
+    case .reply: return .teal
+    case .starterpackjoined: return .yellow
     }
   }
 }

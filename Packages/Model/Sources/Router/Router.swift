@@ -8,13 +8,13 @@ public final class Router {
     get { paths[tab] ?? [] }
     set { paths[tab] = newValue }
   }
-  
+
   public var selectedTab: AppTab = .feed
-  
+
   public var presentedSheet: SheetDestination?
 
   public init() {}
-  
+
   public var selectedTabPath: [RouterDestination] {
     paths[selectedTab] ?? []
   }
@@ -28,6 +28,10 @@ public final class Router {
   }
 
   public func navigateTo(_ destination: RouterDestination, for tab: AppTab? = nil) {
-    paths[tab ?? selectedTab]?.append(destination)
+    if paths[tab ?? selectedTab] == nil {
+      paths[tab ?? selectedTab] = [destination]
+    } else {
+      paths[tab ?? selectedTab]?.append(destination)
+    }
   }
 }

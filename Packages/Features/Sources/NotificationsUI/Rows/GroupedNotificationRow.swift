@@ -11,17 +11,43 @@ struct GroupedNotificationRow: View {
 
   var body: some View {
     VStack(alignment: .leading) {
-      ZStack(alignment: .bottomTrailing) {
-        postView
-        avatarsView
-          .offset(x: group.postItem == nil ? 0 : 6, y: 11)
-        iconView
-          .offset(x: 6, y: 6)
+      if group.postItem != nil {
+        HStack(alignment: .top) {
+          actionTextView
+          Spacer()
+          Text(group.timestamp.relativeFormatted)
+            .foregroundStyle(.secondary)
+        }
+        ZStack(alignment: .bottomTrailing) {
+          postView
+          avatarsView
+            .offset(x: group.postItem == nil ? 0 : 6, y: 20)
+          NotificationIconView(
+            icon: group.type.iconName,
+            color: group.type.color
+          )
+          .offset(x: 6, y: 14)
+        }
+      } else {
+        ZStack(alignment: .bottomTrailing) {
+          avatarsView
+            .offset(x: group.postItem == nil ? 0 : 6)
+          NotificationIconView(
+            icon: group.type.iconName,
+            color: group.type.color
+          )
+          .offset(x: 0, y: -4)
+        }
+        HStack(alignment: .top) {
+          actionTextView
+          Spacer()
+          Text(group.timestamp.relativeFormatted)
+            .foregroundStyle(.secondary)
+        }
       }
-      actionTextView
-        .padding(.top, 12)
     }
     .padding(.vertical, 12)
+    .padding(.bottom, 6)
   }
 
   @ViewBuilder
@@ -31,13 +57,13 @@ struct GroupedNotificationRow: View {
         VStack(alignment: .leading, spacing: 8) {
           PostRowBodyView(post: post)
             .foregroundStyle(.secondary)
+            .lineLimit(2)
           PostRowEmbedView(post: post)
         }
         Spacer()
       }
       .environment(\.isQuote, true)
       .padding(8)
-      .padding(.bottom, 12)
       .background(.thinMaterial)
       .overlay {
         RoundedRectangle(cornerRadius: 8)
@@ -51,6 +77,7 @@ struct GroupedNotificationRow: View {
           .shadow(color: group.type.color.opacity(0.5), radius: 3)
       }
       .clipShape(RoundedRectangle(cornerRadius: 8))
+      .contentShape(Rectangle())
       .onTapGesture {
         router.navigateTo(RouterDestination.post(post))
       }
@@ -83,42 +110,18 @@ struct GroupedNotificationRow: View {
     .padding(.trailing, 12)
   }
 
-  private var iconView: some View {
-    Image(systemName: group.type.iconName)
-      .foregroundStyle(
-        group.type.color
-          .shadow(.drop(color: group.type.color.opacity(0.5), radius: 2))
-      )
-      .shadow(color: group.type.color, radius: 1)
-      .background(
-        Circle()
-          .fill(.thickMaterial)
-          .stroke(
-            LinearGradient(
-              colors: [group.type.color, .indigo],
-              startPoint: .topLeading,
-              endPoint: .bottomTrailing),
-            lineWidth: 1
-          )
-          .frame(width: 30, height: 30)
-          .shadow(color: group.type.color.opacity(0.5), radius: 3)
-      )
-  }
-
   @ViewBuilder
   private var actionTextView: some View {
     if group.notifications.count == 1 {
       Text(
-        group.notifications[0].notificationAuthor.displayName
-          ?? group.notifications[0].notificationAuthor.actorHandle
+        group.notifications[0].notificationAuthor.displayNameOrHandle
       )
       .fontWeight(.semibold)
         + Text(actionText(1))
         .foregroundStyle(.secondary)
     } else {
       Text(
-        group.notifications[0].notificationAuthor.displayName
-          ?? group.notifications[0].notificationAuthor.actorHandle
+        group.notifications[0].notificationAuthor.displayNameOrHandle
       )
       .fontWeight(.semibold)
         + Text(actionText(group.notifications.count))

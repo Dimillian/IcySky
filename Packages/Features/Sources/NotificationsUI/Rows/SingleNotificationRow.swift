@@ -1,9 +1,12 @@
 import ATProtoKit
 import Models
 import PostUI
+import Router
 import SwiftUI
 
 struct SingleNotificationRow: View {
+  @Environment(Router.self) var router
+
   let notification: AppBskyLexicon.Notification.Notification
   let postItem: PostItem?
   let actionText: String
@@ -18,7 +21,7 @@ struct SingleNotificationRow: View {
       } placeholder: {
         Color.gray
       }
-      .frame(width: 30, height: 30)
+      .frame(width: 40, height: 40)
       .overlay {
         Circle()
           .stroke(
@@ -31,20 +34,26 @@ struct SingleNotificationRow: View {
       .shadow(color: .shadowPrimary.opacity(0.3), radius: 2)
 
       VStack(alignment: .leading) {
-        Text(
-          notification.notificationAuthor.displayName ?? notification.notificationAuthor.actorHandle
-        )
-        .fontWeight(.semibold)
-        Text(actionText)
-          .foregroundStyle(.secondary)
+        Text(notification.notificationAuthor.displayNameOrHandle)
+          .fontWeight(.semibold)
+        HStack {
+          Image(systemName: notification.notificationReason.iconName)
+          Text(actionText)
+        }
+        .foregroundStyle(.secondary)
 
         if let postItem {
           VStack(alignment: .leading, spacing: 8) {
             PostRowBodyView(post: postItem)
             PostRowEmbedView(post: postItem)
             PostRowActionsView(post: postItem)
+              .environment(\.hideMoreActions, true)
           }
           .padding(.top, 8)
+          .contentShape(Rectangle())
+          .onTapGesture {
+            router.navigateTo(RouterDestination.post(postItem))
+          }
         }
       }
 

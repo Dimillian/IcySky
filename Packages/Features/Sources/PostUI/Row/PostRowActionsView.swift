@@ -1,7 +1,13 @@
 import Models
 import SwiftUI
 
+extension EnvironmentValues {
+  @Entry public var hideMoreActions = false
+}
+
 public struct PostRowActionsView: View {
+  @Environment(\.hideMoreActions) var hideMoreActions
+
   let post: PostItem
 
   public init(post: PostItem) {
@@ -50,17 +56,19 @@ public struct PostRowActionsView: View {
 
       Spacer()
 
-      Button(action: {}) {
-        Image(systemName: "ellipsis")
-      }
-      .buttonStyle(.plain)
-      .foregroundStyle(
-        LinearGradient(
-          colors: [.indigo, .purple],
-          startPoint: .leading,
-          endPoint: .trailing
+      if !hideMoreActions {
+        Button(action: {}) {
+          Image(systemName: "ellipsis")
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(
+          LinearGradient(
+            colors: [.indigo, .purple],
+            startPoint: .leading,
+            endPoint: .trailing
+          )
         )
-      )
+      }
     }
     .buttonStyle(.plain)
     .labelStyle(.customSpacing(4))
