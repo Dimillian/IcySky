@@ -27,6 +27,7 @@ let package = Package(
     .package(name: "Model", path: "../Model"),
     .package(url: "https://github.com/nikstar/VariableBlur", from: "1.2.0"),
     .package(url: "https://github.com/nalexn/ViewInspector", from: "0.10.0"),
+    .package(url: "https://github.com/kean/Nuke", from: "12.8.0"),
   ],
   targets: [
     .target(
@@ -42,7 +43,11 @@ let package = Package(
     ),
     .target(
       name: "PostUI",
-      dependencies: baseDeps + ["FeedUI"]
+      dependencies: baseDeps + [
+        "FeedUI",
+        .product(name: "Nuke", package: "Nuke"),
+        .product(name: "NukeUI", package: "Nuke"),
+      ]
     ),
     .target(
       name: "AuthUI",
