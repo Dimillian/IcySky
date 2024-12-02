@@ -22,6 +22,7 @@ let package = Package(
     .library(name: "SettingsUI", targets: ["SettingsUI"]),
     .library(name: "NotificationsUI", targets: ["NotificationsUI"]),
     .library(name: "DesignSystem", targets: ["DesignSystem"]),
+    .library(name: "MediaUI", targets: ["MediaUI"]),
   ],
   dependencies: [
     .package(name: "Model", path: "../Model"),
@@ -56,6 +57,13 @@ let package = Package(
     .target(
       name: "SettingsUI",
       dependencies: baseDeps
+    ),
+    .target(
+      name: "MediaUI",
+      dependencies: baseDeps + [
+        .product(name: "Nuke", package: "Nuke"),
+        .product(name: "NukeUI", package: "Nuke"),
+      ]
     ),
     .target(
       name: "NotificationsUI",

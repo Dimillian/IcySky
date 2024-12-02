@@ -2,6 +2,7 @@ import ATProtoKit
 import Auth
 import AuthUI
 import DesignSystem
+import MediaUI
 import Models
 import Network
 import Router
@@ -45,6 +46,12 @@ struct IcySkyApp: App {
           case .auth:
             AuthView()
               .environment(auth)
+          case let .fullScreenMedia(images, preloadedImage, namespace):
+            FullScreenMediaView(
+              images: images,
+              preloadedImage: preloadedImage,
+              namespace: namespace
+            )
           }
         }
       )

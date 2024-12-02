@@ -2,17 +2,19 @@ import ATProtoKit
 import DesignSystem
 import Models
 import NukeUI
+import Router
 import SwiftUI
 
 struct PostRowImagesView: View {
-  @Namespace private var namespace
   @Environment(\.isQuote) var isQuote
+  @Environment(Router.self) var router
+
+  @Namespace private var namespace
 
   let quoteMaxSize: CGFloat = 100
-  
   let images: AppBskyLexicon.Embed.ImagesDefinition.View
-  @State private var firstImageSize: CGSize?
 
+  @State private var firstImageSize: CGSize?
   @State private var isMediaExpanded: Bool = false
 
   var body: some View {
@@ -26,12 +28,13 @@ struct PostRowImagesView: View {
           )
       }
     }
-    .padding(.bottom, images.images.count > 1 && !isQuote ? 15 : 0)
+    .padding(.bottom, images.images.count > 1 && !isQuote ? CGFloat(images.images.count) * 7 : 0)
     .onTapGesture {
-      isMediaExpanded.toggle()
-    }
-    .fullScreenCover(isPresented: $isMediaExpanded) {
-      expandedView
+      router.presentedSheet = .fullScreenMedia(
+        images: images.images.map(\.fullSizeImageURL),
+        preloadedImage: images.images.first?.thumbnailImageURL,
+        namespace: namespace
+      )
     }
   }
 
@@ -51,15 +54,14 @@ struct PostRowImagesView: View {
           image
             .resizable()
             .scaledToFill()
-            .frame(width: finalWidth, height: finalHeight)
             .aspectRatio(contentMode: .fit)
         } else {
           RoundedRectangle(cornerRadius: 8)
             .fill(.thinMaterial)
-            .frame(width: finalWidth, height: finalHeight)
         }
       }
       .processors([.resize(size: .init(width: finalWidth, height: finalHeight))])
+      .frame(width: finalWidth, height: finalHeight)
       .matchedTransitionSource(id: image.fullSizeImageURL, in: namespace)
       .glowingRoundedRectangle()
       .onAppear {
@@ -71,30 +73,5 @@ struct PostRowImagesView: View {
     .aspectRatio(
       isQuote ? 1 : (firstImageSize?.width ?? width) / (firstImageSize?.height ?? height),
       contentMode: .fit)
-  }
-
-  private var expandedView: some View {
-    ScrollView(.horizontal) {
-      LazyHStack {
-        ForEach(images.images, id: \.thumbnailImageURL) { image in
-          LazyImage(url: image.fullSizeImageURL) { state in
-            if let image = state.image {
-              image
-                .resizable()
-                .scaledToFill()
-                .aspectRatio(contentMode: .fit)
-            } else {
-              RoundedRectangle(cornerRadius: 8)
-                .fill(.thinMaterial)
-            }
-          }
-          .containerRelativeFrame([.horizontal, .vertical])
-        }
-      }
-      .scrollTargetLayout()
-    }
-    .scrollContentBackground(.hidden)
-    .scrollTargetBehavior(.viewAligned)
-    .navigationTransition(.zoom(sourceID: images.images[0].fullSizeImageURL, in: namespace))
   }
 }
