@@ -4,5 +4,7 @@
 <dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Save images to your photo library</string>
 </dict>
 </plist>

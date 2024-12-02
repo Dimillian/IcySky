@@ -16,6 +16,7 @@ struct PostRowImagesView: View {
 
   @State private var firstImageSize: CGSize?
   @State private var isMediaExpanded: Bool = false
+  @State private var shouldRotate = true
 
   var body: some View {
     ZStack(alignment: .topLeading) {
@@ -23,18 +24,30 @@ struct PostRowImagesView: View {
         makeImageView(image: images.images[index], index: index)
           .frame(maxWidth: isQuote ? quoteMaxSize : nil)
           .rotationEffect(
-            index == images.images.indices.first ? .degrees(0) : .degrees(Double(index) * -2),
+            index == images.images.indices.first
+              ? .degrees(0) : .degrees(shouldRotate ? Double(index) * -2 : 0),
             anchor: .bottomTrailing
           )
       }
     }
     .padding(.bottom, images.images.count > 1 && !isQuote ? CGFloat(images.images.count) * 7 : 0)
     .onTapGesture {
-      router.presentedSheet = .fullScreenMedia(
-        images: images.images.map(\.fullSizeImageURL),
-        preloadedImage: images.images.first?.thumbnailImageURL,
-        namespace: namespace
-      )
+      withAnimation(.easeInOut(duration: 0.1)) {
+        shouldRotate = false
+      } completion: {
+        router.presentedSheet = .fullScreenMedia(
+          images: images.images.map { .init(url: $0.fullSizeImageURL, alt: $0.altText) },
+          preloadedImage: images.images.first?.thumbnailImageURL,
+          namespace: namespace
+        )
+      }
+    }
+    .onChange(of: router.presentedSheet) {
+      if router.presentedSheet == nil {
+        withAnimation(.bouncy) {
+          shouldRotate = true
+        }
+      }
     }
   }
 
@@ -54,7 +67,8 @@ struct PostRowImagesView: View {
           image
             .resizable()
             .scaledToFill()
-            .aspectRatio(contentMode: .fit)
+            .aspectRatio(contentMode: index == images.images.indices.first ? .fit : .fill)
+            .clipped()
         } else {
           RoundedRectangle(cornerRadius: 8)
             .fill(.thinMaterial)
@@ -64,6 +78,7 @@ struct PostRowImagesView: View {
       .frame(width: finalWidth, height: finalHeight)
       .matchedTransitionSource(id: image.fullSizeImageURL, in: namespace)
       .glowingRoundedRectangle()
+      .shadow(color: images.images.count > 1 ? .black.opacity(0.3) : .clear, radius: 3)
       .onAppear {
         if index == images.images.indices.first {
           self.firstImageSize = CGSize(width: displayWidth, height: displayHeight)

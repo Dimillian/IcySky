@@ -6,7 +6,7 @@ public enum SheetDestination: Hashable, Identifiable {
 
   case auth
   case fullScreenMedia(
-    images: [URL],
+    images: [Media],
     preloadedImage: URL?,
     namespace: Namespace.ID)
 }

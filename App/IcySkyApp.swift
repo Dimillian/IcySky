@@ -5,6 +5,8 @@ import DesignSystem
 import MediaUI
 import Models
 import Network
+import Nuke
+import NukeUI
 import Router
 import SwiftUI
 import User
@@ -19,6 +21,10 @@ struct IcySkyApp: App {
   @State var isLoadingInitialSession: Bool = true
 
   @Environment(\.scenePhase) var scenePhase
+
+  init() {
+    ImagePipeline.shared = ImagePipeline(configuration: .withDataCache)
+  }
 
   var body: some Scene {
     WindowGroup {
