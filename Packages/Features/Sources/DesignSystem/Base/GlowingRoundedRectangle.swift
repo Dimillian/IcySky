@@ -17,7 +17,7 @@ public struct GlowingRoundedRectangle: ViewModifier {
             endPoint: .bottomTrailing),
           lineWidth: 1)
     }
-    .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+    .clipShape(.rect(cornerRadius: cornerRadius))
     .shadow(color: .indigo.opacity(0.3), radius: 2)
   }
 }

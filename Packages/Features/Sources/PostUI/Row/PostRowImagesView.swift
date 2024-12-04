@@ -68,7 +68,6 @@ struct PostRowImagesView: View {
             .resizable()
             .scaledToFill()
             .aspectRatio(contentMode: index == images.images.indices.first ? .fit : .fill)
-            .clipped()
         } else {
           RoundedRectangle(cornerRadius: 8)
             .fill(.thinMaterial)
@@ -77,8 +76,17 @@ struct PostRowImagesView: View {
       .processors([.resize(size: .init(width: finalWidth, height: finalHeight))])
       .frame(width: finalWidth, height: finalHeight)
       .matchedTransitionSource(id: image.fullSizeImageURL, in: namespace)
-      .glowingRoundedRectangle()
-      .shadow(color: images.images.count > 1 ? .black.opacity(0.3) : .clear, radius: 3)
+      .clipShape(.rect(cornerRadius: 8))
+      .overlay {
+        RoundedRectangle(cornerRadius: 8)
+          .stroke(
+            LinearGradient(
+              colors: [.shadowPrimary.opacity(0.3), .indigo.opacity(0.5)],
+              startPoint: .topLeading,
+              endPoint: .bottomTrailing),
+            lineWidth: 1)
+      }
+      .shadow(color: .indigo.opacity(0.3), radius: 3)
       .onAppear {
         if index == images.images.indices.first {
           self.firstImageSize = CGSize(width: displayWidth, height: displayHeight)
