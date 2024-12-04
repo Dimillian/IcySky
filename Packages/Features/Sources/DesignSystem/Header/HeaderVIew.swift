@@ -3,10 +3,16 @@ import SwiftUI
 public struct HeaderView: View {
   @Environment(\.dismiss) var dismiss
   let title: String
+  let subtitle: String?
   let showBack: Bool
 
-  public init(title: String, showBack: Bool = true) {
+  public init(
+    title: String,
+    subtitle: String? = nil,
+    showBack: Bool = true
+  ) {
     self.title = title
+    self.subtitle = subtitle
     self.showBack = showBack
   }
 
@@ -16,9 +22,18 @@ public struct HeaderView: View {
         Image(systemName: "chevron.backward")
           .id("back")
       }
-      Text(title)
-        .lineLimit(1)
-        .minimumScaleFactor(0.5)
+      VStack(alignment: .leading, spacing: 4) {
+        Text(title)
+          .lineLimit(1)
+          .minimumScaleFactor(0.5)
+        if let subtitle {
+          Text(subtitle)
+            .foregroundStyle(.secondary)
+            .font(.callout)
+            .lineLimit(1)
+            .minimumScaleFactor(0.5)
+        }
+      }
     }
     .onTapGesture {
       dismiss()

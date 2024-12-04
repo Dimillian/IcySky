@@ -3,9 +3,11 @@ import Models
 import PostUI
 import Router
 import SwiftUI
+import Network
 
 struct SingleNotificationRow: View {
   @Environment(Router.self) var router
+  @Environment(BSkyClient.self) var client
 
   let notification: AppBskyLexicon.Notification.Notification
   let postItem: PostItem?
@@ -54,6 +56,7 @@ struct SingleNotificationRow: View {
           .onTapGesture {
             router.navigateTo(RouterDestination.post(postItem))
           }
+          .environment(PostDataController(post: postItem, client: client))
         }
       }
 

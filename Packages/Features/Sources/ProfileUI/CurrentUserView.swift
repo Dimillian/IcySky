@@ -8,7 +8,7 @@ public struct CurrentUserView: View {
 
   public var body: some View {
     if let profile = currentUser.profile {
-      ProfileView(profile: profile.profile)
+      ProfileView(profile: profile.profile, showBack: false)
     } else {
       ProgressView()
     }
