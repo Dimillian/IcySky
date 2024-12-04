@@ -14,13 +14,13 @@ import VariableBlur
 
 @main
 struct IcySkyApp: App {
+  @Environment(\.scenePhase) var scenePhase
+
   @State var client: BSkyClient?
   @State var auth: Auth = .init()
   @State var currentUser: CurrentUser?
   @State var router: Router = .init()
   @State var isLoadingInitialSession: Bool = true
-
-  @Environment(\.scenePhase) var scenePhase
 
   init() {
     ImagePipeline.shared = ImagePipeline(configuration: .withDataCache)
@@ -143,7 +143,7 @@ struct IcySkyApp: App {
   }
 
   private func refreshEnvWith(session: UserSession) async {
-    let client = BSkyClient(session: session, protoClient: ATProtoKit(session: session))
+    let client = BSkyClient(session: session)
     self.client = client
     self.currentUser = await CurrentUser(client: client)
   }

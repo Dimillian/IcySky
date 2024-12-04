@@ -28,7 +28,8 @@ let package = Package(
     .target(
       name: "Models",
       dependencies: [
-        .product(name: "ATProtoKit", package: "ATProtoKit")
+        .product(name: "ATProtoKit", package: "ATProtoKit"),
+        "Network",
       ]
     ),
     .target(

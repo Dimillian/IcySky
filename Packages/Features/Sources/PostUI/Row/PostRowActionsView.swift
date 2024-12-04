@@ -1,4 +1,5 @@
 import Models
+import Network
 import SwiftUI
 
 extension EnvironmentValues {
@@ -7,6 +8,7 @@ extension EnvironmentValues {
 
 public struct PostRowActionsView: View {
   @Environment(\.hideMoreActions) var hideMoreActions
+  @Environment(PostDataController.self) var dataController
 
   let post: PostItem
 
@@ -29,10 +31,14 @@ public struct PostRowActionsView: View {
       )
 
       Button(action: {}) {
-        Label("\(post.repostCount)", systemImage: "quote.bubble")
+        Label("\(dataController.repostCount)", systemImage: "quote.bubble")
+          .contentTransition(.numericText(value: Double(dataController.repostCount)))
+          .monospacedDigit()
+          .lineLimit(1)
+          .animation(.smooth, value: dataController.repostCount)
       }
       .buttonStyle(.plain)
-      .symbolVariant(post.isReposted ? .fill : .none)
+      .symbolVariant(dataController.isReposted ? .fill : .none)
       .foregroundStyle(
         LinearGradient(
           colors: [.purple, .indigo],
@@ -41,11 +47,20 @@ public struct PostRowActionsView: View {
         )
       )
 
-      Button(action: {}) {
-        Label("\(post.likeCount)", systemImage: "heart")
+      Button(action: {
+        Task {
+          await dataController.toggleLike()
+        }
+      }) {
+        Label("\(dataController.likeCount)", systemImage: "heart")
+          .lineLimit(1)
       }
       .buttonStyle(.plain)
-      .symbolVariant(post.isLiked ? .fill : .none)
+      .symbolVariant(dataController.isLiked ? .fill : .none)
+      .symbolEffect(.bounce, value: dataController.isLiked)
+      .contentTransition(.numericText(value: Double(dataController.likeCount)))
+      .monospacedDigit()
+      .animation(.smooth, value: dataController.likeCount)
       .foregroundStyle(
         LinearGradient(
           colors: [.red, .purple],

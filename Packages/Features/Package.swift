@@ -18,6 +18,7 @@ let package = Package(
   products: [
     .library(name: "FeedUI", targets: ["FeedUI"]),
     .library(name: "PostUI", targets: ["PostUI"]),
+    .library(name: "ProfileUI", targets: ["ProfileUI"]),
     .library(name: "AuthUI", targets: ["AuthUI"]),
     .library(name: "SettingsUI", targets: ["SettingsUI"]),
     .library(name: "NotificationsUI", targets: ["NotificationsUI"]),
@@ -49,6 +50,10 @@ let package = Package(
         .product(name: "Nuke", package: "Nuke"),
         .product(name: "NukeUI", package: "Nuke"),
       ]
+    ),
+    .target(
+      name: "ProfileUI",
+      dependencies: baseDeps + ["FeedUI"]
     ),
     .target(
       name: "AuthUI",

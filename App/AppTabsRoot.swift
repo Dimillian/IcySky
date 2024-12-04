@@ -5,6 +5,7 @@ import Models
 import Network
 import NotificationsUI
 import PostUI
+import ProfileUI
 import Router
 import SettingsUI
 import SwiftUI
@@ -37,9 +38,7 @@ extension AppTab {
     case .feed:
       FeedsListView()
     case .profile:
-      HStack {
-        Text("Profile view")
-      }
+      CurrentUserView()
     case .messages:
       HStack {
         Text("Messages view")

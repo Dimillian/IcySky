@@ -16,6 +16,7 @@ public struct PostRowView: View {
   @Environment(\.sizeCategory) var sizeCategory
 
   @Environment(Router.self) var router
+  @Environment(BSkyClient.self) var client
 
   let post: PostItem
 
@@ -34,6 +35,7 @@ public struct PostRowView: View {
       mainView
         .padding(.bottom, 18)
     }
+    .environment(PostDataController(post: post, client: client))
     .listRowSeparator(.hidden)
     .listRowInsets(.init(top: 0, leading: 18, bottom: 0, trailing: 18))
   }
@@ -60,12 +62,12 @@ public struct PostRowView: View {
         image
           .resizable()
           .scaledToFit()
-          .frame(width: isQuote ? 16 : 32, height: isQuote ? 16 : 32)
+          .frame(width: isQuote ? 16 : 40, height: isQuote ? 16 : 40)
           .clipShape(Circle())
       default:
         Circle()
           .fill(.gray.opacity(0.2))
-          .frame(width: isQuote ? 16 : 32, height: isQuote ? 16 : 32)
+          .frame(width: isQuote ? 16 : 40, height: isQuote ? 16 : 40)
       }
     }
     .overlay {
@@ -79,6 +81,9 @@ public struct PostRowView: View {
           lineWidth: 1)
     }
     .shadow(color: .shadowPrimary.opacity(0.3), radius: 2)
+    .onTapGesture {
+      router.navigateTo(.profile(post.author))
+    }
   }
 
   private var authorView: some View {
@@ -99,6 +104,9 @@ public struct PostRowView: View {
         .foregroundStyle(.secondary)
     }
     .lineLimit(1)
+    .onTapGesture {
+      router.navigateTo(.profile(post.author))
+    }
   }
 
   @ViewBuilder
@@ -124,6 +132,7 @@ public struct PostRowView: View {
       PostRowView(
         post: .init(
           uri: "",
+          cid: "",
           indexedAt: Date(),
           author: .init(
             did: "",
@@ -134,13 +143,14 @@ public struct PostRowView: View {
           replyCount: 10,
           repostCount: 150,
           likeCount: 38,
-          isLiked: false,
-          isReposted: false,
+          likeURI: nil,
+          repostURI: nil,
           embed: nil,
           replyRef: nil))
       PostRowView(
         post: .init(
           uri: "",
+          cid: "",
           indexedAt: Date(),
           author: .init(
             did: "",
@@ -151,13 +161,14 @@ public struct PostRowView: View {
           replyCount: 10,
           repostCount: 150,
           likeCount: 38,
-          isLiked: true,
-          isReposted: false,
+          likeURI: nil,
+          repostURI: nil,
           embed: nil,
           replyRef: nil))
       PostRowEmbedQuoteView(
         post: .init(
           uri: "",
+          cid: "",
           indexedAt: Date(),
           author: .init(
             did: "",
@@ -168,8 +179,8 @@ public struct PostRowView: View {
           replyCount: 10,
           repostCount: 150,
           likeCount: 38,
-          isLiked: true,
-          isReposted: true,
+          likeURI: "",
+          repostURI: "",
           embed: nil,
           replyRef: nil))
     }

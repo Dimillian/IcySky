@@ -1,6 +1,7 @@
 import FeedUI
 import NotificationsUI
 import PostUI
+import ProfileUI
 import Router
 import SwiftUI
 
@@ -15,6 +16,8 @@ public struct AppRouter: ViewModifier {
           PostDetailView(post: post)
         case .timeline:
           PostsTimelineView()
+        case .profile(let profile):
+          ProfileView(profile: profile)
         }
       }
   }
