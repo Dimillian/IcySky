@@ -15,6 +15,7 @@ public struct PostRowView: View {
   @Environment(\.isFocused) var isFocused
   @Environment(\.sizeCategory) var sizeCategory
 
+  @Environment(PostDataControllerProvider.self) var postDataControllerProvider
   @Environment(Router.self) var router
   @Environment(BSkyClient.self) var client
 
@@ -35,7 +36,7 @@ public struct PostRowView: View {
       mainView
         .padding(.bottom, 18)
     }
-    .environment(PostDataController(post: post, client: client))
+    .environment(postDataControllerProvider.getController(for: post, client: client))
     .listRowSeparator(.hidden)
     .listRowInsets(.init(top: 0, leading: 18, bottom: 0, trailing: 18))
   }
@@ -186,5 +187,24 @@ public struct PostRowView: View {
     }
     .listStyle(.plain)
     .environment(Router())
+    .environment(PostDataControllerProvider())
+    .environment(
+      BSkyClient(
+        session: .init(
+          handle: "",
+          sessionDID: "",
+          email: nil,
+          isEmailConfirmed: nil,
+          isEmailAuthenticationFactorEnabled: nil,
+          accessToken: "",
+          refreshToken: "",
+          didDocument: nil,
+          isActive: nil,
+          status: nil,
+          pdsURL: nil,
+          logger: nil
+        )
+      )
+    )
   }
 }

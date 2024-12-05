@@ -21,6 +21,7 @@ struct IcySkyApp: App {
   @State var currentUser: CurrentUser?
   @State var router: Router = .init()
   @State var isLoadingInitialSession: Bool = true
+  @State var postDataControllerProvider: PostDataControllerProvider = .init()
 
   init() {
     ImagePipeline.shared = ImagePipeline(configuration: .withDataCache)
@@ -44,6 +45,7 @@ struct IcySkyApp: App {
       .environment(currentUser)
       .environment(auth)
       .environment(router)
+      .environment(postDataControllerProvider)
       .modelContainer(for: RecentFeedItem.self)
       .sheet(
         item: $router.presentedSheet,
