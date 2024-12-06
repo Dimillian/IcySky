@@ -8,7 +8,7 @@ import SwiftUI
 struct SingleNotificationRow: View {
   @Environment(Router.self) var router
   @Environment(BSkyClient.self) var client
-  @Environment(PostDataControllerProvider.self) var postDataControllerProvider
+  @Environment(PostContextProvider.self) var postDataControllerProvider
 
   let notification: AppBskyLexicon.Notification.Notification
   let postItem: PostItem?
@@ -57,7 +57,7 @@ struct SingleNotificationRow: View {
           .onTapGesture {
             router.navigateTo(RouterDestination.post(postItem))
           }
-          .environment(postDataControllerProvider.getController(for: postItem, client: client))
+          .environment(postDataControllerProvider.get(for: postItem, client: client))
         }
       }
 

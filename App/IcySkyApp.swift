@@ -21,7 +21,7 @@ struct IcySkyApp: App {
   @State var currentUser: CurrentUser?
   @State var router: Router = .init()
   @State var isLoadingInitialSession: Bool = true
-  @State var postDataControllerProvider: PostDataControllerProvider = .init()
+  @State var postDataControllerProvider: PostContextProvider = .init()
 
   init() {
     ImagePipeline.shared = ImagePipeline(configuration: .withDataCache)

@@ -5,25 +5,25 @@ import SwiftUI
 
 @MainActor
 @Observable
-public class PostDataControllerProvider {
-  private var dataControllers: [String: PostDataController] = [:]
+public class PostContextProvider {
+  private var contexts: [String: PostContext] = [:]
 
   public init() {}
 
-  public func getController(for post: PostItem, client: BSkyClient) -> PostDataController {
-    if let controller = dataControllers[post.uri] {
-      return controller
+  public func get(for post: PostItem, client: BSkyClient) -> PostContext {
+    if let context = contexts[post.uri] {
+      return context
     } else {
-      let controller = PostDataController(post: post, client: client)
-      dataControllers[post.uri] = controller
-      return controller
+      let context = PostContext(post: post, client: client)
+      contexts[post.uri] = context
+      return context
     }
   }
 }
 
 @MainActor
 @Observable
-public class PostDataController {
+public class PostContext {
   private var post: PostItem
   private let client: BSkyClient
 

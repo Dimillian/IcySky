@@ -18,6 +18,10 @@ public struct AppRouter: ViewModifier {
           PostsTimelineView()
         case .profile(let profile):
           ProfileView(profile: profile)
+        case .profilePosts(let profile, let filter):
+          PostsProfileView(profile: profile, filter: filter)
+        case .profileLikes(let profile):
+          PostsLikesView(profile: profile)
         }
       }
   }

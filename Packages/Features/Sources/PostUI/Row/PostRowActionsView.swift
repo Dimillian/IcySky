@@ -8,7 +8,7 @@ extension EnvironmentValues {
 
 public struct PostRowActionsView: View {
   @Environment(\.hideMoreActions) var hideMoreActions
-  @Environment(PostDataController.self) var dataController
+  @Environment(PostContext.self) var dataController
 
   let post: PostItem
 
