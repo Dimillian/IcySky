@@ -53,7 +53,7 @@ let package = Package(
     ),
     .target(
       name: "ProfileUI",
-      dependencies: baseDeps + ["FeedUI"]
+      dependencies: baseDeps + ["FeedUI", "PostUI"]
     ),
     .target(
       name: "AuthUI",
