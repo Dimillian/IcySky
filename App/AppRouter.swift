@@ -10,8 +10,8 @@ public struct AppRouter: ViewModifier {
     content
       .navigationDestination(for: RouterDestination.self) { destination in
         switch destination {
-        case .feed(let uri, let name, let avatarImageURL):
-          PostsFeedView(uri: uri, name: name, avatarImageURL: avatarImageURL)
+        case .feed(let feedItem):
+          PostsFeedView(feedItem: feedItem)
         case .post(let post):
           PostDetailView(post: post)
         case .timeline:

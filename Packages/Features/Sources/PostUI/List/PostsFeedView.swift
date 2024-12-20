@@ -10,14 +10,10 @@ public struct PostsFeedView: View {
   @Environment(BSkyClient.self) var client
   @Environment(\.modelContext) var modelContext
 
-  let uri: String
-  let name: String
-  let avatarImageURL: URL?
+  private let feedItem: FeedItem
 
-  public init(uri: String, name: String, avatarImageURL: URL?) {
-    self.uri = uri
-    self.name = name
-    self.avatarImageURL = avatarImageURL
+  public init(feedItem: FeedItem) {
+    self.feedItem = feedItem
   }
 
   public var body: some View {
@@ -26,19 +22,19 @@ public struct PostsFeedView: View {
         updateRecentlyViewed()
       }
   }
-  
+
   private func updateRecentlyViewed() {
     do {
       try modelContext.delete(
         model: RecentFeedItem.self,
         where: #Predicate { feed in
-          feed.uri == uri
+          feed.uri == feedItem.uri
         })
       modelContext.insert(
         RecentFeedItem(
-          uri: uri,
-          name: name,
-          avatarImageURL: avatarImageURL,
+          uri: feedItem.uri,
+          name: feedItem.displayName,
+          avatarImageURL: feedItem.avatarImageURL,
           lastViewedAt: Date()
         )
       )
@@ -50,17 +46,17 @@ public struct PostsFeedView: View {
 // MARK: - Datasource
 extension PostsFeedView: PostsListViewDatasource {
   var title: String {
-    name
+    feedItem.displayName
   }
 
   func loadPosts(with state: PostsListViewState) async -> PostsListViewState {
     do {
       switch state {
       case .uninitialized, .loading, .error:
-        let feed = try await client.protoClient.getFeed(uri, cursor: nil)
+        let feed = try await client.protoClient.getFeed(feedItem.uri, cursor: nil)
         return .loaded(posts: PostListView.processFeed(feed.feed), cursor: feed.cursor)
       case let .loaded(posts, cursor):
-        let feed = try await client.protoClient.getFeed(uri, cursor: cursor)
+        let feed = try await client.protoClient.getFeed(feedItem.uri, cursor: cursor)
         return .loaded(posts: posts + PostListView.processFeed(feed.feed), cursor: feed.cursor)
       }
     } catch {

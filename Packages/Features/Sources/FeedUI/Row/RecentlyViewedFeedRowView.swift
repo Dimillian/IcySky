@@ -15,10 +15,15 @@ public struct RecentlyViewedFeedRowView: View {
   public var body: some View {
     NavigationLink(
       value: RouterDestination.feed(
-        uri: item.uri,
-        name: item.name,
-        avatarImageURL: item.avatarImageURL
-      )
+        FeedItem(
+          uri: item.uri,
+          displayName: item.name,
+          description: nil,
+          avatarImageURL: item.avatarImageURL,
+          creatorHandle: "",
+          likesCount: 0,
+          liked: false
+        ))
     ) {
       HStack {
         AsyncImage(url: item.avatarImageURL) { phase in
