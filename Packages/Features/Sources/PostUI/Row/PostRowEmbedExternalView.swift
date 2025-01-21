@@ -51,7 +51,7 @@ struct PostRowEmbedExternalView: View {
     .glowingRoundedRectangle()
     .contentShape(Rectangle())
     .onTapGesture {
-      if let url = URL(string: externalView.external.embedURI) {
+      if let url = URL(string: externalView.external.uri) {
         openURL(url)
       }
     }

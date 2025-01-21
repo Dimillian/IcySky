@@ -53,10 +53,10 @@ extension PostsFeedView: PostsListViewDatasource {
     do {
       switch state {
       case .uninitialized, .loading, .error:
-        let feed = try await client.protoClient.getFeed(feedItem.uri, cursor: nil)
+        let feed = try await client.protoClient.getFeed(by: feedItem.uri, cursor: nil)
         return .loaded(posts: PostListView.processFeed(feed.feed), cursor: feed.cursor)
       case let .loaded(posts, cursor):
-        let feed = try await client.protoClient.getFeed(feedItem.uri, cursor: cursor)
+        let feed = try await client.protoClient.getFeed(by: feedItem.uri, cursor: cursor)
         return .loaded(posts: posts + PostListView.processFeed(feed.feed), cursor: feed.cursor)
       }
     } catch {

@@ -80,14 +80,14 @@ public struct NotificationsListView: View {
     do {
       if let cursor {
         let response = try await client.protoClient.listNotifications(
-          priority: false, cursor: cursor)
+          isPriority: false, cursor: cursor)
         self.notificationsGroups.append(
           contentsOf: await NotificationsGroup.groupNotifications(
             client: client, response.notifications)
         )
         self.cursor = response.cursor
       } else {
-        let response = try await client.protoClient.listNotifications(priority: false)
+        let response = try await client.protoClient.listNotifications(isPriority: false)
         self.notificationsGroups = await NotificationsGroup.groupNotifications(
           client: client, response.notifications)
         self.cursor = response.cursor

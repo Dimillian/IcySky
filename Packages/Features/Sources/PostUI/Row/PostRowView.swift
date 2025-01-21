@@ -4,6 +4,7 @@ import Network
 import Router
 import SwiftUI
 import User
+import ATProtoKit
 
 extension EnvironmentValues {
   @Entry public var isQuote: Bool = false
@@ -188,23 +189,6 @@ public struct PostRowView: View {
     .listStyle(.plain)
     .environment(Router())
     .environment(PostContextProvider())
-    .environment(
-      BSkyClient(
-        session: .init(
-          handle: "",
-          sessionDID: "",
-          email: nil,
-          isEmailConfirmed: nil,
-          isEmailAuthenticationFactorEnabled: nil,
-          accessToken: "",
-          refreshToken: "",
-          didDocument: nil,
-          isActive: nil,
-          status: nil,
-          pdsURL: nil,
-          logger: nil
-        )
-      )
-    )
+    .environment(BSkyClient(configuration: .init(service: "")))
   }
 }

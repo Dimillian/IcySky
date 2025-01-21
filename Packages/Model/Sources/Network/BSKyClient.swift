@@ -3,27 +3,18 @@ import SwiftUI
 
 @Observable
 public class BSkyClient {
-  public let session: UserSession
+  public let configuration: ATProtocolConfiguration
   public let protoClient: ATProtoKit
   public let blueskyClient: ATProtoBluesky
 
-  public init(session: UserSession) {
-    self.session = session
-    self.protoClient = ATProtoKit(session: session)
+  public init(configuration: ATProtocolConfiguration) {
+    self.configuration = configuration
+    self.protoClient = ATProtoKit(sessionConfiguration: configuration)
     self.blueskyClient = ATProtoBluesky(atProtoKitInstance: protoClient)
   }
 
   static public func preview() -> BSkyClient {
-    .init(
-      session: .init(
-        handle: "",
-        sessionDID: "",
-        isEmailAuthenticationFactorEnabled: nil,
-        accessToken: "",
-        refreshToken: "",
-        isActive: nil,
-        status: nil)
-    )
+    .init(configuration: .init(service: ""))
   }
 }
 

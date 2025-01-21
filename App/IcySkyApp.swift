@@ -63,13 +63,13 @@ struct IcySkyApp: App {
           }
         }
       )
-      .task(id: auth.session) {
-        if let newSession = auth.session {
-          await refreshEnvWith(session: newSession)
+      .task(id: auth.configuration) {
+        if let newConfiguration = auth.configuration {
+          await refreshEnvWith(configuration: newConfiguration)
           if router.presentedSheet == .auth {
             router.presentedSheet = nil
           }
-        } else if auth.session == nil && !isLoadingInitialSession {
+        } else if auth.configuration == nil && !isLoadingInitialSession {
           router.presentedSheet = .auth
         }
         isLoadingInitialSession = false
@@ -77,7 +77,7 @@ struct IcySkyApp: App {
       .task(id: scenePhase) {
         if scenePhase == .active {
           await auth.refresh()
-          if auth.session == nil {
+          if auth.configuration == nil {
             router.presentedSheet = .auth
           }
         }
@@ -144,8 +144,8 @@ struct IcySkyApp: App {
     }
   }
 
-  private func refreshEnvWith(session: UserSession) async {
-    let client = BSkyClient(session: session)
+  private func refreshEnvWith(configuration: ATProtocolConfiguration) async {
+    let client = BSkyClient(configuration: configuration)
     self.client = client
     self.currentUser = await CurrentUser(client: client)
   }

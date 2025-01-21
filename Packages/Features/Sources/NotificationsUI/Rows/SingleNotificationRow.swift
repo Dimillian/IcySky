@@ -16,7 +16,7 @@ struct SingleNotificationRow: View {
 
   var body: some View {
     HStack(alignment: .top) {
-      AsyncImage(url: notification.notificationAuthor.avatarImageURL) { image in
+      AsyncImage(url: notification.author.avatarImageURL) { image in
         image
           .resizable()
           .scaledToFit()
@@ -37,10 +37,10 @@ struct SingleNotificationRow: View {
       .shadow(color: .shadowPrimary.opacity(0.3), radius: 2)
 
       VStack(alignment: .leading) {
-        Text(notification.notificationAuthor.displayNameOrHandle)
+        Text(notification.author.displayNameOrHandle)
           .fontWeight(.semibold)
         HStack {
-          Image(systemName: notification.notificationReason.iconName)
+          Image(systemName: notification.reason.iconName)
           Text(actionText)
         }
         .foregroundStyle(.secondary)

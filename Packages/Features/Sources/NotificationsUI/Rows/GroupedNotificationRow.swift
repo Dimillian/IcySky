@@ -83,8 +83,8 @@ struct GroupedNotificationRow: View {
 
   private var avatarsView: some View {
     HStack(spacing: -10) {
-      ForEach(group.notifications.prefix(5), id: \.notificationURI) { notification in
-        AsyncImage(url: notification.notificationAuthor.avatarImageURL) { image in
+      ForEach(group.notifications.prefix(5), id: \.uri) { notification in
+        AsyncImage(url: notification.author.avatarImageURL) { image in
           image.resizable()
         } placeholder: {
           Circle()
@@ -111,14 +111,14 @@ struct GroupedNotificationRow: View {
   private var actionTextView: some View {
     if group.notifications.count == 1 {
       Text(
-        group.notifications[0].notificationAuthor.displayNameOrHandle
+        group.notifications[0].author.displayNameOrHandle
       )
       .fontWeight(.semibold)
         + Text(actionText(1))
         .foregroundStyle(.secondary)
     } else {
       Text(
-        group.notifications[0].notificationAuthor.displayNameOrHandle
+        group.notifications[0].author.displayNameOrHandle
       )
       .fontWeight(.semibold)
         + Text(actionText(group.notifications.count))

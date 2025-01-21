@@ -28,7 +28,7 @@ struct NotificationsGroup: Identifiable {
       Array(
         Set(
           sortedNotifications
-            .filter { $0.notificationReason != .follow }
+            .filter { $0.reason != .follow }
             .compactMap { $0.postURI }
         ))
     var postItems: [PostItem] = []
@@ -39,7 +39,7 @@ struct NotificationsGroup: Identifiable {
     }
 
     for notification in sortedNotifications {
-      let reason = notification.notificationReason
+      let reason = notification.reason
 
       if reason.shouldGroup {
         // Group notifications by type and subject
@@ -49,7 +49,7 @@ struct NotificationsGroup: Identifiable {
         // Create individual groups for non-grouped notifications
         groups.append(
           NotificationsGroup(
-            id: notification.notificationURI,
+            id: notification.uri,
             timestamp: notification.indexedAt,
             type: reason,
             notifications: [notification],
@@ -79,10 +79,10 @@ struct NotificationsGroup: Identifiable {
 
 extension AppBskyLexicon.Notification.Notification {
   fileprivate var postURI: String? {
-    switch notificationReason {
+    switch reason {
     case .follow, .starterpackjoined: return nil
     case .like, .repost: return reasonSubjectURI
-    case .reply, .mention, .quote: return notificationURI
+    case .reply, .mention, .quote: return uri
     }
   }
 }

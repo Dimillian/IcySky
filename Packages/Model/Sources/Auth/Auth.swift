@@ -33,12 +33,12 @@ public final class Auth: @unchecked Sendable {
     }
   }
 
-  public private(set) var session: UserSession?
+  public private(set) var configuration: ATProtocolConfiguration?
 
   public func logout() {
     self.authToken = nil
     self.refreshToken = nil
-    self.session = nil
+    self.configuration = nil
   }
 
   public init() {}
@@ -47,26 +47,36 @@ public final class Auth: @unchecked Sendable {
     let configuration = ATProtocolConfiguration(
       handle: handle,
       appPassword: appPassword)
-    let session = try await configuration.authenticate()
-    self.authToken = session.accessToken
-    self.refreshToken = session.refreshToken
-    self.session = session
+    try await configuration.authenticate()
+    if let session = configuration.session {
+      self.authToken = session.accessToken
+      self.refreshToken = session.refreshToken
+    }
+    self.configuration = configuration
   }
 
   public func refresh() async {
     do {
       if let refreshToken {
         let configuration = ATProtocolConfiguration(handle: "", appPassword: "")
-        let session = try await configuration.refreshSession(using: refreshToken)
-        self.authToken = session.accessToken
-        self.refreshToken = session.refreshToken
-        self.session = session
+        _ = try await configuration.refreshSession(by: refreshToken)
+        if let session = configuration.session {
+          self.authToken = session.accessToken
+          self.refreshToken = session.refreshToken
+        }
+        self.configuration = configuration
       }
     } catch {
-      self.session = nil
+      self.configuration = nil
     }
   }
 
+}
+
+extension ATProtocolConfiguration: @retroactive Equatable {
+  public static func == (lhs: ATProtocolConfiguration, rhs: ATProtocolConfiguration) -> Bool {
+    lhs.session == rhs.session
+  }
 }
 
 extension UserSession: @retroactive Equatable, @unchecked Sendable {

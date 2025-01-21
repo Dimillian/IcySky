@@ -107,7 +107,7 @@ extension FeedsListView {
   private func fetchMyFeeds() async {
     do {
       let feeds = try await client.protoClient.getFeedGenerators(
-        currentUser.savedFeeds.map { $0.value })
+        by: currentUser.savedFeeds.map { $0.value })
       withAnimation {
         self.feeds = feeds.feeds.map { $0.feedItem }
       }

@@ -54,24 +54,11 @@ public struct PostItem: Hashable, Identifiable, Equatable {
   }
 }
 
-extension ATUnion.EmbedViewUnion: @retroactive Equatable {
-  public static func == (lhs: Self, rhs: Self) -> Bool {
-    (try? lhs.toJsonData()) == (try? rhs.toJsonData())
-  }
-}
-
-extension AppBskyLexicon.Feed.PostRecord.ReplyReference: @retroactive Equatable {
-  public static func == (lhs: Self, rhs: Self) -> Bool {
-    lhs.parent.cidHash == rhs.parent.cidHash && lhs.parent.recordURI == rhs.parent.recordURI
-      && lhs.root.cidHash == rhs.root.cidHash && lhs.root.recordURI == rhs.root.recordURI
-  }
-}
-
 extension AppBskyLexicon.Feed.FeedViewPostDefinition {
   public var postItem: PostItem {
     PostItem(
-      uri: post.postURI,
-      cid: post.cidHash,
+      uri: post.postItem.uri,
+      cid: post.postItem.cid,
       indexedAt: post.indexedAt,
       author: .init(
         did: post.author.actorDID,
@@ -94,8 +81,8 @@ extension AppBskyLexicon.Feed.FeedViewPostDefinition {
 extension AppBskyLexicon.Feed.PostViewDefinition {
   public var postItem: PostItem {
     PostItem(
-      uri: postURI,
-      cid: cidHash,
+      uri: uri,
+      cid: cid,
       indexedAt: indexedAt,
       author: .init(
         did: author.actorDID,
@@ -122,8 +109,8 @@ extension AppBskyLexicon.Feed.ThreadViewPostDefinition {
 extension AppBskyLexicon.Embed.RecordDefinition.ViewRecord {
   public var postItem: PostItem {
     PostItem(
-      uri: recordURI,
-      cid: cidHash,
+      uri: uri,
+      cid: cid,
       indexedAt: indexedAt,
       author: .init(
         did: author.actorDID,

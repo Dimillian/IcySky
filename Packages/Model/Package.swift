@@ -15,7 +15,7 @@ let package = Package(
   ],
   dependencies: [
     .package(
-      url: "https://github.com/MasterJ93/ATProtoKit", branch: "main"),
+      url: "https://github.com/MasterJ93/ATProtoKit", from: "0.23.2"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
   ],
   targets: [
