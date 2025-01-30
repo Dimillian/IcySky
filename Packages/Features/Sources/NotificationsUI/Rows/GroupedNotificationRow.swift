@@ -64,7 +64,6 @@ struct GroupedNotificationRow: View {
       .padding(8)
       .background {
         RoundedRectangle(cornerRadius: 8)
-          .fill(.thinMaterial)
           .stroke(
             LinearGradient(
               colors: [group.type.color, .indigo],
