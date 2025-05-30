@@ -12,7 +12,7 @@ import SwiftUI
 import Destinations
 
 struct AppTabRootView: View {
-  @Environment(RouterAlias.self) var router
+  @Environment(AppRouter.self) var router
 
   let tab: AppTab
 
@@ -23,7 +23,7 @@ struct AppTabRootView: View {
       NavigationStack(path: $router[tab]) {
         tab.rootView
           .navigationBarHidden(true)
-          .withAppRouter()
+          .withAppDestinations()
           .environment(\.currentTab, tab)
       }
     }

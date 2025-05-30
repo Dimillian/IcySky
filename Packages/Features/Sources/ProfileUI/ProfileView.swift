@@ -6,7 +6,7 @@ import SwiftUI
 import Destinations
 
 public struct ProfileView: View {
-  @Environment(RouterAlias.self) var router
+  @Environment(AppRouter.self) var router
     
   public let profile: Profile
   public let showBack: Bool

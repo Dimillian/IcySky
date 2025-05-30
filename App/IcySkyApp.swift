@@ -20,7 +20,7 @@ struct IcySkyApp: App {
   @State var client: BSkyClient?
   @State var auth: Auth = .init()
   @State var currentUser: CurrentUser?
-  @State var router: RouterAlias = .init(initialTab: .feed)
+  @State var router: AppRouter = .init(initialTab: .feed)
   @State var isLoadingInitialSession: Bool = true
   @State var postDataControllerProvider: PostContextProvider = .init()
 

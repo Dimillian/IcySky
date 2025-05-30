@@ -6,7 +6,7 @@ import AppRouter
 import SwiftUI
 import Destinations
 
-public struct AppRouter: ViewModifier {
+public struct AppDestinations: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .navigationDestination(for: RouterDestination.self) { destination in
@@ -29,7 +29,7 @@ public struct AppRouter: ViewModifier {
 }
 
 extension View {
-  public func withAppRouter() -> some View {
-    modifier(AppRouter())
+  public func withAppDestinations() -> some View {
+    modifier(AppDestinations())
   }
 }

@@ -1,3 +1,3 @@
 import AppRouter
 
-public typealias RouterAlias = Router<AppTab, RouterDestination, SheetDestination>
+public typealias AppRouter = Router<AppTab, RouterDestination, SheetDestination>

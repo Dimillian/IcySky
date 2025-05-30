@@ -7,7 +7,7 @@ import SwiftUI
 import Destinations
 
 struct SingleNotificationRow: View {
-  @Environment(RouterAlias.self) var router
+  @Environment(AppRouter.self) var router
   @Environment(BSkyClient.self) var client
   @Environment(PostContextProvider.self) var postDataControllerProvider
 

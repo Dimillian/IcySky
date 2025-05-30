@@ -8,7 +8,7 @@ import Destinations
 
 struct PostRowImagesView: View {
   @Environment(\.isQuote) var isQuote
-  @Environment(RouterAlias.self) var router
+  @Environment(AppRouter.self) var router
 
   @Namespace private var namespace
 

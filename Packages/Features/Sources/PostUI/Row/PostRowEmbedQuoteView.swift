@@ -5,7 +5,7 @@ import Destinations
 
 struct PostRowEmbedQuoteView: View {
   @Environment(\.currentTab) var currentTab
-  @Environment(RouterAlias.self) var router
+  @Environment(AppRouter.self) var router
 
   let post: PostItem
 

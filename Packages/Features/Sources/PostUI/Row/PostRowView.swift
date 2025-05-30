@@ -18,7 +18,7 @@ public struct PostRowView: View {
   @Environment(\.sizeCategory) var sizeCategory
 
   @Environment(PostContextProvider.self) var postDataControllerProvider
-  @Environment(RouterAlias.self) var router
+  @Environment(AppRouter.self) var router
   @Environment(BSkyClient.self) var client
 
   let post: PostItem
@@ -188,7 +188,7 @@ public struct PostRowView: View {
           replyRef: nil))
     }
     .listStyle(.plain)
-    .environment(RouterAlias(initialTab: .feed))
+    .environment(AppRouter(initialTab: .feed))
     .environment(PostContextProvider())
     .environment(BSkyClient(configuration: .init(service: "")))
   }

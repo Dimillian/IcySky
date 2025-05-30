@@ -7,7 +7,7 @@ public extension CGFloat {
 }
 
 public struct TabBarView: View {
-    @Environment(RouterAlias.self) var router
+    @Environment(AppRouter.self) var router
 
   public init() {}
 
@@ -77,11 +77,11 @@ public struct TabBarView: View {
   TabBarView()
     .padding()
     .environment(\.colorScheme, .light)
-    .environment(RouterAlias(initialTab: .feed))
+    .environment(AppRouter(initialTab: .feed))
 
   TabBarView()
     .padding()
     .background(.black)
     .environment(\.colorScheme, .dark)
-    .environment(RouterAlias(initialTab: .feed))
+    .environment(AppRouter(initialTab: .feed))
 }
