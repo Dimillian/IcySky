@@ -5,6 +5,6 @@ import ATProtoKit
 struct AuthTests {
   @Test func testLoginLogoutFlow() {
     let auth = Auth()
-    #expect(auth.session == nil)
+    #expect(auth.configuration?.session == nil)
   }
 }
