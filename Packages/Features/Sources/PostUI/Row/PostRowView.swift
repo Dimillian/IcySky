@@ -1,10 +1,11 @@
 import DesignSystem
 import Models
 import Network
-import Router
+import AppRouter
 import SwiftUI
 import User
 import ATProtoKit
+import Destinations
 
 extension EnvironmentValues {
   @Entry public var isQuote: Bool = false
@@ -17,7 +18,7 @@ public struct PostRowView: View {
   @Environment(\.sizeCategory) var sizeCategory
 
   @Environment(PostContextProvider.self) var postDataControllerProvider
-  @Environment(Router.self) var router
+  @Environment(RouterAlias.self) var router
   @Environment(BSkyClient.self) var client
 
   let post: PostItem
@@ -187,7 +188,7 @@ public struct PostRowView: View {
           replyRef: nil))
     }
     .listStyle(.plain)
-    .environment(Router())
+    .environment(RouterAlias(initialTab: .feed))
     .environment(PostContextProvider())
     .environment(BSkyClient(configuration: .init(service: "")))
   }

@@ -1,10 +1,11 @@
 import SwiftUI
+import AppRouter
 
 extension EnvironmentValues {
   @Entry public var currentTab: AppTab = .feed
 }
 
-public enum AppTab: String, CaseIterable, Identifiable, Hashable, Sendable {
+public enum AppTab: String, TabType {
   case feed, notification, messages, profile, settings
 
   public var id: String { rawValue }

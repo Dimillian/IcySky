@@ -2,8 +2,9 @@ import FeedUI
 import NotificationsUI
 import PostUI
 import ProfileUI
-import Router
+import AppRouter
 import SwiftUI
+import Destinations
 
 public struct AppRouter: ViewModifier {
   public func body(content: Content) -> some View {

@@ -2,7 +2,7 @@
 import DesignSystem
 import Models
 import Network
-import Router
+import AppRouter
 import SwiftUI
 import User
 import VariableBlur

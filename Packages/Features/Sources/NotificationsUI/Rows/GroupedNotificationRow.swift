@@ -1,11 +1,12 @@
 import ATProtoKit
 import DesignSystem
 import PostUI
-import Router
+import AppRouter
 import SwiftUI
+import Destinations
 
 struct GroupedNotificationRow: View {
-  @Environment(Router.self) var router
+  @Environment(RouterAlias.self) var router
 
   let group: NotificationsGroup
   let actionText: (Int) -> String  // Closure to generate action text based on count

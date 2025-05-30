@@ -2,12 +2,13 @@ import ATProtoKit
 import DesignSystem
 import Models
 import NukeUI
-import Router
+import AppRouter
 import SwiftUI
+import Destinations
 
 struct PostRowImagesView: View {
   @Environment(\.isQuote) var isQuote
-  @Environment(Router.self) var router
+  @Environment(RouterAlias.self) var router
 
   @Namespace private var namespace
 

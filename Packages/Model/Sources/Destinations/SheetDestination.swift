@@ -1,7 +1,8 @@
 import Models
 import SwiftUI
+import AppRouter
 
-public enum SheetDestination: Hashable, Identifiable {
+public enum SheetDestination: SheetType, Hashable, Identifiable {
   public var id: Int { self.hashValue }
 
   case auth

@@ -2,7 +2,7 @@ import ATProtoKit
 import DesignSystem
 import Models
 import Network
-import Router
+import AppRouter
 import SwiftUI
 
 public struct PostDetailView: View {

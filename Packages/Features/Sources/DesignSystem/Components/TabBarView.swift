@@ -1,12 +1,13 @@
-import Router
+import AppRouter
 import SwiftUI
+import Destinations
 
 public extension CGFloat {
   static let tabBarHeight: CGFloat = 70
 }
 
 public struct TabBarView: View {
-  @Environment(Router.self) var router
+    @Environment(RouterAlias.self) var router
 
   public init() {}
 
@@ -76,11 +77,11 @@ public struct TabBarView: View {
   TabBarView()
     .padding()
     .environment(\.colorScheme, .light)
-    .environment(Router())
+    .environment(RouterAlias(initialTab: .feed))
 
   TabBarView()
     .padding()
     .background(.black)
     .environment(\.colorScheme, .dark)
-    .environment(Router())
+    .environment(RouterAlias(initialTab: .feed))
 }

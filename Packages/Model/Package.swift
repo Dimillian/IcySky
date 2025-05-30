@@ -11,12 +11,13 @@ let package = Package(
     .library(name: "Models", targets: ["Models"]),
     .library(name: "Auth", targets: ["Auth"]),
     .library(name: "User", targets: ["User"]),
-    .library(name: "Router", targets: ["Router"]),
+    .library(name: "Destinations", targets: ["Destinations"]),
   ],
   dependencies: [
     .package(
       url: "https://github.com/MasterJ93/ATProtoKit", from: "0.23.3"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
+    .package(url: "https://github.com/Dimillian/AppRouter.git", from: "1.0.0"),
   ],
   targets: [
     .target(
@@ -51,8 +52,8 @@ let package = Package(
       ]
     ),
     .target(
-      name: "Router",
-      dependencies: ["Models"]
+      name: "Destinations",
+      dependencies: ["Models", "AppRouter"]
     ),
   ]
 )

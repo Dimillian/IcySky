@@ -1,11 +1,13 @@
 import DesignSystem
 import Models
 import PostUI
-import Router
+import AppRouter
 import SwiftUI
+import Destinations
 
 public struct ProfileView: View {
-  @Environment(Router.self) var router
+  @Environment(RouterAlias.self) var router
+    
   public let profile: Profile
   public let showBack: Bool
 

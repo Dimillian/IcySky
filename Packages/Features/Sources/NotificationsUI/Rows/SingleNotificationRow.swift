@@ -2,11 +2,12 @@ import ATProtoKit
 import Models
 import Network
 import PostUI
-import Router
+import AppRouter
 import SwiftUI
+import Destinations
 
 struct SingleNotificationRow: View {
-  @Environment(Router.self) var router
+  @Environment(RouterAlias.self) var router
   @Environment(BSkyClient.self) var client
   @Environment(PostContextProvider.self) var postDataControllerProvider
 

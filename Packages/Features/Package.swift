@@ -6,9 +6,9 @@ import PackageDescription
 let baseDeps: [PackageDescription.Target.Dependency] = [
   .product(name: "Network", package: "Model"),
   .product(name: "Models", package: "Model"),
-  .product(name: "Router", package: "Model"),
   .product(name: "Auth", package: "Model"),
   .product(name: "User", package: "Model"),
+  .product(name: "Destinations", package: "Model"),
   "DesignSystem",
 ]
 
@@ -30,6 +30,7 @@ let package = Package(
     .package(url: "https://github.com/nikstar/VariableBlur", from: "1.2.0"),
     .package(url: "https://github.com/nalexn/ViewInspector", from: "0.10.0"),
     .package(url: "https://github.com/kean/Nuke", from: "12.8.0"),
+    .package(url: "https://github.com/Dimillian/AppRouter.git", from: "1.0.0"),
   ],
   targets: [
     .target(
@@ -78,7 +79,8 @@ let package = Package(
       name: "DesignSystem",
       dependencies: [
         .product(name: "VariableBlur", package: "VariableBlur"),
-        .product(name: "Router", package: "Model"),
+        .product(name: "Destinations", package: "Model"),
+        "AppRouter",
       ]
     ),
     .testTarget(

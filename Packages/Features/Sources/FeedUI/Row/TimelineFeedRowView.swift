@@ -2,8 +2,9 @@ import ATProtoKit
 import DesignSystem
 import Models
 import Network
-import Router
+import AppRouter
 import SwiftUI
+import Destinations
 
 struct TimelineFeedRowView: View {
   var body: some View {

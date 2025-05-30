@@ -1,10 +1,11 @@
 import Models
-import Router
+import AppRouter
 import SwiftUI
+import Destinations
 
 struct PostRowEmbedQuoteView: View {
   @Environment(\.currentTab) var currentTab
-  @Environment(Router.self) var router
+  @Environment(RouterAlias.self) var router
 
   let post: PostItem
 

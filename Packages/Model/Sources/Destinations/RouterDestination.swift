@@ -1,7 +1,8 @@
 import Models
 import SwiftUI
+import AppRouter
 
-public enum RouterDestination: Hashable {
+public enum RouterDestination: DestinationType, Hashable {
   case feed(FeedItem)
   case post(PostItem)
   case profile(Profile)

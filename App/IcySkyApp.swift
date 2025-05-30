@@ -7,10 +7,11 @@ import Models
 import Network
 import Nuke
 import NukeUI
-import Router
+import AppRouter
 import SwiftUI
 import User
 import VariableBlur
+import Destinations
 
 @main
 struct IcySkyApp: App {
@@ -19,7 +20,7 @@ struct IcySkyApp: App {
   @State var client: BSkyClient?
   @State var auth: Auth = .init()
   @State var currentUser: CurrentUser?
-  @State var router: Router = .init()
+  @State var router: RouterAlias = .init(initialTab: .feed)
   @State var isLoadingInitialSession: Bool = true
   @State var postDataControllerProvider: PostContextProvider = .init()
 

@@ -6,12 +6,13 @@ import Network
 import NotificationsUI
 import PostUI
 import ProfileUI
-import Router
+import AppRouter
 import SettingsUI
 import SwiftUI
+import Destinations
 
 struct AppTabRootView: View {
-  @Environment(Router.self) var router
+  @Environment(RouterAlias.self) var router
 
   let tab: AppTab
 
