@@ -1,6 +1,6 @@
-import Testing
-import Auth
 import ATProtoKit
+import Auth
+import Testing
 
 struct AuthTests {
   @Test func testLoginLogoutFlow() {

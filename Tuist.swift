@@ -1,5 +1,5 @@
 import ProjectDescription
 
 let config = Config(
-    fullHandle: "Dimillian/IcySky"
+  fullHandle: "Dimillian/IcySky"
 )

@@ -1,7 +1,7 @@
 import DesignSystem
-import ViewInspector
-import Testing
 import SwiftUI
+import Testing
+import ViewInspector
 
 @MainActor
 struct HeaderViewTests {
@@ -10,7 +10,7 @@ struct HeaderViewTests {
     let headerView = HeaderView(title: title, showBack: false)
     #expect(try headerView.inspect().find(text: title).string() == title)
   }
-  
+
   @Test func testHeaderViewBackButton() throws {
     let title = "TestTitle"
     let headerView = HeaderView(title: title, showBack: true)

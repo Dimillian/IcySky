@@ -1,13 +1,13 @@
+import AppRouter
 import DesignSystem
+import Destinations
 import Models
 import PostUI
-import AppRouter
 import SwiftUI
-import Destinations
 
 public struct ProfileView: View {
   @Environment(AppRouter.self) var router
-    
+
   public let profile: Profile
   public let showBack: Bool
 

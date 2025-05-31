@@ -1,5 +1,5 @@
-import SwiftUI
 import AppRouter
+import SwiftUI
 
 extension EnvironmentValues {
   @Entry public var currentTab: AppTab = .feed

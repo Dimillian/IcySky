@@ -1,10 +1,10 @@
 import ATProtoKit
+import AppRouter
+import Destinations
 import Models
 import Network
 import PostUI
-import AppRouter
 import SwiftUI
-import Destinations
 
 struct SingleNotificationRow: View {
   @Environment(AppRouter.self) var router

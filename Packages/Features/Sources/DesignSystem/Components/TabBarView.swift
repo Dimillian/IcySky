@@ -1,13 +1,13 @@
 import AppRouter
-import SwiftUI
 import Destinations
+import SwiftUI
 
-public extension CGFloat {
-  static let tabBarHeight: CGFloat = 70
+extension CGFloat {
+  public static let tabBarHeight: CGFloat = 70
 }
 
 public struct TabBarView: View {
-    @Environment(AppRouter.self) var router
+  @Environment(AppRouter.self) var router
 
   public init() {}
 

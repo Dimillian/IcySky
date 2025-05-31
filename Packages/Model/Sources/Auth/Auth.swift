@@ -6,13 +6,13 @@ import SwiftUI
 @Observable
 public final class Auth: @unchecked Sendable {
   let keychain = KeychainSwift()
-  
+
   public private(set) var sessionRefreshed = Date()
-  
+
   public private(set) var configuration: ATProtocolConfiguration?
-  
+
   private let ATProtoKeychain: AppleSecureKeychain
-  
+
   public private(set) var authToken: String? {
     get {
       keychain.get("auth_token")
@@ -55,7 +55,7 @@ public final class Auth: @unchecked Sendable {
       keychain.set(newUUID, forKey: "session_uuid")
       self.ATProtoKeychain = AppleSecureKeychain(identifier: .init(uuidString: newUUID) ?? UUID())
     }
-    
+
   }
 
   public func authenticate(handle: String, appPassword: String) async throws {

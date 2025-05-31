@@ -77,12 +77,17 @@ struct NotificationsGroup: Identifiable {
   }
 }
 
-extension AppBskyLexicon.Notification.Notification.Reason: @retroactive Hashable, @retroactive Equatable {
+extension AppBskyLexicon.Notification.Notification.Reason: @retroactive Hashable, @retroactive
+  Equatable
+{
   public func hash(into hasher: inout Hasher) {
     hasher.combine(self.rawValue)
   }
-  
-  public static func == (lhs: AppBskyLexicon.Notification.Notification.Reason, rhs: AppBskyLexicon.Notification.Notification.Reason) -> Bool {
+
+  public static func == (
+    lhs: AppBskyLexicon.Notification.Notification.Reason,
+    rhs: AppBskyLexicon.Notification.Notification.Reason
+  ) -> Bool {
     lhs.rawValue == rhs.rawValue
   }
 }
@@ -119,7 +124,7 @@ extension AppBskyLexicon.Notification.Notification.Reason {
     case .quote: return "quote.opening"
     case .reply: return "arrowshape.turn.up.left.fill"
     case .starterpackjoined: return "star"
-    default: return "bell.fill" // Fallback for unknown reasons
+    default: return "bell.fill"  // Fallback for unknown reasons
     }
   }
 
@@ -132,7 +137,7 @@ extension AppBskyLexicon.Notification.Notification.Reason {
     case .quote: return .orange
     case .reply: return .teal
     case .starterpackjoined: return .yellow
-    default: return .gray // Fallback for unknown reasons
+    default: return .gray  // Fallback for unknown reasons
     }
   }
 }

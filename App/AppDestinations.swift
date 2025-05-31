@@ -1,10 +1,10 @@
+import AppRouter
+import Destinations
 import FeedUI
 import NotificationsUI
 import PostUI
 import ProfileUI
-import AppRouter
 import SwiftUI
-import Destinations
 
 public struct AppDestinations: ViewModifier {
   public func body(content: Content) -> some View {

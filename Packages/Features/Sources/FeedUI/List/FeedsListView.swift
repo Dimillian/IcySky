@@ -1,8 +1,8 @@
 @preconcurrency import ATProtoKit
+import AppRouter
 import DesignSystem
 import Models
 import Network
-import AppRouter
 import SwiftUI
 import User
 import VariableBlur

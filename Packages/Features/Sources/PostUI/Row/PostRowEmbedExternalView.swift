@@ -5,7 +5,7 @@ import SwiftUI
 
 struct PostRowEmbedExternalView: View {
   @Environment(\.openURL) var openURL
-  
+
   let externalView: AppBskyLexicon.Embed.ExternalDefinition.View
 
   var body: some View {

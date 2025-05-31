@@ -1,17 +1,17 @@
 import ATProtoKit
+import AppRouter
 import Auth
 import AuthUI
 import DesignSystem
+import Destinations
 import MediaUI
 import Models
 import Network
 import Nuke
 import NukeUI
-import AppRouter
 import SwiftUI
 import User
 import VariableBlur
-import Destinations
 
 @main
 struct IcySkyApp: App {

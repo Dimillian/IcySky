@@ -1,12 +1,12 @@
-import SwiftUI
 import Auth
 import DesignSystem
+import SwiftUI
 
 public struct SettingsView: View {
   @Environment(Auth.self) var auth
-  
-  public init() { }
-  
+
+  public init() {}
+
   public var body: some View {
     Form {
       Section {
@@ -15,7 +15,7 @@ public struct SettingsView: View {
           Task {
             do {
               try await auth.logout()
-            } catch { }
+            } catch {}
           }
         } label: {
           Text("Signout")

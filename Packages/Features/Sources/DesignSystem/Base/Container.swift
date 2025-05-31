@@ -2,7 +2,6 @@ import SwiftUI
 
 public struct ScreenContainerModifier: ViewModifier {
   public init() {}
-  
 
   public func body(content: Content) -> some View {
     content

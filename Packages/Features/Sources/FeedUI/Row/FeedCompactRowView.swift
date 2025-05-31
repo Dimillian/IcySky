@@ -1,10 +1,10 @@
 import ATProtoKit
+import AppRouter
 import DesignSystem
+import Destinations
 import Models
 import Network
-import AppRouter
 import SwiftUI
-import Destinations
 
 struct FeedCompactRowView: View {
   let title: String

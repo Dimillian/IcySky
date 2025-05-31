@@ -4,7 +4,7 @@ extension UINavigationController: @retroactive UIGestureRecognizerDelegate {
   override open func viewDidLoad() {
     super.viewDidLoad()
     interactivePopGestureRecognizer?.delegate = self
-    
+
     let gesture = UnidirectionalPanGestureRecognizer(direction: .horizontal)
     gesture.delegate = self
     if let targets = interactivePopGestureRecognizer?.value(forKey: "targets") {
@@ -17,7 +17,6 @@ extension UINavigationController: @retroactive UIGestureRecognizerDelegate {
     return viewControllers.count > 1
   }
 }
-
 
 public class UnidirectionalPanGestureRecognizer: UIPanGestureRecognizer {
   public enum Direction {

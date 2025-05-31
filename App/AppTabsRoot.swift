@@ -1,15 +1,15 @@
+import AppRouter
 import Auth
 import DesignSystem
+import Destinations
 import FeedUI
 import Models
 import Network
 import NotificationsUI
 import PostUI
 import ProfileUI
-import AppRouter
 import SettingsUI
 import SwiftUI
-import Destinations
 
 struct AppTabRootView: View {
   @Environment(AppRouter.self) var router

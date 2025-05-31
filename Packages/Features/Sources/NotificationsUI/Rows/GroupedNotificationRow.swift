@@ -1,9 +1,9 @@
 import ATProtoKit
-import DesignSystem
-import PostUI
 import AppRouter
-import SwiftUI
+import DesignSystem
 import Destinations
+import PostUI
+import SwiftUI
 
 struct GroupedNotificationRow: View {
   @Environment(AppRouter.self) var router
