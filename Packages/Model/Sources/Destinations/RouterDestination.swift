@@ -3,7 +3,7 @@ import Models
 import SwiftUI
 
 public enum RouterDestination: DestinationType, Hashable {
-  public static func from(path: String, parameters: [String: String]) -> RouterDestination? {
+  public static func from(path: String, fullPath: [String], parameters: [String : String]) -> RouterDestination? {
     nil
   }
 

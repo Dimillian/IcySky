@@ -15,9 +15,9 @@ let package = Package(
   ],
   dependencies: [
     .package(
-      url: "https://github.com/Dimillian/ATProtoKit", from: "0.27.3"),
+      url: "https://github.com/dimillian/ATProtoKit", branch: "remove-update"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
-    .package(url: "https://github.com/Dimillian/AppRouter.git", from: "1.0.1"),
+    .package(url: "https://github.com/Dimillian/AppRouter.git", from: "1.0.2"),
   ],
   targets: [
     .target(

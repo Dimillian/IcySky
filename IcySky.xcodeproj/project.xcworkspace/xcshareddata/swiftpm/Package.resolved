@@ -1,19 +1,19 @@
 {
-  "originHash" : "50327a1002cf200414b5088f055c3a6f7934d568335c86564764e57f142be0ba",
+  "originHash" : "38535089e7edf2a9253c1811932fb3a1dd23f25cb9e77d4815e0874b031ab622",
   "pins" : [
     {
       "identity" : "approuter",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Dimillian/AppRouter.git",
       "state" : {
-        "revision" : "c17b20dccd6faf547740fceea912264f6d8e2fd9",
-        "version" : "1.0.1"
+        "revision" : "72f63f4312a231ab2706234b9e99c4b71651f38c",
+        "version" : "1.0.2"
       }
     },
     {
       "identity" : "atprotokit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Dimillian/ATProtoKit",
+      "location" : "https://github.com/dimillian/ATProtoKit",
       "state" : {
         "branch" : "remove-update",
         "revision" : "a817ae7c7757c89260df374f4b3cf575da6fcceb"
@@ -78,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nikstar/VariableBlur",
       "state" : {
-        "revision" : "41698eecb3373550b2100dbcd308d886501d7033",
-        "version" : "1.2.0"
+        "revision" : "c8dc0ada195dfd47354cec5994c2dd434aa6c146",
+        "version" : "1.2.1"
       }
     },
     {
@@ -87,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nalexn/ViewInspector",
       "state" : {
-        "revision" : "5acfa0a3c095ac9ad050abe51c60d1831e8321da",
-        "version" : "0.10.0"
+        "revision" : "788e7879d38a839c4e348ab0762dcc0364e646a2",
+        "version" : "0.10.1"
       }
     }
   ],
