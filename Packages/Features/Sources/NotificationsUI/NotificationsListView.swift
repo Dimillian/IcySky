@@ -51,7 +51,7 @@ public struct NotificationsListView: View {
               postItem: group.postItem,
               actionText: "quoted you"
             )
-          case .starterpackjoined:
+          default:
             EmptyView()
           }
         }

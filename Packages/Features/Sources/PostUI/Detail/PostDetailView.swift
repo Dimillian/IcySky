@@ -57,8 +57,7 @@ public struct PostDetailView: View {
 
   private func fetchThread() async {
     do {
-      let thread = try await client.protoClient.getPostThread(
-        from: post.uri, shouldAuthenticate: true)
+      let thread = try await client.protoClient.getPostThread(from: post.uri)
       switch thread.thread {
       case .threadViewPost(let threadViewPost):
         self.post = threadViewPost.post.postItem

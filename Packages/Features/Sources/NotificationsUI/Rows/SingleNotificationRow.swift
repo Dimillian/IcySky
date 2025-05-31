@@ -38,7 +38,7 @@ struct SingleNotificationRow: View {
       .shadow(color: .shadowPrimary.opacity(0.3), radius: 2)
 
       VStack(alignment: .leading) {
-        Text(notification.author.displayNameOrHandle)
+        Text(notification.author.displayName ?? "")
           .fontWeight(.semibold)
         HStack {
           Image(systemName: notification.reason.iconName)

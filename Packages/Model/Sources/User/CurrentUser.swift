@@ -22,7 +22,7 @@ public class CurrentUser {
 
   public func fetchProfile() async {
     do {
-      if let DID = client.configuration.session?.sessionDID {
+      if let DID = try await client.protoClient.getUserSession()?.sessionDID {
         self.profile = try await client.protoClient.getProfile(for: DID)
       }
     } catch {

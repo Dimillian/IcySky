@@ -111,14 +111,14 @@ struct GroupedNotificationRow: View {
   private var actionTextView: some View {
     if group.notifications.count == 1 {
       Text(
-        group.notifications[0].author.displayNameOrHandle
+        group.notifications[0].author.displayName ?? group.notifications[0].author.actorHandle
       )
       .fontWeight(.semibold)
         + Text(actionText(1))
         .foregroundStyle(.secondary)
     } else {
       Text(
-        group.notifications[0].author.displayNameOrHandle
+        group.notifications[0].author.displayName ?? group.notifications[0].author.actorHandle
       )
       .fontWeight(.semibold)
         + Text(actionText(group.notifications.count))

@@ -1,5 +1,5 @@
 {
-  "originHash" : "3a552808dad4e8c2fca5ef73e649032a76cd6b14cb1c961d73c6ced7b5b9e67c",
+  "originHash" : "50327a1002cf200414b5088f055c3a6f7934d568335c86564764e57f142be0ba",
   "pins" : [
     {
       "identity" : "approuter",
@@ -13,10 +13,10 @@
     {
       "identity" : "atprotokit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/MasterJ93/ATProtoKit",
+      "location" : "https://github.com/Dimillian/ATProtoKit",
       "state" : {
-        "revision" : "cb1aa40ca2b47556b5d9ee24e6287d1685468a44",
-        "version" : "0.23.3"
+        "branch" : "remove-update",
+        "revision" : "a817ae7c7757c89260df374f4b3cf575da6fcceb"
       }
     },
     {
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-collections.git",
       "state" : {
-        "revision" : "671108c96644956dddcd89dd59c203dcdb36cec7",
-        "version" : "1.1.4"
+        "revision" : "c1805596154bb3a265fd91b8ac0c4433b4348fb0",
+        "version" : "1.2.0"
       }
     },
     {
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "96a2f8a0fa41e9e09af4585e2724c4e825410b91",
-        "version" : "1.6.2"
+        "revision" : "3d8596ed08bd13520157f0355e35caed215ffbfa",
+        "version" : "1.6.3"
       }
     },
     {

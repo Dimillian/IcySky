@@ -128,8 +128,3 @@ extension FeedsListView {
     }
   }
 }
-
-#Preview {
-  FeedsListView()
-    .environment(BSkyClient.preview())
-}

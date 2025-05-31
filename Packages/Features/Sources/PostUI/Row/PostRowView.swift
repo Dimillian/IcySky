@@ -190,6 +190,5 @@ public struct PostRowView: View {
     .listStyle(.plain)
     .environment(AppRouter(initialTab: .feed))
     .environment(PostContextProvider())
-    .environment(BSkyClient(configuration: .init(service: "")))
   }
 }

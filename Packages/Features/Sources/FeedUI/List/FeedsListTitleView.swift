@@ -82,8 +82,3 @@ public struct FeedsListTitleView: View {
     .transition(.slide)
   }
 }
-
-#Preview {
-  FeedsListView()
-    .environment(BSkyClient.preview())
-}

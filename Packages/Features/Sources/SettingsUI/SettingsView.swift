@@ -12,7 +12,11 @@ public struct SettingsView: View {
       Section {
         HeaderView(title: "Settings", showBack: false)
         Button {
-          auth.logout()
+          Task {
+            do {
+              try await auth.logout()
+            } catch { }
+          }
         } label: {
           Text("Signout")
             .padding()

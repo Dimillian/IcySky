@@ -2,19 +2,15 @@
 import SwiftUI
 
 @Observable
-public class BSkyClient {
+public final class BSkyClient: Sendable {
   public let configuration: ATProtocolConfiguration
   public let protoClient: ATProtoKit
   public let blueskyClient: ATProtoBluesky
 
-  public init(configuration: ATProtocolConfiguration) {
+  public init(configuration: ATProtocolConfiguration) async {
     self.configuration = configuration
-    self.protoClient = ATProtoKit(sessionConfiguration: configuration)
+    self.protoClient = await ATProtoKit(sessionConfiguration: configuration)
     self.blueskyClient = ATProtoBluesky(atProtoKitInstance: protoClient)
-  }
-
-  static public func preview() -> BSkyClient {
-    .init(configuration: .init(service: ""))
   }
 }
 

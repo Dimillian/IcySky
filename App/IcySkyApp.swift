@@ -64,7 +64,7 @@ struct IcySkyApp: App {
           }
         }
       )
-      .task(id: auth.configuration) {
+      .task(id: auth.sessionRefreshed) {
         if let newConfiguration = auth.configuration {
           await refreshEnvWith(configuration: newConfiguration)
           if router.presentedSheet == .auth {
@@ -146,7 +146,7 @@ struct IcySkyApp: App {
   }
 
   private func refreshEnvWith(configuration: ATProtocolConfiguration) async {
-    let client = BSkyClient(configuration: configuration)
+    let client = await BSkyClient(configuration: configuration)
     self.client = client
     self.currentUser = await CurrentUser(client: client)
   }
