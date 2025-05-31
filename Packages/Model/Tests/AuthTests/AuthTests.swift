@@ -5,6 +5,6 @@ import Testing
 struct AuthTests {
   @Test func testLoginLogoutFlow() {
     let auth = Auth()
-    #expect(auth.configuration?.session == nil)
+    #expect(auth.configuration == nil)
   }
 }
