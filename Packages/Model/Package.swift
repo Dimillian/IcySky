@@ -17,7 +17,7 @@ let package = Package(
     .package(
       url: "https://github.com/MasterJ93/ATProtoKit", from: "0.23.3"),
     .package(url: "https://github.com/evgenyneu/keychain-swift", from: "24.0.0"),
-    .package(url: "https://github.com/Dimillian/AppRouter.git", from: "1.0.0"),
+    .package(url: "https://github.com/Dimillian/AppRouter.git", from: "1.0.1"),
   ],
   targets: [
     .target(

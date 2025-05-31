@@ -30,7 +30,7 @@ let package = Package(
     .package(url: "https://github.com/nikstar/VariableBlur", from: "1.2.0"),
     .package(url: "https://github.com/nalexn/ViewInspector", from: "0.10.0"),
     .package(url: "https://github.com/kean/Nuke", from: "12.8.0"),
-    .package(url: "https://github.com/Dimillian/AppRouter.git", from: "1.0.0"),
+    .package(url: "https://github.com/Dimillian/AppRouter.git", from: "1.0.1"),
   ],
   targets: [
     .target(
