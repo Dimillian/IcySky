@@ -39,6 +39,7 @@ public struct FeedsListSearchField: View {
             .frame(width: 50, height: 50)
         }
         .buttonStyle(.circle)
+        .transition(.push(from: .leading).combined(with: .scale).combined(with: .opacity))
       }
     }
   }
