@@ -11,6 +11,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  test-model:
+    name: Test Model Package
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+      - name: Select Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_16.1.app
+      - name: Skip Xcode Macro Fingerprint Validation
+        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+      - name: Test Model Package
+        run: swift test --package-path Packages/Model
+
   build:
     name: Build IcySky
     runs-on: macos-15
@@ -22,8 +36,6 @@ jobs:
         run: sudo xcode-select -switch /Applications/Xcode_16.1.app
       - name: Skip Xcode Macro Fingerprint Validation
         run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
-      - name: Test Model Package
-        run: swift test --package-path Packages/Model
       - name: Build IcySky
         run: xcodebuild -scheme IcySky -destination 'platform=iOS Simulator,name=iPhone 16' -configuration "Debug" build
       - name: Share IcySky
