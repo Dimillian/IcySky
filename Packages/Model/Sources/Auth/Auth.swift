@@ -75,6 +75,8 @@ public final class Auth: @unchecked Sendable {
       try await ATProtoKeychain.saveRefreshToken(refreshToken)
       let configuration = ATProtocolConfiguration(keychainProtocol: ATProtoKeychain)
       try await configuration.refreshSession()
+      self.authToken = try await configuration.keychainProtocol.retrieveAccessToken()
+      self.refreshToken = try await configuration.keychainProtocol.retrieveRefreshToken()
       self.configuration = configuration
     } catch {
       self.configuration = nil
