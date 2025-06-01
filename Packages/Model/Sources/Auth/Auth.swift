@@ -71,10 +71,10 @@ public final class Auth: @unchecked Sendable {
     defer { sessionLastRefreshed = Date() }
     do {
       guard let authToken, let refreshToken else { return }
-      try await ATProtoKeychain.saveAccessToken(authToken)
-      try await ATProtoKeychain.saveRefreshToken(refreshToken)
       let configuration = ATProtocolConfiguration(keychainProtocol: ATProtoKeychain)
       try await configuration.refreshSession()
+      try await ATProtoKeychain.saveAccessToken(authToken)
+      try await ATProtoKeychain.saveRefreshToken(refreshToken)
       self.authToken = try await configuration.keychainProtocol.retrieveAccessToken()
       self.refreshToken = try await configuration.keychainProtocol.retrieveRefreshToken()
       self.configuration = configuration
