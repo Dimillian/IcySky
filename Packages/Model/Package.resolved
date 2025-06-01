@@ -1,13 +1,22 @@
 {
-  "originHash" : "ab17d83bbc31e56e6e212c669f73fd9e87f22beab0992e71293b9e6bb755ce79",
+  "originHash" : "5c2652841b13d575ca17fe08490cd4dd7f28c5d084f030269ae52bbfc0073c77",
   "pins" : [
+    {
+      "identity" : "approuter",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Dimillian/AppRouter.git",
+      "state" : {
+        "revision" : "72f63f4312a231ab2706234b9e99c4b71651f38c",
+        "version" : "1.0.2"
+      }
+    },
     {
       "identity" : "atprotokit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/MasterJ93/ATProtoKit",
+      "location" : "https://github.com/dimillian/ATProtoKit",
       "state" : {
-        "branch" : "main",
-        "revision" : "ca2ea402e498273fce3e181ed767019f51305280"
+        "branch" : "remove-update",
+        "revision" : "a817ae7c7757c89260df374f4b3cf575da6fcceb"
       }
     },
     {

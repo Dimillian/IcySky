@@ -7,7 +7,7 @@ import SwiftUI
 public final class Auth: @unchecked Sendable {
   let keychain = KeychainSwift()
 
-  public private(set) var sessionRefreshed = Date()
+  public private(set) var sessionLastRefreshed = Date()
 
   public private(set) var configuration: ATProtocolConfiguration?
 
@@ -44,7 +44,7 @@ public final class Auth: @unchecked Sendable {
     refreshToken = nil
     authToken = nil
     configuration = nil
-    sessionRefreshed = Date()
+    sessionLastRefreshed = Date()
   }
 
   public init() {
@@ -59,7 +59,7 @@ public final class Auth: @unchecked Sendable {
   }
 
   public func authenticate(handle: String, appPassword: String) async throws {
-    defer { sessionRefreshed = Date() }
+    defer { sessionLastRefreshed = Date() }
     let configuration = ATProtocolConfiguration(keychainProtocol: ATProtoKeychain)
     try await configuration.authenticate(with: handle, password: appPassword)
     self.authToken = try await configuration.keychainProtocol.retrieveAccessToken()
@@ -68,7 +68,7 @@ public final class Auth: @unchecked Sendable {
   }
 
   public func refresh() async {
-    defer { sessionRefreshed = Date() }
+    defer { sessionLastRefreshed = Date() }
     do {
       guard let authToken, let refreshToken else { return }
       try await ATProtoKeychain.saveAccessToken(authToken)

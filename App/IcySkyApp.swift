@@ -64,7 +64,7 @@ struct IcySkyApp: App {
           }
         }
       )
-      .task(id: auth.sessionRefreshed) {
+      .task(id: auth.sessionLastRefreshed) {
         if let newConfiguration = auth.configuration {
           await refreshEnvWith(configuration: newConfiguration)
           if router.presentedSheet == .auth {
@@ -78,9 +78,6 @@ struct IcySkyApp: App {
       .task(id: scenePhase) {
         if scenePhase == .active {
           await auth.refresh()
-          if auth.configuration == nil {
-            router.presentedSheet = .auth
-          }
         }
       }
       .overlay(

@@ -75,6 +75,9 @@ public struct FullScreenMediaView: View {
     .scrollContentBackground(.hidden)
     .scrollTargetBehavior(.viewAligned)
     .navigationTransition(.zoom(sourceID: images[0].id, in: namespace))
+    .containerBackground(.clear, for: .navigation)
+    .background(.clear)
+    .toolbarBackground(.clear, for: .navigationBar)
     .onTapGesture {
       withAnimation {
         isOverlayVisible.toggle()
