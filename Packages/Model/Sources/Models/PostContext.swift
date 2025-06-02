@@ -56,8 +56,9 @@ public class PostContext {
     do {
       if let likeURI {
         self.likeURI = nil
-        try await client.blueskyClient.deleteLikeRecord(.recordURI(atURI: likeURI))
+        try await client.blueskyClient.deleteRecord(.recordURI(atURI: likeURI))
       } else {
+        self.likeURI = "ui.optimistic.like"
         self.likeURI = try await client.blueskyClient.createLikeRecord(
           .init(recordURI: post.uri, cidHash: post.cid)
         ).recordURI
