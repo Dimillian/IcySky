@@ -13,36 +13,8 @@ public final class Auth: @unchecked Sendable {
 
   private let ATProtoKeychain: AppleSecureKeychain
 
-  public private(set) var authToken: String? {
-    get {
-      keychain.get("auth_token")
-    }
-    set {
-      if let newValue {
-        keychain.set(newValue, forKey: "auth_token")
-      } else {
-        keychain.delete("auth_token")
-      }
-    }
-  }
-
-  public private(set) var refreshToken: String? {
-    get {
-      keychain.get("refresh_token")
-    }
-    set {
-      if let newValue {
-        keychain.set(newValue, forKey: "refresh_token")
-      } else {
-        keychain.delete("refresh_token")
-      }
-    }
-  }
-
   public func logout() async throws {
     try await configuration?.deleteSession()
-    refreshToken = nil
-    authToken = nil
     configuration = nil
     sessionLastRefreshed = Date()
   }
@@ -62,21 +34,14 @@ public final class Auth: @unchecked Sendable {
     defer { sessionLastRefreshed = Date() }
     let configuration = ATProtocolConfiguration(keychainProtocol: ATProtoKeychain)
     try await configuration.authenticate(with: handle, password: appPassword)
-    self.authToken = try await configuration.keychainProtocol.retrieveAccessToken()
-    self.refreshToken = try await configuration.keychainProtocol.retrieveRefreshToken()
     self.configuration = configuration
   }
 
   public func refresh() async {
     defer { sessionLastRefreshed = Date() }
     do {
-      guard let authToken, let refreshToken else { return }
-      try await ATProtoKeychain.saveAccessToken(authToken)
-      try await ATProtoKeychain.saveRefreshToken(refreshToken)
       let configuration = ATProtocolConfiguration(keychainProtocol: ATProtoKeychain)
       try await configuration.refreshSession()
-      self.authToken = try await configuration.keychainProtocol.retrieveAccessToken()
-      self.refreshToken = try await configuration.keychainProtocol.retrieveRefreshToken()
       self.configuration = configuration
     } catch {
       self.configuration = nil
