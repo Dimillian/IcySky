@@ -67,13 +67,13 @@ public struct FeedsListTitleView: View {
       )
       .padding(.leading, isInSearch ? -120 : 0)
       .onTapGesture {
-        withAnimation {
+        withAnimation(.bouncy) {
           isInSearch.toggle()
           isSearchFocused.wrappedValue = true
         }
       }
       .transition(.slide)
     }
-    .animation(.smooth, value: isInSearch)
+    .animation(.bouncy, value: isInSearch)
   }
 }
