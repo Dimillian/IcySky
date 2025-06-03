@@ -32,12 +32,16 @@ public struct PillModifier: ViewModifier {
   private var background: some View {
     if colorScheme == .dark {
       Capsule()
-        .strokeBorder(Color.shadowSecondary, lineWidth: 1)
-        .background(Capsule().fill(material))
+        .foregroundStyle(material)
         .shadow(
           color: .shadowPrimary.opacity(isPressed ? 0 : 0.2),
           radius: isPressed ? 5 : 2, x: 1, y: 1
         )
+        .overlay {
+          Capsule()
+            .strokeBorder(Color.shadowPrimary.opacity(0.1), lineWidth: 1)
+            .blendMode(.sourceAtop)
+        }
     } else {
       Capsule()
         .foregroundStyle(
