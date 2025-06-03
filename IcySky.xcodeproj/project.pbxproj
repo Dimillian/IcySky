@@ -23,6 +23,7 @@
 		9FA556A32CF49E55008A62B4 /* FeedUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FD63DDD2CEF1F5B00243D9A /* FeedUI */; };
 		9FA557082CF61EE4008A62B4 /* NotificationsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA557072CF61EE4008A62B4 /* NotificationsUI */; };
 		9FAEE3BA2CF09BB400F86CDC /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FAEE3B92CF09BB400F86CDC /* SettingsUI */; };
+		9FB136012DEEB30A003D7ABE /* ComposerUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FB136002DEEB30A003D7ABE /* ComposerUI */; };
 		9FD63DE02CEF1F5B00243D9A /* PostUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FD63DDF2CEF1F5B00243D9A /* PostUI */; };
 		9FD63DE22CEF20F500243D9A /* AuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FD63DE12CEF20F500243D9A /* AuthUI */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 				9FA556A32CF49E55008A62B4 /* FeedUI in Frameworks */,
 				9F1552F12CEF35C000DD9F6E /* FeedUI in Frameworks */,
 				9FAEE3BA2CF09BB400F86CDC /* SettingsUI in Frameworks */,
+				9FB136012DEEB30A003D7ABE /* ComposerUI in Frameworks */,
 				9F1552F32CEF35C000DD9F6E /* PostUI in Frameworks */,
 				9F58939F2CEDF04200798943 /* Models in Frameworks */,
 				9F1552ED2CEF35C000DD9F6E /* AuthUI in Frameworks */,
@@ -138,6 +140,7 @@
 				9FA557072CF61EE4008A62B4 /* NotificationsUI */,
 				9F21F9B62CFDC288003B9250 /* MediaUI */,
 				9F21FACA2D00411D003B9250 /* ProfileUI */,
+				9FB136002DEEB30A003D7ABE /* ComposerUI */,
 			);
 			productName = IcySky;
 			productReference = 9F2142232CE9DAA1004167D7 /* IcySky.app */;
@@ -487,6 +490,10 @@
 		9FAEE3B92CF09BB400F86CDC /* SettingsUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SettingsUI;
+		};
+		9FB136002DEEB30A003D7ABE /* ComposerUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ComposerUI;
 		};
 		9FD63DDD2CEF1F5B00243D9A /* FeedUI */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -10,4 +10,5 @@ public enum SheetDestination: SheetType, Hashable, Identifiable {
     images: [Media],
     preloadedImage: URL?,
     namespace: Namespace.ID)
+  case composer
 }

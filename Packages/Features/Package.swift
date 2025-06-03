@@ -24,6 +24,7 @@ let package = Package(
     .library(name: "NotificationsUI", targets: ["NotificationsUI"]),
     .library(name: "DesignSystem", targets: ["DesignSystem"]),
     .library(name: "MediaUI", targets: ["MediaUI"]),
+    .library(name: "ComposerUI", targets: ["ComposerUI"]),
   ],
   dependencies: [
     .package(name: "Model", path: "../Model"),
@@ -74,6 +75,10 @@ let package = Package(
     .target(
       name: "NotificationsUI",
       dependencies: baseDeps + ["PostUI"]
+    ),
+    .target(
+      name: "ComposerUI",
+      dependencies: baseDeps
     ),
     .target(
       name: "DesignSystem",

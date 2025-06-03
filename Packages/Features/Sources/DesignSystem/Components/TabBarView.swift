@@ -15,6 +15,7 @@ public struct TabBarView: View {
     ZStack(alignment: .center) {
       backButtonView
       tabbarView
+      composeButtonView
     }
   }
 
@@ -37,6 +38,27 @@ public struct TabBarView: View {
     .buttonStyle(.circle)
     .animation(.bouncy, value: router.selectedTabPath)
     .offset(x: router.selectedTabPath.isEmpty ? 0 : -164)
+  }
+
+  private var composeButtonView: some View {
+    Button {
+      router.presentedSheet = .composer
+    } label: {
+      Image(systemName: "square.and.pencil")
+        .symbolRenderingMode(.palette)
+        .foregroundStyle(.primary)
+        .imageScale(.medium)
+        .foregroundStyle(
+          .linearGradient(
+            colors: [.indigo, .secondary],
+            startPoint: .top, endPoint: .bottom)
+        )
+        .shadow(color: .clear, radius: 1, x: 0, y: 0)
+        .frame(width: 50, height: 50)
+    }
+    .buttonStyle(.circle)
+    .offset(x: router.selectedTabPath.isEmpty ? 132 : 164)
+    .animation(.bouncy, value: router.selectedTabPath)
   }
 
   private var tabbarView: some View {
@@ -70,6 +92,8 @@ public struct TabBarView: View {
     }
     .padding()
     .pillStyle(material: .regular)
+    .offset(x: router.selectedTabPath.isEmpty ? -36 : 0)
+    .animation(.bouncy, value: router.selectedTabPath)
   }
 }
 

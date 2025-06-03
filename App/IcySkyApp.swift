@@ -2,6 +2,7 @@ import ATProtoKit
 import AppRouter
 import Auth
 import AuthUI
+import ComposerUI
 import DesignSystem
 import Destinations
 import MediaUI
@@ -61,6 +62,8 @@ struct IcySkyApp: App {
               preloadedImage: preloadedImage,
               namespace: namespace
             )
+          case .composer:
+            ComposerView()
           }
         }
       )

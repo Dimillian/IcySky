@@ -40,7 +40,7 @@ public struct PillModifier: ViewModifier {
 }
 
 extension View {
-  public func pillStyle(material: Material = .ultraThickMaterial, isPressed: Bool = false)
+  public func pillStyle(material: Material = .thin, isPressed: Bool = false)
     -> some View
   {
     modifier(PillModifier(material: material, isPressed: isPressed))
@@ -48,7 +48,7 @@ extension View {
 }
 
 extension View {
-  public func circleStyle(material: Material = .ultraThickMaterial, isPressed: Bool = false)
+  public func circleStyle(material: Material = .thin, isPressed: Bool = false)
     -> some View
   {
     modifier(PillModifier(material: material, isPressed: isPressed, isCircle: true))
