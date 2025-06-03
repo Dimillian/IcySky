@@ -38,9 +38,16 @@ public struct PillModifier: ViewModifier {
           radius: isPressed ? 5 : 2, x: 1, y: 1
         )
         .overlay {
-          Capsule()
-            .strokeBorder(Color.shadowPrimary.opacity(0.1), lineWidth: 1)
-            .blendMode(.sourceAtop)
+          ZStack {
+            Capsule()
+              .strokeBorder(.white.opacity(0.06), lineWidth: 1)
+              .blendMode(.screen)
+            
+            Capsule()
+              .strokeBorder(.white.opacity(0.04), lineWidth: 1)
+              .blur(radius: 6)
+              .blendMode(.screen)
+          }
         }
     } else {
       Capsule()
