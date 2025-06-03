@@ -28,14 +28,29 @@ public struct PillModifier: ViewModifier {
     }
   }
 
+  @ViewBuilder
   private var background: some View {
-    Capsule()
-      .foregroundStyle(
-        material
-          .shadow(.inner(color: .shadowSecondary, radius: isPressed ? 5 : 1, x: 0, y: 1))
-      )
-      .shadow(
-        color: .shadowPrimary.opacity(isPressed ? 0 : 0.2), radius: isPressed ? 5 : 2, x: 1, y: 1)
+    if colorScheme == .dark {
+      Capsule()
+        .strokeBorder(Color.shadowSecondary, lineWidth: 1)
+        .background(Capsule().fill(material))
+        .shadow(
+          color: .shadowPrimary.opacity(isPressed ? 0 : 0.2),
+          radius: isPressed ? 5 : 2, x: 1, y: 1
+        )
+    } else {
+      Capsule()
+        .foregroundStyle(
+          material
+            .shadow(
+              .inner(color: .shadowSecondary, radius: isPressed ? 5 : 1, x: 0, y: 1)
+            )
+        )
+        .shadow(
+          color: .shadowPrimary.opacity(isPressed ? 0 : 0.2),
+          radius: isPressed ? 5 : 2, x: 1, y: 1
+        )
+    }
   }
 }
 

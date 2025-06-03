@@ -17,6 +17,7 @@ public struct TabBarView: View {
       tabbarView
       composeButtonView
     }
+    .animation(.bouncy, value: router.selectedTabPath)
   }
 
   private var backButtonView: some View {
@@ -32,11 +33,9 @@ public struct TabBarView: View {
             colors: [.indigo, .secondary],
             startPoint: .top, endPoint: .bottom)
         )
-        .shadow(color: .clear, radius: 1, x: 0, y: 0)
         .frame(width: 50, height: 50)
     }
     .buttonStyle(.circle)
-    .animation(.bouncy, value: router.selectedTabPath)
     .offset(x: router.selectedTabPath.isEmpty ? 0 : -164)
   }
 
@@ -53,24 +52,20 @@ public struct TabBarView: View {
             colors: [.indigo, .secondary],
             startPoint: .top, endPoint: .bottom)
         )
-        .shadow(color: .clear, radius: 1, x: 0, y: 0)
         .frame(width: 50, height: 50)
     }
     .buttonStyle(.circle)
-    .offset(x: router.selectedTabPath.isEmpty ? 132 : 164)
-    .animation(.bouncy, value: router.selectedTabPath)
+    .offset(x: 164)
   }
 
   private var tabbarView: some View {
     HStack(spacing: 32) {
       ForEach(AppTab.allCases, id: \.rawValue) { tab in
         Button {
-          withAnimation {
-            if router.selectedTab == tab {
-              router.popToRoot(for: tab)
-            }
-            router.selectedTab = tab
+          if router.selectedTab == tab {
+            router.popToRoot(for: tab)
           }
+          router.selectedTab = tab
         } label: {
           Image(systemName: tab.icon)
             .symbolRenderingMode(.palette)
@@ -86,14 +81,12 @@ public struct TabBarView: View {
                 colors: router.selectedTab == tab ? [.indigo, .purple] : [.indigo, .secondary],
                 startPoint: .top, endPoint: .bottom)
             )
-            .shadow(color: router.selectedTab == tab ? .indigo : .clear, radius: 1, x: 0, y: 0)
+            .shadow(color: router.selectedTab == tab ? .indigo.opacity(0.3) : .clear, radius: 1, x: 0, y: 0)
         }
       }
     }
     .padding()
     .pillStyle(material: .regular)
-    .offset(x: router.selectedTabPath.isEmpty ? -36 : 0)
-    .animation(.bouncy, value: router.selectedTabPath)
   }
 }
 
