@@ -1,5 +1,5 @@
 {
-  "originHash" : "5c2652841b13d575ca17fe08490cd4dd7f28c5d084f030269ae52bbfc0073c77",
+  "originHash" : "f5998f1fd4b3a5baa386c7cf6177b70540452c183d1bd30c8e3fb613aaaed138",
   "pins" : [
     {
       "identity" : "approuter",
@@ -13,10 +13,10 @@
     {
       "identity" : "atprotokit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/dimillian/ATProtoKit",
+      "location" : "https://github.com/MasterJ93/ATProtoKit",
       "state" : {
-        "branch" : "remove-update",
-        "revision" : "a817ae7c7757c89260df374f4b3cf575da6fcceb"
+        "revision" : "9d4b9f4bb61fba8e2b1303ef232a860e6b1652b0",
+        "version" : "0.28.0"
       }
     },
     {
