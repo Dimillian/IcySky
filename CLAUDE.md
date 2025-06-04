@@ -72,6 +72,30 @@ The codebase is split into two main Swift packages:
 - Environment-based dependency injection for shared services
 - Tab-based navigation with sheet-based modal presentation
 
+### Authentication Flow
+The `Auth` class uses AsyncStream for reactive authentication state management:
+- **AsyncStream Pattern**: `configurationUpdates` emits configuration changes as they happen
+- **Stateless Updates**: No timestamp tracking or manual state synchronization
+- **Automatic Propagation**: Login, logout, and session refresh all emit through the same stream
+- **App Integration**: The root app view listens to the stream and updates UI state accordingly
+
+Example:
+```swift
+// In Auth class
+public let configurationUpdates: AsyncStream<ATProtocolConfiguration?>
+
+// In IcySkyApp
+.task {
+    for await configuration in auth.configurationUpdates {
+        if let configuration {
+            await refreshEnvWith(configuration: configuration)
+        } else {
+            appState = .unauthenticated
+            router.presentedSheet = .auth
+        }
+    }
+}
+
 ### Testing Approach
 - Swift Testing framework (modern replacement for XCTest)
 - ViewInspector for SwiftUI component testing

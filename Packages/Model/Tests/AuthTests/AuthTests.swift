@@ -5,47 +5,44 @@ import Foundation
 
 struct AuthTests {
 
-  @Test func testSessionLastRefreshedUpdatesOnLogout() async throws {
+  @Test func testLogoutClearsConfigurationAndEmitsNil() async throws {
     let auth = Auth()
-    let initialDate = Date()
-
-    try await Task.sleep(nanoseconds: 1_000_000)
-
+    
+    // Start collecting updates before triggering logout
+    let task = Task {
+      var result: ATProtocolConfiguration?
+      for await config in auth.configurationUpdates {
+        result = config
+        break
+      }
+      return result
+    }
+    
     try await auth.logout()
-
-    #expect(auth.sessionLastRefreshed! > initialDate)
+    
+    let emittedConfig = await task.value
+    #expect(emittedConfig == nil)
     #expect(auth.configuration == nil)
   }
 
-  @Test func testLogoutClearsConfiguration() async throws {
+  @Test func testRefreshEmitsNilOnFailure() async throws {
     let auth = Auth()
-
-    try await auth.logout()
-
-    #expect(auth.configuration == nil)
-  }
-
-  @Test func testRefreshWithoutTokensReturnsEarly() async throws {
-    let auth = Auth()
-    let initialDate = Date()
-
-    try await Task.sleep(nanoseconds: 1_000_000)
-
+    
+    // Start collecting updates before triggering refresh
+    let task = Task {
+      var result: ATProtocolConfiguration?
+      for await config in auth.configurationUpdates {
+        result = config
+        break
+      }
+      return result
+    }
+    
     await auth.refresh()
-
-    #expect(auth.sessionLastRefreshed! > initialDate)
+    
+    let emittedConfig = await task.value
+    #expect(emittedConfig == nil)
     #expect(auth.configuration == nil)
-  }
-
-  @Test func testSessionLastRefreshedUpdatesOnRefresh() async throws {
-    let auth = Auth()
-    let initialDate = Date()
-
-    try await Task.sleep(nanoseconds: 1_000_000)
-
-    await auth.refresh()
-
-    #expect(auth.sessionLastRefreshed! > initialDate)
   }
 
   @Test func testAuthInstanceCreation() {
@@ -54,5 +51,29 @@ struct AuthTests {
 
     #expect(auth1.configuration == nil)
     #expect(auth2.configuration == nil)
+  }
+  
+  @Test func testConfigurationUpdatesStream() async throws {
+    let auth = Auth()
+    var updates: [ATProtocolConfiguration?] = []
+    
+    let task = Task {
+      for await config in auth.configurationUpdates {
+        updates.append(config)
+        if updates.count >= 2 { break }
+      }
+    }
+    
+    // Simulate logout (emits nil)
+    try await auth.logout()
+    
+    // Simulate refresh failure (emits nil)
+    await auth.refresh()
+    
+    try await Task.sleep(nanoseconds: 100_000_000) // 100ms
+    task.cancel()
+    
+    #expect(updates.count == 2)
+    #expect(updates.allSatisfy { $0 == nil })
   }
 }

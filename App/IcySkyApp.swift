@@ -75,26 +75,17 @@ struct IcySkyApp: App {
       .task(id: scenePhase) {
         if scenePhase == .active {
           await auth.refresh()
-          if auth.configuration == nil {
-            appState = .unauthenticated
-            router.presentedSheet = .auth
-          }
         }
       }
-      .task(id: auth.sessionLastRefreshed) {
-        switch appState {
-        case .resuming, .unauthenticated:
-          if let newConfiguration = auth.configuration {
+      .task {
+        for await configuration in auth.configurationUpdates {
+          if let configuration {
             router.presentedSheet = nil
-            await refreshEnvWith(configuration: newConfiguration)
-          }
-        case .authenticated:
-          if auth.configuration == nil {
+            await refreshEnvWith(configuration: configuration)
+          } else {
             appState = .unauthenticated
             router.presentedSheet = .auth
           }
-        default:
-          break
         }
       }
       .overlay(
