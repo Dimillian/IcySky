@@ -158,3 +158,25 @@ struct ExampleView: View {
 ```
 
 This approach results in cleaner, more maintainable code that works with SwiftUI's design rather than against it.
+
+## Build Verification Rule
+
+**IMPORTANT**: After making code changes, you MUST use the XcodeBuildMCP commands to build and verify the project compiles without errors:
+
+1. First, discover available schemes:
+   ```
+   mcp__XcodeBuildMCP__list_schems_proj({ projectPath: "/Users/thomas/Documents/Dev/Open Source/IcySky/IcySky.xcodeproj" })
+   ```
+
+2. Build the IcySky scheme for iOS Simulator:
+   ```
+   mcp__XcodeBuildMCP__build_ios_sim_name_proj({ 
+     projectPath: "/Users/thomas/Documents/Dev/Open Source/IcySky/IcySky.xcodeproj", 
+     scheme: "IcySky", 
+     simulatorName: "iPhone 16" 
+   })
+   ```
+   
+3. If there are build errors, fix them before considering the task complete.
+
+This ensures code changes are syntactically correct and don't break the build.
