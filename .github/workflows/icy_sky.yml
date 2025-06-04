@@ -25,6 +25,20 @@ jobs:
       - name: Test Model Package
         run: swift test --package-path Packages/Model
 
+  test-feature:
+    name: Test Features Package
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+      - name: Select Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_16.1.app
+      - name: Skip Xcode Macro Fingerprint Validation
+        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+      - name: Test Features Package
+        run: xcodebuild test -scheme FeaturesTests -destination 'platform=iOS Simulator,name=iPhone 16'
+
   build:
     name: Build IcySky
     runs-on: macos-15

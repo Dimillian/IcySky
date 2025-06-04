@@ -33,7 +33,7 @@
 		9F5F5E102CEE46B200A4712C /* IcySky-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "IcySky-Info.plist"; sourceTree = "<group>"; };
 		9FAEE3A72CF0994400F86CDC /* Features */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Features; path = Packages/Features; sourceTree = "<group>"; };
 		9FAEE3A82CF0994C00F86CDC /* Model */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Model; path = Packages/Model; sourceTree = "<group>"; };
-		9FAEE3B72CF099E600F86CDC /* PackageTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = PackageTests.xctestplan; sourceTree = "<group>"; };
+		E9FE37002DF0661A00EB0418 /* FeaturesTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = FeaturesTests.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -77,7 +77,7 @@
 		9F21421A2CE9DAA1004167D7 = {
 			isa = PBXGroup;
 			children = (
-				9FAEE3B72CF099E600F86CDC /* PackageTests.xctestplan */,
+				E9FE37002DF0661A00EB0418 /* FeaturesTests.xctestplan */,
 				9F5F5E102CEE46B200A4712C /* IcySky-Info.plist */,
 				9F2142252CE9DAA1004167D7 /* App */,
 				9FAEE3A82CF0994C00F86CDC /* Model */,

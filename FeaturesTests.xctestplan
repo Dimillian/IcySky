@@ -1,0 +1,36 @@
+{
+  "configurations" : [
+    {
+      "id" : "79418425-9BDC-4B83-8F74-854A9D664E7A",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:IcySky.xcodeproj",
+      "identifier" : "9F2142222CE9DAA1004167D7",
+      "name" : "IcySky"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/Features",
+        "identifier" : "FeedUITests",
+        "name" : "FeedUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/Features",
+        "identifier" : "DesignSystemTests",
+        "name" : "DesignSystemTests"
+      }
+    }
+  ],
+  "version" : 1
+}
