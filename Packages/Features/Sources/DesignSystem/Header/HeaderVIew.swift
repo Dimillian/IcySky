@@ -242,8 +242,8 @@ public struct HeaderView: View {
     Divider()
     HeaderView(
       title: "Large Title",
-      fontSize: .largeTitle,
-      type: .titleOnly
+      type: .titleOnly,
+      fontSize: .largeTitle
     )
   }
   .padding()
