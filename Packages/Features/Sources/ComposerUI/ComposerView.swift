@@ -19,7 +19,12 @@ public struct ComposerView: View {
 
   public var body: some View {
     VStack(spacing: 0) {
-      ComposerHeaderView()
+      HeaderView(
+        title: "Composer",
+        type: .modal,
+        fontSize: .largeTitle,
+        alignment: .leading
+      )
       
       VStack {
         if case .error(let errorMessage) = sendState {

@@ -1,3 +1,4 @@
+import DesignSystem
 import Network
 import SwiftUI
 
@@ -33,13 +34,7 @@ public struct FeedsListTitleView: View {
         HStack {
           VStack(alignment: .leading, spacing: 2) {
             Text("Feeds")
-              .foregroundStyle(
-                .primary.shadow(
-                  .inner(
-                    color: .shadowSecondary.opacity(0.5),
-                    radius: 1, x: -1, y: -1))
-              )
-              .shadow(color: .black.opacity(0.2), radius: 1, x: 1, y: 1)
+              .headerTitleShadow()
               .font(.title)
               .fontWeight(.bold)
             Text(filter.rawValue)
