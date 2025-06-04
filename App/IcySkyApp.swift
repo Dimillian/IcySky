@@ -50,7 +50,12 @@ struct IcySkyApp: App {
         }
       }
       .modelContainer(for: RecentFeedItem.self)
-      .withSheetDestinations(auth: $auth, router: $router)
+      .withSheetDestinations(
+        router: $router,
+        auth: auth,
+        client: appState.client,
+        currentUser: appState.currentUser
+      )
       .task(id: scenePhase) {
         if scenePhase == .active {
           await auth.refresh()

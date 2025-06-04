@@ -4,11 +4,15 @@ import AuthUI
 import ComposerUI
 import Destinations
 import MediaUI
+import Network
 import SwiftUI
+import User
 
 public struct SheetDestinations: ViewModifier {
-  @Binding var auth: Auth
   @Binding var router: AppRouter
+  let auth: Auth
+  let client: BSkyClient?
+  let currentUser: CurrentUser?
 
   public func body(content: Content) -> some View {
     content
@@ -24,14 +28,29 @@ public struct SheetDestinations: ViewModifier {
             namespace: namespace
           )
         case .composer:
-          ComposerView()
+          if let client, let currentUser {
+            ComposerView()
+              .environment(client)
+              .environment(currentUser)
+          }
         }
       }
   }
 }
 
 extension View {
-  public func withSheetDestinations(auth: Binding<Auth>, router: Binding<AppRouter>) -> some View {
-    modifier(SheetDestinations(auth: auth, router: router))
+  public func withSheetDestinations(
+    router: Binding<AppRouter>,
+    auth: Auth,
+    client: BSkyClient? = nil,
+    currentUser: CurrentUser? = nil
+  ) -> some View {
+    modifier(
+      SheetDestinations(
+        router: router,
+        auth: auth,
+        client: client,
+        currentUser: currentUser
+      ))
   }
 }
