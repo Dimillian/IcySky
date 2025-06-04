@@ -1,18 +1,19 @@
 import ATProtoKit
 import Auth
 import Testing
+import Foundation
 
 struct AuthTests {
 
   @Test func testSessionLastRefreshedUpdatesOnLogout() async throws {
     let auth = Auth()
-    let initialDate = auth.sessionLastRefreshed
+    let initialDate = Date()
 
     try await Task.sleep(nanoseconds: 1_000_000)
 
     try await auth.logout()
 
-    #expect(auth.sessionLastRefreshed > initialDate)
+    #expect(auth.sessionLastRefreshed! > initialDate)
     #expect(auth.configuration == nil)
   }
 
@@ -26,25 +27,25 @@ struct AuthTests {
 
   @Test func testRefreshWithoutTokensReturnsEarly() async throws {
     let auth = Auth()
-    let initialDate = auth.sessionLastRefreshed
+    let initialDate = Date()
 
     try await Task.sleep(nanoseconds: 1_000_000)
 
     await auth.refresh()
 
-    #expect(auth.sessionLastRefreshed > initialDate)
+    #expect(auth.sessionLastRefreshed! > initialDate)
     #expect(auth.configuration == nil)
   }
 
   @Test func testSessionLastRefreshedUpdatesOnRefresh() async throws {
     let auth = Auth()
-    let initialDate = auth.sessionLastRefreshed
+    let initialDate = Date()
 
     try await Task.sleep(nanoseconds: 1_000_000)
 
     await auth.refresh()
 
-    #expect(auth.sessionLastRefreshed > initialDate)
+    #expect(auth.sessionLastRefreshed! > initialDate)
   }
 
   @Test func testAuthInstanceCreation() {
