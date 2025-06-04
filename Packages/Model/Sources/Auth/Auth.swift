@@ -7,7 +7,7 @@ import SwiftUI
 public final class Auth: @unchecked Sendable {
   let keychain = KeychainSwift()
 
-  public private(set) var sessionLastRefreshed = Date()
+  public private(set) var sessionLastRefreshed: Date?
 
   public private(set) var configuration: ATProtocolConfiguration?
 

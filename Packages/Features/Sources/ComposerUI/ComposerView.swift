@@ -7,3 +7,12 @@ public struct ComposerView: View {
     Text("Composer")
   }
 }
+
+#Preview {
+  NavigationStack {
+    
+  }
+  .sheet(isPresented: .constant(true)) {
+    ComposerView()
+  }
+}

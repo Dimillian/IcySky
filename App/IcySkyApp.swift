@@ -18,11 +18,9 @@ import VariableBlur
 struct IcySkyApp: App {
   @Environment(\.scenePhase) var scenePhase
 
-  @State var client: BSkyClient?
+  @State var appState: AppState = .resuming
   @State var auth: Auth = .init()
-  @State var currentUser: CurrentUser?
   @State var router: AppRouter = .init(initialTab: .feed)
-  @State var isLoadingInitialSession: Bool = true
   @State var postDataControllerProvider: PostContextProvider = .init()
 
   init() {
@@ -31,23 +29,30 @@ struct IcySkyApp: App {
 
   var body: some Scene {
     WindowGroup {
-      TabView(selection: $router.selectedTab) {
-        if client != nil && currentUser != nil {
-          ForEach(AppTab.allCases) { tab in
-            AppTabRootView(tab: tab)
-              .tag(tab)
-              .toolbarVisibility(.hidden, for: .tabBar)
-          }
-        } else {
+      Group {
+        switch appState {
+        case .resuming:
           ProgressView()
             .containerRelativeFrame([.horizontal, .vertical])
+        case .authenticated(let client, let currentUser):
+          TabView(selection: $router.selectedTab) {
+            ForEach(AppTab.allCases) { tab in
+              AppTabRootView(tab: tab)
+                .tag(tab)
+                .toolbarVisibility(.hidden, for: .tabBar)
+            }
+          }
+          .environment(client)
+          .environment(currentUser)
+          .environment(auth)
+          .environment(router)
+          .environment(postDataControllerProvider)
+        case .unauthenticated:
+          Text("Unauthenticated")
+        case .error(let error):
+          Text("Error: \(error.localizedDescription)")
         }
       }
-      .environment(client)
-      .environment(currentUser)
-      .environment(auth)
-      .environment(router)
-      .environment(postDataControllerProvider)
       .modelContainer(for: RecentFeedItem.self)
       .sheet(
         item: $router.presentedSheet,
@@ -67,35 +72,45 @@ struct IcySkyApp: App {
           }
         }
       )
-      .task(id: auth.sessionLastRefreshed) {
-        if let newConfiguration = auth.configuration {
-          await refreshEnvWith(configuration: newConfiguration)
-          if router.presentedSheet == .auth {
-            router.presentedSheet = nil
-          }
-        } else if auth.configuration == nil && !isLoadingInitialSession {
-          router.presentedSheet = .auth
-        }
-        isLoadingInitialSession = false
-      }
       .task(id: scenePhase) {
         if scenePhase == .active {
           await auth.refresh()
+          if auth.configuration == nil {
+            appState = .unauthenticated
+            router.presentedSheet = .auth
+          }
+        }
+      }
+      .task(id: auth.sessionLastRefreshed) {
+        switch appState {
+        case .resuming, .unauthenticated:
+          if let newConfiguration = auth.configuration {
+            router.presentedSheet = nil
+            await refreshEnvWith(configuration: newConfiguration)
+          }
+        case .authenticated:
+          if auth.configuration == nil {
+            appState = .unauthenticated
+            router.presentedSheet = .auth
+          }
+        default:
+          break
         }
       }
       .overlay(
         alignment: .top,
         content: {
-          topFrostView
+          if case .authenticated = appState {
+            topFrostView
+          }
         }
       )
       .overlay(
         alignment: .bottom,
         content: {
           ZStack(alignment: .center) {
-            bottomFrostView
-
-            if client != nil {
+            if case .authenticated = appState {
+              bottomFrostView
               TabBarView()
                 .environment(router)
                 .ignoresSafeArea(.keyboard)
@@ -146,8 +161,12 @@ struct IcySkyApp: App {
   }
 
   private func refreshEnvWith(configuration: ATProtocolConfiguration) async {
-    let client = await BSkyClient(configuration: configuration)
-    self.client = client
-    self.currentUser = await CurrentUser(client: client)
+    do {
+      let client = await BSkyClient(configuration: configuration)
+      let currentUser = try await CurrentUser(client: client)
+      appState = .authenticated(client: client, currentUser: currentUser)
+    } catch {
+      appState = .error(error)
+    }
   }
 }
