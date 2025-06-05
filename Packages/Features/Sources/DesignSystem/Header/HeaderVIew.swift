@@ -86,23 +86,21 @@ public struct HeaderView: View {
   }
 
   public var body: some View {
-    HStack {
-      // Action button (left side for navigation, right side for modal/custom)
-      if case .navigation = type {
+    HStack(alignment: .center) {
+      switch type {
+      case .titleOnly:
+        EmptyView()
+      case .navigation:
         actionButton
+      case .modal, .custom:
+        actionButton
+          .padding(.trailing, 12)
       }
 
       // Title section
       titleSection
 
       Spacer()
-
-      // Action button (right side for modal/custom)
-      if case .modal = type {
-        actionButton
-      } else if case .custom = type {
-        actionButton
-      }
     }
     .headerTitleShadow()
     .font(fontSize.font)
@@ -237,7 +235,7 @@ public struct HeaderView: View {
     Divider()
     HeaderView(
       title: "Custom",
-      type: .custom(systemImage: "star") { }
+      type: .custom(systemImage: "star") {}
     )
     Divider()
     HeaderView(
