@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ComposerTextEditorView: View {
   @Binding var text: String
-  let sendState: ComposerView.SendState
+  let sendState: ComposerSendState
   @FocusState private var isFocused: Bool
   
   var body: some View {

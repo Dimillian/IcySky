@@ -4,7 +4,7 @@ import SwiftUI
 
 struct ComposerToolbarView: View {
   @Binding var text: String
-  @Binding var sendState: ComposerView.SendState
+  @Binding var sendState: ComposerSendState
 
   var body: some View {
     HStack {

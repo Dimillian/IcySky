@@ -7,66 +7,31 @@ public struct ComposerView: View {
   @Environment(\.dismiss) private var dismiss
 
   @State private var text: String = ""
-  @State private var sendState: SendState = .idle
-
-  enum SendState: Equatable {
-    case idle
-    case loading
-    case error(String)
-  }
+  @State private var sendState: ComposerSendState = .idle
 
   public init() {}
 
   public var body: some View {
     VStack(spacing: 0) {
-      HStack(alignment: .center) {
-        HeaderView(
-          title: "New Post",
-          type: .modal,
-          fontSize: .largeTitle,
-          alignment: .leading
-        )
-        Spacer()
-        
-        Button {
-          Task { await sendPost() }
-        } label: {
-          Image(systemName: "paperplane")
-            .font(.body)
-            .padding(.all, 12)
-            .foregroundStyle(.indigoPurple)
-        }
-        .buttonStyle(.circle)
-        .foregroundColor(.primary)
-        .padding(.trailing, 16)
-      }
+      ComposerHeaderView(sendState: $sendState, onSend: sendPost)
+
       Divider()
-      
-      VStack {
-        if case .error(let errorMessage) = sendState {
-          Text(errorMessage)
-            .foregroundColor(.red)
-            .padding()
-        }
 
-        ComposerTextEditorView(text: $text, sendState: sendState)
-
-        if sendState == .loading {
-          ProgressView()
-            .padding()
-        }
-
-        Spacer()
-      }
+      ComposerTextEditorView(text: $text, sendState: sendState)
     }
-    .safeAreaInset(edge: .bottom, content: {
-      ComposerToolbarView(
-        text: $text,
-        sendState: $sendState
-      )
-    })
+    .safeAreaInset(
+      edge: .bottom,
+      content: {
+        ComposerToolbarView(
+          text: $text,
+          sendState: $sendState
+        )
+      })
   }
-  
+}
+
+// MARK: - Network
+extension ComposerView {
   private func sendPost() async {
     sendState = .loading
     do {
