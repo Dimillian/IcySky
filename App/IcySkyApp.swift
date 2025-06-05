@@ -31,18 +31,12 @@ struct IcySkyApp: App {
           ProgressView()
             .containerRelativeFrame([.horizontal, .vertical])
         case .authenticated(let client, let currentUser):
-          TabView(selection: $router.selectedTab) {
-            ForEach(AppTab.allCases) { tab in
-              AppTabRootView(tab: tab)
-                .tag(tab)
-                .toolbarVisibility(.hidden, for: .tabBar)
-            }
-          }
-          .environment(client)
-          .environment(currentUser)
-          .environment(auth)
-          .environment(router)
-          .environment(postDataControllerProvider)
+          AppTabView()
+            .environment(client)
+            .environment(currentUser)
+            .environment(auth)
+            .environment(router)
+            .environment(postDataControllerProvider)
         case .unauthenticated:
           Text("Unauthenticated")
         case .error(let error):
