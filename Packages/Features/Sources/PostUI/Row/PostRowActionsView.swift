@@ -1,3 +1,4 @@
+import DesignSystem
 import Models
 import Network
 import SwiftUI
@@ -22,13 +23,7 @@ public struct PostRowActionsView: View {
         Label("\(post.replyCount)", systemImage: "bubble")
       }
       .buttonStyle(.plain)
-      .foregroundStyle(
-        LinearGradient(
-          colors: [.indigo, .purple],
-          startPoint: .top,
-          endPoint: .bottom
-        )
-      )
+      .foregroundStyle(.indigoPurple)
 
       Button(action: {}) {
         Label("\(dataController.repostCount)", systemImage: "quote.bubble")
@@ -39,13 +34,7 @@ public struct PostRowActionsView: View {
       }
       .buttonStyle(.plain)
       .symbolVariant(dataController.isReposted ? .fill : .none)
-      .foregroundStyle(
-        LinearGradient(
-          colors: [.purple, .indigo],
-          startPoint: .top,
-          endPoint: .bottom
-        )
-      )
+      .foregroundStyle(.purpleIndigo)
 
       Button(action: {
         Task {
@@ -61,13 +50,7 @@ public struct PostRowActionsView: View {
       .contentTransition(.numericText(value: Double(dataController.likeCount)))
       .monospacedDigit()
       .animation(.smooth, value: dataController.likeCount)
-      .foregroundStyle(
-        LinearGradient(
-          colors: [.red, .purple],
-          startPoint: .topLeading,
-          endPoint: .bottomTrailing
-        )
-      )
+      .foregroundStyle(.redPurple)
 
       Spacer()
 
@@ -76,13 +59,7 @@ public struct PostRowActionsView: View {
           Image(systemName: "ellipsis")
         }
         .buttonStyle(.plain)
-        .foregroundStyle(
-          LinearGradient(
-            colors: [.indigo, .purple],
-            startPoint: .leading,
-            endPoint: .trailing
-          )
-        )
+        .foregroundStyle(.indigoPurpleHorizontal)
       }
     }
     .buttonStyle(.plain)

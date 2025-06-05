@@ -8,7 +8,6 @@ struct ComposerTextEditorView: View {
   var body: some View {
     TextEditor(text: $text)
       .font(.system(size: UIFontMetrics.default.scaledValue(for: 20)))
-      .frame(height: 150)
       .frame(maxWidth: .infinity)
       .padding()
       .focused($isFocused)

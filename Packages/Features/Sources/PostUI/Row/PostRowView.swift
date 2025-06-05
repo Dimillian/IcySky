@@ -76,11 +76,7 @@ public struct PostRowView: View {
     .overlay {
       Circle()
         .stroke(
-          LinearGradient(
-            colors: post.hasReply
-              ? [.purple, .indigo] : [.shadowPrimary.opacity(0.5), .indigo.opacity(0.5)],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing),
+          LinearGradient.avatarBorder(hasReply: post.hasReply),
           lineWidth: 1)
     }
     .shadow(color: .shadowPrimary.opacity(0.3), radius: 2)
@@ -119,12 +115,8 @@ public struct PostRowView: View {
         .frame(width: 1)
         .frame(maxHeight: .infinity)
         .foregroundStyle(
-          LinearGradient(
-            colors: [.indigo, .purple],
-            startPoint: .top,
-            endPoint: .bottom
-          )
-          .shadow(.drop(color: .indigo, radius: 3)))
+          LinearGradient.indigoPurple
+            .shadow(.drop(color: .indigo, radius: 3)))
     }
   }
 }

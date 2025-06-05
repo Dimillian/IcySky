@@ -19,12 +19,28 @@ public struct ComposerView: View {
 
   public var body: some View {
     VStack(spacing: 0) {
-      HeaderView(
-        title: "Composer",
-        type: .modal,
-        fontSize: .largeTitle,
-        alignment: .leading
-      )
+      HStack(alignment: .center) {
+        HeaderView(
+          title: "New Post",
+          type: .modal,
+          fontSize: .largeTitle,
+          alignment: .leading
+        )
+        Spacer()
+        
+        Button {
+          Task { await sendPost() }
+        } label: {
+          Image(systemName: "paperplane")
+            .font(.body)
+            .padding(.all, 12)
+            .foregroundStyle(.indigoPurple)
+        }
+        .buttonStyle(.circle)
+        .foregroundColor(.primary)
+        .padding(.trailing, 16)
+      }
+      Divider()
       
       VStack {
         if case .error(let errorMessage) = sendState {
@@ -43,14 +59,12 @@ public struct ComposerView: View {
         Spacer()
       }
     }
-    .toolbar {
+    .safeAreaInset(edge: .bottom, content: {
       ComposerToolbarView(
         text: $text,
-        sendState: $sendState,
-        onSend: sendPost,
-        onDismiss: { dismiss() }
+        sendState: $sendState
       )
-    }
+    })
   }
   
   private func sendPost() async {
@@ -61,14 +75,5 @@ public struct ComposerView: View {
     } catch {
       sendState = .error("Failed to send post: \(error.localizedDescription)")
     }
-  }
-}
-
-#Preview {
-  NavigationStack {
-    ComposerView()
-  }
-  .sheet(isPresented: .constant(true)) {
-    ComposerView()
   }
 }
