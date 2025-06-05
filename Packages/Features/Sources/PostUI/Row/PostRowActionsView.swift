@@ -1,4 +1,6 @@
+import AppRouter
 import DesignSystem
+import Destinations
 import Models
 import Network
 import SwiftUI
@@ -10,6 +12,7 @@ extension EnvironmentValues {
 public struct PostRowActionsView: View {
   @Environment(\.hideMoreActions) var hideMoreActions
   @Environment(PostContext.self) var dataController
+  @Environment(AppRouter.self) var router
 
   let post: PostItem
 
@@ -19,7 +22,9 @@ public struct PostRowActionsView: View {
 
   public var body: some View {
     HStack(alignment: .firstTextBaseline, spacing: 16) {
-      Button(action: {}) {
+      Button(action: {
+        router.presentedSheet = .composer(mode: .reply(post))
+      }) {
         Label("\(post.replyCount)", systemImage: "bubble")
       }
       .buttonStyle(.plain)

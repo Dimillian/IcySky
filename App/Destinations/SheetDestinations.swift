@@ -27,11 +27,18 @@ public struct SheetDestinations: ViewModifier {
             preloadedImage: preloadedImage,
             namespace: namespace
           )
-        case .composer:
+        case let .composer(mode):
           if let client, let currentUser {
-            ComposerView()
-              .environment(client)
-              .environment(currentUser)
+            switch mode {
+            case .newPost:
+              ComposerView(mode: .newPost)
+                .environment(client)
+                .environment(currentUser)
+            case let .reply(post):
+              ComposerView(mode: .reply(post))
+                .environment(client)
+                .environment(currentUser)
+            }
           }
         }
       }

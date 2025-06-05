@@ -41,7 +41,7 @@ public struct TabBarView: View {
 
   private var composeButtonView: some View {
     Button {
-      router.presentedSheet = .composer
+      router.presentedSheet = .composer(mode: .newPost)
     } label: {
       Image(systemName: "square.and.pencil")
         .symbolRenderingMode(.palette)
@@ -81,7 +81,9 @@ public struct TabBarView: View {
                 colors: router.selectedTab == tab ? [.indigo, .purple] : [.indigo, .secondary],
                 startPoint: .top, endPoint: .bottom)
             )
-            .shadow(color: router.selectedTab == tab ? .indigo.opacity(0.3) : .clear, radius: 1, x: 0, y: 0)
+            .shadow(
+              color: router.selectedTab == tab ? .indigo.opacity(0.3) : .clear, radius: 1, x: 0,
+              y: 0)
         }
       }
     }
