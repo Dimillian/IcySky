@@ -78,9 +78,9 @@ public struct HeaderView: View {
 
   private var paddingForType: CGFloat {
     switch type {
-    case .navigation:
+    case .navigation, .titleOnly:
       return 0  // Original behavior - no horizontal padding
-    case .modal, .titleOnly, .custom:
+    case .modal, .custom:
       return 16  // New modal/custom headers get padding
     }
   }
