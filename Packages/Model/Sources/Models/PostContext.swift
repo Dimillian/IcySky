@@ -6,6 +6,7 @@ import SwiftUI
 @MainActor
 @Observable
 public class PostContextProvider {
+  @ObservationIgnored
   private var contexts: [String: PostContext] = [:]
 
   public init() {}
