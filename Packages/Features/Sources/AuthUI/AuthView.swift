@@ -42,7 +42,7 @@ public struct AuthView: View {
             .padding()
         }
         .frame(maxWidth: .infinity)
-        .buttonStyle(.pill)
+        .buttonStyle(.glass)
 
         if let error {
           Text(error)

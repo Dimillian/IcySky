@@ -32,7 +32,7 @@ struct ComposerSendButton: View {
           .foregroundStyle(.indigoPurple)
       }
     }
-    .buttonStyle(.circle)
+    .buttonStyle(.glass)
     .foregroundColor(.primary)
     .padding(.trailing, 16)
     .alert("Error", isPresented: $showError) {

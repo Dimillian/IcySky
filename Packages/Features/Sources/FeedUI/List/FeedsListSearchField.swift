@@ -26,7 +26,8 @@ public struct FeedsListSearchField: View {
       }
       .frame(maxWidth: isInSearch ? .infinity : 100)
       .padding()
-      .pillStyle()
+      .glassEffect(in: Capsule())
+      
       if isInSearch {
         Button {
           withAnimation {
@@ -37,8 +38,8 @@ public struct FeedsListSearchField: View {
         } label: {
           Image(systemName: "xmark")
             .frame(width: 50, height: 50)
+            .glassEffect(in: Circle())
         }
-        .buttonStyle(.circle)
         .transition(.push(from: .leading).combined(with: .scale).combined(with: .opacity))
       }
     }

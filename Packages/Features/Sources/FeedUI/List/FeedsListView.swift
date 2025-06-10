@@ -28,6 +28,7 @@ public struct FeedsListView: View {
   public var body: some View {
     List {
       headerView
+        .padding(.bottom, 16)
       if let error {
         FeedsListErrorView(error: error) {
           await fetchSuggestedFeed()

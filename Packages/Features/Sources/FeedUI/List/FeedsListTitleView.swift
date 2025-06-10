@@ -61,6 +61,7 @@ public struct FeedsListTitleView: View {
         isSearchFocused: isSearchFocused
       )
       .padding(.leading, isInSearch ? -120 : 0)
+      .contentShape(Rectangle())
       .onTapGesture {
         withAnimation(.bouncy) {
           isInSearch.toggle()

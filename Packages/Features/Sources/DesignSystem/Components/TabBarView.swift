@@ -34,9 +34,10 @@ public struct TabBarView: View {
             startPoint: .top, endPoint: .bottom)
         )
         .frame(width: 50, height: 50)
+        .glassEffect(in: Circle())
     }
-    .buttonStyle(.circle)
     .offset(x: router.selectedTabPath.isEmpty ? 0 : -164)
+    .opacity(router.selectedTabPath.isEmpty ? 0 : 1)
   }
 
   private var composeButtonView: some View {
@@ -45,7 +46,6 @@ public struct TabBarView: View {
     } label: {
       Image(systemName: "square.and.pencil")
         .symbolRenderingMode(.palette)
-        .foregroundStyle(.primary)
         .imageScale(.medium)
         .foregroundStyle(
           .linearGradient(
@@ -53,8 +53,8 @@ public struct TabBarView: View {
             startPoint: .top, endPoint: .bottom)
         )
         .frame(width: 50, height: 50)
+        .glassEffect(in: Circle())
     }
-    .buttonStyle(.circle)
     .offset(x: 164)
   }
 
@@ -88,7 +88,7 @@ public struct TabBarView: View {
       }
     }
     .padding()
-    .pillStyle(material: .regular)
+    .glassEffect(in: Capsule())
   }
 }
 

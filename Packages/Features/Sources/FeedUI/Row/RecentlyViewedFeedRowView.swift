@@ -57,5 +57,6 @@ public struct RecentlyViewedFeedRowView: View {
       }
     }
     .listRowSeparator(.hidden)
+    .listRowInsets(.vertical, 0)
   }
 }
