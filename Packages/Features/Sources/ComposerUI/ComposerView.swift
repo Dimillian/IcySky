@@ -24,14 +24,12 @@ public struct ComposerView: View {
 
       ComposerTextEditorView(text: $text, sendState: sendState)
     }
-    .safeAreaInset(
-      edge: .bottom,
-      content: {
-        ComposerToolbarView(
-          text: $text,
-          sendState: $sendState
-        )
-      })
+    .toolbar {
+      ComposerToolbarView(
+        text: $text,
+        sendState: $sendState
+      )
+    }
   }
 }
 
