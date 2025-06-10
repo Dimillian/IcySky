@@ -6,7 +6,6 @@ public struct ScreenContainerModifier: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .listStyle(.plain)
-      .safeAreaPadding(.init(top: 0, leading: 0, bottom: .tabBarHeight, trailing: 0))
   }
 }
 
