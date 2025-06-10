@@ -28,7 +28,6 @@ let package = Package(
   ],
   dependencies: [
     .package(name: "Model", path: "../Model"),
-    .package(url: "https://github.com/nikstar/VariableBlur", from: "1.2.1"),
     .package(url: "https://github.com/nalexn/ViewInspector", from: "0.10.1"),
     .package(url: "https://github.com/kean/Nuke", from: "12.8.0"),
     .package(url: "https://github.com/Dimillian/AppRouter.git", from: "1.0.2"),
@@ -83,7 +82,6 @@ let package = Package(
     .target(
       name: "DesignSystem",
       dependencies: [
-        .product(name: "VariableBlur", package: "VariableBlur"),
         .product(name: "Destinations", package: "Model"),
         "AppRouter",
       ]

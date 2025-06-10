@@ -5,7 +5,6 @@ import Models
 import Network
 import SwiftUI
 import User
-import VariableBlur
 
 public struct FeedsListView: View {
   @Environment(BSkyClient.self) var client

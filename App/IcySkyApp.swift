@@ -66,28 +66,6 @@ struct IcySkyApp: App {
           }
         }
       }
-      .overlay(
-        alignment: .top,
-        content: {
-          if case .authenticated = appState {
-            FrostView(position: .top)
-          }
-        }
-      )
-      .overlay(
-        alignment: .bottom,
-        content: {
-          ZStack(alignment: .center) {
-            if case .authenticated = appState {
-              FrostView(position: .bottom)
-              TabBarView()
-                .environment(router)
-                .ignoresSafeArea(.keyboard)
-            }
-          }
-        }
-      )
-      .ignoresSafeArea(.keyboard)
     }
   }
 

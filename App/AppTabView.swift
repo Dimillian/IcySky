@@ -1,26 +1,33 @@
 import DesignSystem
 import Destinations
 import SwiftUI
+import AppRouter
 
 struct AppTabView: View {
   @Environment(AppRouter.self) var router
-  @State private var loadedTabs: Set<AppTab> = []
-
   let tabs: [AppTab] = AppTab.allCases
 
   var body: some View {
-    ZStack {
-      ForEach(Array(loadedTabs), id: \.id) { tab in
-        AppTabRootView(tab: tab)
-          .opacity(router.selectedTab == tab ? 1.0 : 0.0)
+    @Bindable var router = router
+    TabView(selection: $router.selectedTab) {
+      ForEach(AppTab.allCases) { tab in
+        Tab(value: tab, role: tab == .compose ? .search : .none) {
+          AppTabRootView(tab: tab)
+        } label: {
+          Label(tab.title, systemImage: tab.icon)
+        }
       }
     }
-    .onAppear {
-      loadedTabs.insert(router.selectedTab)
-    }
-    .onChange(of: router.selectedTab) { _, newTab in
-      loadedTabs.insert(newTab)
-    }
+    .tint(.indigo)
+    .tabBarMinimizeBehavior(.onScrollDown)
+    .onChange(of: router.selectedTab, { oldTab, newTab in
+      if newTab == .compose {
+        router.presentedSheet = .composer(mode: .newPost)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+          router.selectedTab = oldTab
+        }
+      }
+    })
   }
 }
 
