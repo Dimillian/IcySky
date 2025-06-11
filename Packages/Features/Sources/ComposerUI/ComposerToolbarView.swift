@@ -3,7 +3,7 @@ import Network
 import SwiftUI
 
 struct ComposerToolbarView: ToolbarContent {
-  @Binding var text: String
+  @Binding var text: AttributedString
   @Binding var sendState: ComposerSendState
 
   var body: some ToolbarContent {
@@ -52,7 +52,8 @@ struct ComposerToolbarView: ToolbarContent {
     }
 
     ToolbarItem(placement: .keyboard) {
-      Text("\(300 - text.count)")
+      let text = String(text.characters)
+      Text("\(300 - text.count))")
         .foregroundStyle(text.count > 250 ? .redPurple : .indigoPurple)
         .font(.subheadline)
         .contentTransition(.numericText(value: Double(text.count)))

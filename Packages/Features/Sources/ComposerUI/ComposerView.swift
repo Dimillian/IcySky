@@ -9,7 +9,9 @@ public struct ComposerView: View {
   
   @State var presentationDetent: PresentationDetent = .large
 
-  @State private var text: String = ""
+  @State private var text = AttributedString()
+  @State private var selection = AttributedTextSelection()
+  
   @State private var sendState: ComposerSendState = .idle
 
   let mode: ComposerMode
@@ -30,7 +32,7 @@ public struct ComposerView: View {
 
   public var body: some View {
     NavigationStack {
-      ComposerTextEditorView(text: $text, sendState: sendState)
+      ComposerTextEditorView(text: $text, selection: $selection, sendState: sendState)
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -56,10 +58,10 @@ extension ComposerView {
     do {
       switch mode {
       case .newPost:
-        _ = try await client.blueskyClient.createPostRecord(text: text)
+        _ = try await client.blueskyClient.createPostRecord(text: String(text.characters))
       case .reply(let post):
         // TODO: Create replyRef
-        _ = try await client.blueskyClient.createPostRecord(text: text)
+        _ = try await client.blueskyClient.createPostRecord(text: String(text.characters))
       }
       dismiss()
     } catch {
