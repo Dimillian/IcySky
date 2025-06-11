@@ -13,7 +13,6 @@ public struct FullScreenMediaView: View {
   let namespace: Namespace.ID
 
   @State private var isFirstImageLoaded: Bool = false
-  @State private var isOverlayVisible: Bool = false
   @State private var isSaved: Bool = false
   @State private var scrollPosition: Media?
   @State private var isAltVisible: Bool = false
@@ -34,89 +33,73 @@ public struct FullScreenMediaView: View {
   }
 
   public var body: some View {
-    ScrollView(.horizontal, showsIndicators: false) {
-      LazyHStack {
-        ForEach(images.indices, id: \.self) { index in
-          LazyImage(
-            request: .init(
-              url: index == 0 ? firstImageURL : images[index].url,
-              priority: .veryHigh)
-          ) { state in
-            if let image = state.image {
-              image
-                .resizable()
-                .scaledToFill()
-                .aspectRatio(contentMode: .fit)
-                .scaleEffect(zoom)
-                .gesture(
-                  MagnifyGesture()
-                    .updating($zoom) { value, gestureState, transaction in
-                      gestureState = value.magnification
-                    }
-                )
-            } else {
-              RoundedRectangle(cornerRadius: 8)
-                .fill(.thinMaterial)
+    NavigationStack {
+      ScrollView(.horizontal, showsIndicators: false) {
+        LazyHStack {
+          ForEach(images.indices, id: \.self) { index in
+            LazyImage(
+              request: .init(
+                url: index == 0 ? firstImageURL : images[index].url,
+                priority: .veryHigh)
+            ) { state in
+              if let image = state.image {
+                image
+                  .resizable()
+                  .scaledToFill()
+                  .aspectRatio(contentMode: .fit)
+                  .scaleEffect(zoom)
+                  .gesture(
+                    MagnifyGesture()
+                      .updating($zoom) { value, gestureState, transaction in
+                        gestureState = value.magnification
+                      }
+                  )
+              } else {
+                RoundedRectangle(cornerRadius: 8)
+                  .fill(.thinMaterial)
+              }
             }
+            .containerRelativeFrame([.horizontal, .vertical])
+            .id(images[index])
           }
-          .containerRelativeFrame([.horizontal, .vertical])
-          .id(images[index])
         }
+        .scrollTargetLayout()
       }
-      .scrollTargetLayout()
+      .scrollPosition(id: $scrollPosition)
+      .toolbar {
+        leadingToolbar
+        trailingToolbar
+      }
+      .scrollContentBackground(.hidden)
+      .scrollTargetBehavior(.viewAligned)
+      .task {
+        scrollPosition = images.first
+        do {
+          let data = try await ImagePipeline.shared.data(for: .init(url: images.first?.url))
+          if !data.0.isEmpty {
+            self.isFirstImageLoaded = true
+          }
+        } catch {}
+      }
     }
-    .scrollPosition(id: $scrollPosition)
-    .overlay(alignment: .topTrailing) {
-      topActionsView
-    }
-    .overlay(alignment: .bottom) {
-      bottomActionsView
-    }
-    .scrollContentBackground(.hidden)
-    .scrollTargetBehavior(.viewAligned)
     .navigationTransition(.zoom(sourceID: images[0].id, in: namespace))
-    .containerBackground(.clear, for: .navigation)
-    .background(.clear)
-    .toolbarBackground(.clear, for: .navigationBar)
-    .onTapGesture {
-      withAnimation {
-        isOverlayVisible.toggle()
-      }
-    }
-    .task {
-      scrollPosition = images.first
-      do {
-        let data = try await ImagePipeline.shared.data(for: .init(url: images.first?.url))
-        if !data.0.isEmpty {
-          self.isFirstImageLoaded = true
-        }
-      } catch {}
-    }
   }
 
-  private var topActionsView: some View {
-    HStack {
-      if isOverlayVisible {
-        Button {
-          dismiss()
-        } label: {
-          Image(systemName: "xmark")
-            .padding()
-        }
-        .buttonStyle(.glass)
-        .foregroundColor(.indigo)
-        .padding(.trailing, 16)
-        .transition(.move(edge: .top).combined(with: .opacity))
+  private var leadingToolbar: some ToolbarContent {
+    ToolbarItem(placement: .navigationBarLeading) {
+      Button {
+        dismiss()
+      } label: {
+        Image(systemName: "xmark")
+          .foregroundStyle(.redPurple)
       }
     }
   }
 
-  private var bottomActionsView: some View {
-    HStack(spacing: 16) {
-      if isOverlayVisible {
-        saveButton
-        shareButton
-      }
+  private var trailingToolbar: some ToolbarContent {
+    ToolbarItemGroup(placement: .navigationBarTrailing) {
+      saveButton
+      shareButton
     }
   }
 
@@ -140,29 +123,18 @@ public struct FullScreenMediaView: View {
         } catch {}
       }
     } label: {
-      if isSaved {
-        Label("Saved", systemImage: "checkmark")
-          .padding()
-      } else {
-        Label("Save", systemImage: "square.and.arrow.down")
-          .padding()
-      }
+      Image(systemName: isSaved ? "checkmark" : "arrow.down.circle")
+        .foregroundStyle(.indigoPurple)
     }
-    .foregroundColor(.indigo)
-    .buttonStyle(.glass)
-    .transition(.move(edge: .bottom).combined(with: .opacity))
   }
 
   @ViewBuilder
   private var shareButton: some View {
     if let imageURL = scrollPosition?.url {
       ShareLink(item: imageURL) {
-        Label("Share", systemImage: "square.and.arrow.up")
-          .padding()
+        Image(systemName: "square.and.arrow.up")
+          .foregroundStyle(.indigoPurple)
       }
-      .foregroundColor(.indigo)
-      .buttonStyle(.glass)
-      .transition(.move(edge: .bottom).combined(with: .opacity))
     }
   }
 }

@@ -21,9 +21,6 @@ public struct PostDetailView: View {
   public var body: some View {
     ScrollViewReader { proxy in
       List {
-        HeaderView(title: "Post")
-          .padding(.bottom)
-
         ForEach(parents) { parent in
           PostRowView(post: parent)
         }
@@ -52,6 +49,7 @@ public struct PostDetailView: View {
           proxy.scrollTo(scrollToId, anchor: .top)
         }
       }
+      .navigationTitle("Post")
     }
   }
 
