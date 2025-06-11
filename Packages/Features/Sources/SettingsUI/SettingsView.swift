@@ -21,7 +21,7 @@ public struct SettingsView: View {
           Text("Signout")
             .padding()
         }
-        .buttonStyle(.pill)
+        .buttonStyle(.glass)
       }
     }
   }

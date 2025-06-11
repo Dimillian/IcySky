@@ -40,14 +40,12 @@ extension AppTab {
       FeedsListView()
     case .profile:
       CurrentUserView()
-    case .messages:
-      HStack {
-        Text("Messages view")
-      }
     case .notification:
       NotificationsListView()
     case .settings:
       SettingsView()
+    case .compose:
+      EmptyView()
     }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "originHash" : "12b6b50041fdbfb83a0daa06c9edffe6763a576255f6947df8a629336ebf0746",
+  "originHash" : "24c95b404ee3914065b3d0fea5f1884e1e95c2a141b456b37cabcc4cbe57502a",
   "pins" : [
     {
       "identity" : "approuter",
@@ -71,15 +71,6 @@
       "state" : {
         "revision" : "0b01caa633889f6d64f73f1c01607358d36fe6e6",
         "version" : "0.4.0"
-      }
-    },
-    {
-      "identity" : "variableblur",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/nikstar/VariableBlur",
-      "state" : {
-        "revision" : "c8dc0ada195dfd47354cec5994c2dd434aa6c146",
-        "version" : "1.2.1"
       }
     },
     {

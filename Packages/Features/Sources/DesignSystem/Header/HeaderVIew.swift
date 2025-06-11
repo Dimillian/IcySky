@@ -147,7 +147,7 @@ public struct HeaderView: View {
           .font(.body)
           .padding(.all, 12)
       }
-      .buttonStyle(.circle)
+      .buttonStyle(.glass)
       .foregroundColor(.primary)
 
     case .custom(let systemImage, let action):
@@ -158,7 +158,7 @@ public struct HeaderView: View {
           .font(.body)
           .padding(.all, 8)
       }
-      .buttonStyle(.circle)
+      .buttonStyle(.glass)
       .foregroundColor(.primary)
 
     case .titleOnly:

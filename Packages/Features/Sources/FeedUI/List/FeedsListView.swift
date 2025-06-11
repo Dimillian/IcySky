@@ -5,7 +5,6 @@ import Models
 import Network
 import SwiftUI
 import User
-import VariableBlur
 
 public struct FeedsListView: View {
   @Environment(BSkyClient.self) var client
@@ -28,6 +27,7 @@ public struct FeedsListView: View {
   public var body: some View {
     List {
       headerView
+        .padding(.bottom, 16)
       if let error {
         FeedsListErrorView(error: error) {
           await fetchSuggestedFeed()

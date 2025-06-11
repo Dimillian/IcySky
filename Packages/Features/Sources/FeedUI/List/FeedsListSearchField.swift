@@ -1,4 +1,5 @@
 import SwiftUI
+import DesignSystem
 
 public struct FeedsListSearchField: View {
 
@@ -17,29 +18,32 @@ public struct FeedsListSearchField: View {
   }
 
   public var body: some View {
-    HStack {
+    GlassEffectContainer {
       HStack {
-        Image(systemName: "magnifyingglass")
-        TextField("Search", text: $searchText)
-          .focused(isSearchFocused)
-          .allowsHitTesting(isInSearch)
-      }
-      .frame(maxWidth: isInSearch ? .infinity : 100)
-      .padding()
-      .pillStyle()
-      if isInSearch {
-        Button {
-          withAnimation {
-            isInSearch.toggle()
-            isSearchFocused.wrappedValue = false
-            searchText = ""
-          }
-        } label: {
-          Image(systemName: "xmark")
-            .frame(width: 50, height: 50)
+        HStack {
+          Image(systemName: "magnifyingglass")
+          TextField("Search", text: $searchText)
+            .focused(isSearchFocused)
+            .allowsHitTesting(isInSearch)
         }
-        .buttonStyle(.circle)
-        .transition(.push(from: .leading).combined(with: .scale).combined(with: .opacity))
+        .frame(maxWidth: isInSearch ? .infinity : 100)
+        .padding()
+        .glassEffect(in: Capsule())
+        
+        if isInSearch {
+          Button {
+            withAnimation {
+              isInSearch.toggle()
+              isSearchFocused.wrappedValue = false
+              searchText = ""
+            }
+          } label: {
+            Image(systemName: "xmark")
+              .frame(width: 50, height: 50)
+              .foregroundStyle(.redPurple)
+              .glassEffect(in: Circle())
+          }
+        }
       }
     }
   }

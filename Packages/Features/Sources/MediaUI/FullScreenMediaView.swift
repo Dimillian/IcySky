@@ -103,7 +103,7 @@ public struct FullScreenMediaView: View {
           Image(systemName: "xmark")
             .padding()
         }
-        .buttonStyle(.circle)
+        .buttonStyle(.glass)
         .foregroundColor(.indigo)
         .padding(.trailing, 16)
         .transition(.move(edge: .top).combined(with: .opacity))
@@ -149,7 +149,7 @@ public struct FullScreenMediaView: View {
       }
     }
     .foregroundColor(.indigo)
-    .buttonStyle(.pill)
+    .buttonStyle(.glass)
     .transition(.move(edge: .bottom).combined(with: .opacity))
   }
 
@@ -161,7 +161,7 @@ public struct FullScreenMediaView: View {
           .padding()
       }
       .foregroundColor(.indigo)
-      .buttonStyle(.pill)
+      .buttonStyle(.glass)
       .transition(.move(edge: .bottom).combined(with: .opacity))
     }
   }

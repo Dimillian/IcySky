@@ -17,7 +17,7 @@ struct FeedsListErrorView: View {
         Text("Retry")
           .padding()
       }
-      .buttonStyle(.pill)
+      .buttonStyle(.glass)
     }
     .listRowSeparator(.hidden)
   }

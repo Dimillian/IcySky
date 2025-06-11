@@ -11,9 +11,6 @@ public struct PostListView: View {
 
   public var body: some View {
     List {
-      HeaderView(title: datasource.title)
-        .padding(.bottom)
-
       switch state {
       case .loading, .uninitialized:
         placeholderView
@@ -28,6 +25,7 @@ public struct PostListView: View {
         Text(error.localizedDescription)
       }
     }
+    .navigationTitle(datasource.title)
     .screenContainer()
     .task {
       if case .uninitialized = state {
