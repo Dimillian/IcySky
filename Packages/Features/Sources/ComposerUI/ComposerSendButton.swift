@@ -19,22 +19,14 @@ struct ComposerSendButton: View {
       switch sendState {
       case .loading:
         ProgressView()
-          .padding()
       case .error:
         Image(systemName: "exclamationmark.triangle")
-          .font(.body)
-          .padding(.all, 12)
           .foregroundStyle(.red)
       default:
         Image(systemName: "paperplane")
-          .font(.body)
-          .padding(.all, 12)
           .foregroundStyle(.indigoPurple)
       }
     }
-    .buttonStyle(.glass)
-    .foregroundColor(.primary)
-    .padding(.trailing, 16)
     .alert("Error", isPresented: $showError) {
       Button("OK", role: .cancel) {
         showError = false
