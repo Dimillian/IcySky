@@ -15,7 +15,7 @@ struct ComposerToolbarView: ToolbarContent {
       }
 
     }
-    
+
     ToolbarItem(placement: .keyboard) {
       Button {
       } label: {
@@ -24,7 +24,6 @@ struct ComposerToolbarView: ToolbarContent {
       }
     }
 
-    
     ToolbarItem(placement: .keyboard) {
       Button {
       } label: {
@@ -32,9 +31,9 @@ struct ComposerToolbarView: ToolbarContent {
           .foregroundStyle(.indigoPurple)
       }
     }
-    
+
     ToolbarSpacer(placement: .keyboard)
-       
+
     ToolbarItem(placement: .keyboard) {
       Button {
       } label: {
@@ -42,7 +41,7 @@ struct ComposerToolbarView: ToolbarContent {
           .foregroundStyle(.indigoPurple)
       }
     }
-    
+
     ToolbarItem(placement: .keyboard) {
       Button {
       } label: {
@@ -53,7 +52,7 @@ struct ComposerToolbarView: ToolbarContent {
 
     ToolbarItem(placement: .keyboard) {
       let text = String(text.characters)
-      Text("\(300 - text.count))")
+      Text("\(300 - text.count)")
         .foregroundStyle(text.count > 250 ? .redPurple : .indigoPurple)
         .font(.subheadline)
         .contentTransition(.numericText(value: Double(text.count)))

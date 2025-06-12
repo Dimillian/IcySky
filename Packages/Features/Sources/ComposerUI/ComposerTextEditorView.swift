@@ -12,6 +12,7 @@ struct ComposerTextEditorView: View {
   var body: some View {
     ZStack(alignment: .topLeading) {
       TextEditor(text: $text, selection: $selection)
+        .textInputFormattingControlVisibility(.hidden, for: .all)
         .font(.system(size: UIFontMetrics.default.scaledValue(for: 20)))
         .frame(maxWidth: .infinity)
         .padding()
@@ -40,39 +41,32 @@ struct ComposerTextEditorView: View {
   }
 
   private func processText() {
-    // Reset all foreground colors
     text.foregroundColor = nil
+    text.underlineStyle = nil
 
-    // Find all @ and # characters in a single pass
-    let patternIndices = text.characters.indices(where: { $0 == "@" || $0 == "#" })
+    let plainString = String(text.characters)
 
-    for range in patternIndices.ranges {
-      let start = range.lowerBound
-      let prefix = text.characters[start]
+    let combinedPattern = ComposerTextPattern.allCases
+      .map { $0.pattern }
+      .joined(separator: "|")
 
-      // Check if prefix is at start or preceded by whitespace
-      let isValidStart =
-        start == text.startIndex
-        || (start > text.startIndex
-          && text.characters[text.characters.index(before: start)].isWhitespace)
+    guard let regex = try? Regex(combinedPattern) else { return }
 
-      if isValidStart {
-        // Find the end of the pattern
-        var end = text.characters.index(after: start)
-        while end < text.endIndex {
-          let char = text.characters[end]
-          if !char.isLetter && !char.isNumber && char != "_" {
-            break
-          }
-          end = text.characters.index(after: end)
-        }
-
-        // Apply appropriate color based on prefix
-        if end > start {
-          let color: Color = prefix == "@" ? .indigo : .purple
-          text[start..<end].foregroundColor = color
-        }
+    for match in plainString.matches(of: regex) {
+      guard let start = AttributedString.Index(match.range.lowerBound, within: text),
+        let end = AttributedString.Index(match.range.upperBound, within: text)
+      else {
+        continue
       }
+
+      let matchedText = String(plainString[match.range])
+
+      guard let patternType = ComposerTextPattern.allCases.first(where: { $0.matches(matchedText) })
+      else {
+        continue
+      }
+
+      patternType.applyAttributes(to: &text, in: start..<end)
     }
   }
 }
