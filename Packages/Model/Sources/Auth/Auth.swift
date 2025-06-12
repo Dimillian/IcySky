@@ -57,7 +57,7 @@ public final class Auth: @unchecked Sendable {
 
 }
 
-extension UserSession: @retroactive Equatable, @unchecked Sendable {
+extension UserSession: @retroactive Equatable {
   public static func == (lhs: UserSession, rhs: UserSession) -> Bool {
     lhs.sessionDID == rhs.sessionDID
   }

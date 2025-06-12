@@ -6,16 +6,16 @@ import SwiftUI
 public struct ComposerView: View {
   @Environment(BSkyClient.self) private var client
   @Environment(\.dismiss) private var dismiss
-  
+
   @State var presentationDetent: PresentationDetent = .large
 
   @State private var text = AttributedString()
   @State private var selection = AttributedTextSelection()
-  
+
   @State private var sendState: ComposerSendState = .idle
 
   let mode: ComposerMode
-  
+
   private var title: String {
     switch mode {
     case .newPost:
@@ -24,7 +24,6 @@ public struct ComposerView: View {
       return "Reply to \(post.author.displayName ?? post.author.handle)"
     }
   }
-
 
   public init(mode: ComposerMode) {
     self.mode = mode
@@ -44,7 +43,7 @@ public struct ComposerView: View {
             sendState: $sendState,
             onSend: sendPost
           )
-       }
+        }
     }
     .presentationDetents([.height(200), .large], selection: $presentationDetent)
     .presentationBackgroundInteraction(.enabled)
@@ -59,7 +58,7 @@ extension ComposerView {
       switch mode {
       case .newPost:
         _ = try await client.blueskyClient.createPostRecord(text: String(text.characters))
-      case .reply(let post):
+      case .reply:
         // TODO: Create replyRef
         _ = try await client.blueskyClient.createPostRecord(text: String(text.characters))
       }

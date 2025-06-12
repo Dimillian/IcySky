@@ -7,7 +7,8 @@ struct ComposerHeaderView: ToolbarContent {
   @Binding var sendState: ComposerSendState
   let onSend: () async -> Void
 
-  var body: some ToolbarContent {    ToolbarItem(placement: .topBarTrailing) {
+  var body: some ToolbarContent {
+    ToolbarItem(placement: .topBarTrailing) {
       ComposerSendButton(
         sendState: sendState,
         onSend: onSend
