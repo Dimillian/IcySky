@@ -9,7 +9,7 @@ struct ComposerHeaderView: ToolbarContent {
 
   var body: some ToolbarContent {
     ToolbarItem(placement: .topBarTrailing) {
-      ComposerSendButton(
+      ComposerSendButtonView(
         sendState: sendState,
         onSend: onSend
       )

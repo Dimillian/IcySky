@@ -7,15 +7,12 @@ struct ComposerTextProcessor {
   private let combinedRegex: Regex<AnyRegexOutput>
   
   init() {
-    let patterns = [
-      "#\\w+",          // Complete hashtag
-      "@[\\w.-]+",      // Complete mention  
-      "(?i)https?://(?:www\\.)?\\S+(?:/|\\b)",  // URL
-      "#$",             // Just # being typed
-      "@$"              // Just @ being typed
-    ]
+    // Build regex from the patterns defined in ComposerTextPattern
+    let patterns = ComposerTextPattern.allCases.map { $0.pattern }
+    // Add patterns for in-progress typing
+    let inProgressPatterns = ["#$", "@$"]  // Just # or @ being typed
     
-    let combinedPattern = patterns.joined(separator: "|")
+    let combinedPattern = (patterns + inProgressPatterns).joined(separator: "|")
     self.combinedRegex = try! Regex(combinedPattern)
   }
   
@@ -34,18 +31,9 @@ struct ComposerTextProcessor {
       guard !matchedText.isEmpty else { continue }
       
       // Determine which pattern type this is
-      let patternType: ComposerTextPattern?
-      if matchedText.hasPrefix("#") {
-        patternType = .hashtag
-      } else if matchedText.hasPrefix("@") {
-        patternType = .mention
-      } else if matchedText.lowercased().hasPrefix("http") {
-        patternType = .url
-      } else {
-        patternType = nil
+      guard let pattern = ComposerTextPattern.allCases.first(where: { $0.matches(matchedText) }) else {
+        continue
       }
-      
-      guard let pattern = patternType else { continue }
       
       // Convert String range to AttributedString indices
       guard let matchStart = AttributedString.Index(match.range.lowerBound, within: freshText),

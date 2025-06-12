@@ -245,3 +245,74 @@ Feel free to use any of these new APIs throughout the codebase:
 - Replace legacy implementations with iOS 26 APIs where appropriate
 - Take advantage of Liquid Glass effects for modern UI aesthetics
 - Use the enhanced text and drag-and-drop capabilities for better interactions
+
+## Text Processing with AttributedString (iOS 26)
+
+### Overview
+The ComposerUI module implements automatic pattern detection for @mentions and #hashtags using iOS 26's AttributedString APIs. This implementation demonstrates how to work with TextEditor's behavior when implementing real-time pattern detection.
+
+### Architecture
+
+**Location**: `Packages/Features/Sources/ComposerUI/TextProcessing/`
+
+**Key Components**:
+- `ComposerTextPattern.swift` - Defines patterns (hashtag, mention, URL) and their attributes
+- `ComposerTextProcessor.swift` - Processes text to detect and mark patterns
+- `ComposerFormattingDefinition.swift` - Applies visual styling using AttributedTextValueConstraint
+
+### Implementation Details
+
+#### Custom Attributes
+```swift
+struct TextPatternAttribute: CodableAttributedStringKey {
+    typealias Value = ComposerTextPattern
+    static let name = "IcySky.TextPatternAttribute"
+    static let inheritedByAddedText: Bool = false
+}
+```
+
+#### Text Processing Approach
+Due to TextEditor creating fragmented character-by-character runs during typing, we must:
+1. Create a fresh AttributedString from the plain text on each update
+2. Apply all pattern attributes to the fresh string
+3. Replace the entire text with the fresh version
+
+```swift
+func processText(_ text: inout AttributedString) {
+    let plainString = String(text.characters)
+    var freshText = AttributedString(plainString)
+    
+    // Find and apply patterns to fresh text
+    // This avoids fragmented runs from TextEditor
+}
+```
+
+#### Formatting Definition
+The `ComposerFormattingDefinition` uses constraints to automatically apply visual styling:
+- `PatternColorConstraint` - Applies colors based on text pattern
+- `URLUnderlineConstraint` - Underlines URLs
+
+Applied at the parent view level:
+```swift
+.attributedTextFormattingDefinition(ComposerFormattingDefinition())
+```
+
+### Key Learnings
+
+1. **TextEditor Behavior**: During active typing, TextEditor creates character-by-character AttributedString runs, causing fragmentation
+
+2. **Apple's Approach vs Ours**: 
+   - Apple's sample (recipe editor) uses manual attribute application by user selection
+   - Our approach requires automatic pattern detection during typing
+   - This fundamental difference necessitates rebuilding the AttributedString
+
+3. **Performance Optimization**: Process immediately for small changes (typing), debounce for large changes (paste)
+
+4. **Pattern Matching**: Centralize regex patterns and matching logic in the enum to avoid duplication
+
+### Important Notes
+
+- The fresh AttributedString approach is necessary for automatic pattern detection
+- AttributedTextFormattingDefinition constraints work elegantly for visual styling
+- This pattern can be adapted for other real-time text processing needs (e.g., syntax highlighting)
+- The implementation leverages iOS 26's enhanced TextEditor with AttributedString support

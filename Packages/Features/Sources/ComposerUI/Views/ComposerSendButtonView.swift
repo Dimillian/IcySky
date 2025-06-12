@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ComposerSendButton: View {
+struct ComposerSendButtonView: View {
   let sendState: ComposerSendState
   let onSend: () async -> Void
   @State private var showError = false
