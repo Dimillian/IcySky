@@ -4,7 +4,7 @@ import Auth
 import DesignSystem
 import Destinations
 import Models
-import Network
+import Client
 import Nuke
 import NukeUI
 import SwiftUI

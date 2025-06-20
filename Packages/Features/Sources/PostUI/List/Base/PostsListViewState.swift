@@ -1,7 +1,7 @@
 import Foundation
 import Models
 
-enum PostsListViewState {
+enum PostsListViewState: Sendable {
   case uninitialized
   case loading
   case loaded(posts: [PostItem], cursor: String?)

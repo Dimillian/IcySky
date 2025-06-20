@@ -1,7 +1,7 @@
 import ATProtoKit
 import Foundation
 
-public struct PostItem: Hashable, Identifiable, Equatable {
+public struct PostItem: Hashable, Identifiable, Equatable, Sendable {
   public func hash(into hasher: inout Hasher) {
     hasher.combine(uri)
   }
@@ -131,7 +131,7 @@ extension AppBskyLexicon.Embed.RecordDefinition.ViewRecord {
 }
 
 extension PostItem {
-  @MainActor public static var placeholders: [PostItem] = Array(
+  public static let placeholders: [PostItem] = Array(
     repeating: (), count: 10
   ).map {
     .init(

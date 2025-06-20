@@ -4,7 +4,7 @@ import DesignSystem
 import Destinations
 import FeedUI
 import Models
-import Network
+import Client
 import NotificationsUI
 import PostUI
 import ProfileUI
@@ -31,7 +31,6 @@ struct AppTabRootView: View {
   }
 }
 
-@MainActor
 extension AppTab {
   @ViewBuilder
   fileprivate var rootView: some View {

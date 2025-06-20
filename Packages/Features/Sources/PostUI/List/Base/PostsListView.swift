@@ -1,7 +1,7 @@
 @preconcurrency import ATProtoKit
 import DesignSystem
 import Models
-import Network
+import Client
 import SwiftUI
 import User
 

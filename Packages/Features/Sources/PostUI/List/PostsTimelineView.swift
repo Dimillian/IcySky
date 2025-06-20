@@ -1,7 +1,7 @@
 @preconcurrency import ATProtoKit
 import DesignSystem
 import Models
-import Network
+import Client
 import SwiftUI
 import User
 
@@ -16,7 +16,7 @@ public struct PostsTimelineView: View {
 }
 
 // MARK: - Datasource
-extension PostsTimelineView: PostsListViewDatasource {
+extension PostsTimelineView: @MainActor PostsListViewDatasource {
   var title: String {
     "Following"
   }

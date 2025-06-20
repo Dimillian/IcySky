@@ -2,7 +2,7 @@ import ATProtoKit
 import AppRouter
 import DesignSystem
 import Models
-import Network
+import Client
 import SwiftUI
 
 public struct NotificationsListView: View {

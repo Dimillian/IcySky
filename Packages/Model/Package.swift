@@ -7,7 +7,7 @@ let package = Package(
   name: "Model",
   platforms: [.iOS(.v26), .macOS(.v26)],
   products: [
-    .library(name: "Network", targets: ["Network"]),
+    .library(name: "Client", targets: ["Client"]),
     .library(name: "Models", targets: ["Models"]),
     .library(name: "Auth", targets: ["Auth"]),
     .library(name: "User", targets: ["User"]),
@@ -20,7 +20,7 @@ let package = Package(
   ],
   targets: [
     .target(
-      name: "Network",
+      name: "Client",
       dependencies: [
         .product(name: "ATProtoKit", package: "ATProtoKit")
       ]
@@ -29,7 +29,7 @@ let package = Package(
       name: "Models",
       dependencies: [
         .product(name: "ATProtoKit", package: "ATProtoKit"),
-        "Network",
+        "Client",
       ]
     ),
     .target(
@@ -47,7 +47,7 @@ let package = Package(
       name: "User",
       dependencies: [
         .product(name: "ATProtoKit", package: "ATProtoKit"),
-        "Network",
+        "Client",
       ]
     ),
     .target(

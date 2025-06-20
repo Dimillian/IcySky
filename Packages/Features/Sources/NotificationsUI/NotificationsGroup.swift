@@ -1,10 +1,9 @@
 import ATProtoKit
 import Foundation
 import Models
-import Network
+import Client
 import SwiftUI
 
-@MainActor
 struct NotificationsGroup: Identifiable {
   let id: String
   let timestamp: Date

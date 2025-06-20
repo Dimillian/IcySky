@@ -1,7 +1,7 @@
 @preconcurrency import ATProtoKit
 import DesignSystem
 import Models
-import Network
+import Client
 import SwiftData
 import SwiftUI
 import User
@@ -44,7 +44,7 @@ public struct PostsFeedView: View {
 }
 
 // MARK: - Datasource
-extension PostsFeedView: PostsListViewDatasource {
+extension PostsFeedView: @MainActor PostsListViewDatasource {
   var title: String {
     feedItem.displayName
   }

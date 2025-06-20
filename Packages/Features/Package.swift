@@ -4,7 +4,7 @@
 import PackageDescription
 
 let baseDeps: [PackageDescription.Target.Dependency] = [
-  .product(name: "Network", package: "Model"),
+  .product(name: "Client", package: "Model"),
   .product(name: "Models", package: "Model"),
   .product(name: "Auth", package: "Model"),
   .product(name: "User", package: "Model"),

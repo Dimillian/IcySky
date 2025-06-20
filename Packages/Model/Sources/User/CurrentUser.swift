@@ -1,10 +1,9 @@
 @preconcurrency import ATProtoKit
-import Network
+import Client
 import SwiftUI
 
 @Observable
-@MainActor
-public class CurrentUser {
+public final class CurrentUser: @unchecked Sendable {
   public let client: BSkyClient
 
   public private(set) var profile: AppBskyLexicon.Actor.ProfileViewDetailedDefinition?

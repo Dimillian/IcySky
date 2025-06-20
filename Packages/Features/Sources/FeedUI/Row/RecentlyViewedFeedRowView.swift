@@ -3,7 +3,7 @@ import AppRouter
 import DesignSystem
 import Destinations
 import Models
-import Network
+import Client
 import SwiftUI
 
 public struct RecentlyViewedFeedRowView: View {

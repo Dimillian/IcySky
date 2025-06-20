@@ -1,7 +1,7 @@
 @preconcurrency import ATProtoKit
 import DesignSystem
 import Models
-import Network
+import Client
 import SwiftUI
 import User
 
@@ -20,7 +20,7 @@ public struct PostsLikesView: View {
 }
 
 // MARK: - Datasource
-extension PostsLikesView: PostsListViewDatasource {
+extension PostsLikesView: @MainActor PostsListViewDatasource {
   var title: String {
     "Likes"
   }

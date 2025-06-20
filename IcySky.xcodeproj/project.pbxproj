@@ -9,17 +9,16 @@
 /* Begin PBXBuildFile section */
 		9F1552E62CEF35B200DD9F6E /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 9F1552E52CEF35B200DD9F6E /* Auth */; };
 		9F1552E82CEF35B200DD9F6E /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 9F1552E72CEF35B200DD9F6E /* Models */; };
-		9F1552EA2CEF35B200DD9F6E /* Network in Frameworks */ = {isa = PBXBuildFile; productRef = 9F1552E92CEF35B200DD9F6E /* Network */; };
 		9F1552ED2CEF35C000DD9F6E /* AuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9F1552EC2CEF35C000DD9F6E /* AuthUI */; };
 		9F1552EF2CEF35C000DD9F6E /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 9F1552EE2CEF35C000DD9F6E /* DesignSystem */; };
 		9F1552F12CEF35C000DD9F6E /* FeedUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9F1552F02CEF35C000DD9F6E /* FeedUI */; };
 		9F1552F32CEF35C000DD9F6E /* PostUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9F1552F22CEF35C000DD9F6E /* PostUI */; };
 		9F21F9B72CFDC288003B9250 /* MediaUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9F21F9B62CFDC288003B9250 /* MediaUI */; };
 		9F21FACB2D00411D003B9250 /* ProfileUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9F21FACA2D00411D003B9250 /* ProfileUI */; };
-		9F5892032CEB2E2D00798943 /* Network in Frameworks */ = {isa = PBXBuildFile; productRef = 9F5892022CEB2E2D00798943 /* Network */; };
 		9F5892972CEC703B00798943 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 9F5892962CEC703B00798943 /* DesignSystem */; };
 		9F58939D2CEDF04200798943 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 9F58939C2CEDF04200798943 /* Auth */; };
 		9F58939F2CEDF04200798943 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 9F58939E2CEDF04200798943 /* Models */; };
+		9FA3256B2E05439D007BAC14 /* Client in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA3256A2E05439D007BAC14 /* Client */; };
 		9FA556A32CF49E55008A62B4 /* FeedUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FD63DDD2CEF1F5B00243D9A /* FeedUI */; };
 		9FA557082CF61EE4008A62B4 /* NotificationsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA557072CF61EE4008A62B4 /* NotificationsUI */; };
 		9FAEE3BA2CF09BB400F86CDC /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FAEE3B92CF09BB400F86CDC /* SettingsUI */; };
@@ -54,11 +53,11 @@
 				9FAEE3BA2CF09BB400F86CDC /* SettingsUI in Frameworks */,
 				9FB136012DEEB30A003D7ABE /* ComposerUI in Frameworks */,
 				9F1552F32CEF35C000DD9F6E /* PostUI in Frameworks */,
+				9FA3256B2E05439D007BAC14 /* Client in Frameworks */,
 				9F58939F2CEDF04200798943 /* Models in Frameworks */,
 				9F1552ED2CEF35C000DD9F6E /* AuthUI in Frameworks */,
 				9F1552EF2CEF35C000DD9F6E /* DesignSystem in Frameworks */,
 				9FA557082CF61EE4008A62B4 /* NotificationsUI in Frameworks */,
-				9F5892032CEB2E2D00798943 /* Network in Frameworks */,
 				9F1552E82CEF35B200DD9F6E /* Models in Frameworks */,
 				9F21F9B72CFDC288003B9250 /* MediaUI in Frameworks */,
 				9F58939D2CEDF04200798943 /* Auth in Frameworks */,
@@ -67,7 +66,6 @@
 				9F5892972CEC703B00798943 /* DesignSystem in Frameworks */,
 				9F1552E62CEF35B200DD9F6E /* Auth in Frameworks */,
 				9FD63DE22CEF20F500243D9A /* AuthUI in Frameworks */,
-				9F1552EA2CEF35B200DD9F6E /* Network in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,7 +120,6 @@
 			);
 			name = IcySky;
 			packageProductDependencies = (
-				9F5892022CEB2E2D00798943 /* Network */,
 				9F5892962CEC703B00798943 /* DesignSystem */,
 				9F58939C2CEDF04200798943 /* Auth */,
 				9F58939E2CEDF04200798943 /* Models */,
@@ -131,7 +128,6 @@
 				9FD63DE12CEF20F500243D9A /* AuthUI */,
 				9F1552E52CEF35B200DD9F6E /* Auth */,
 				9F1552E72CEF35B200DD9F6E /* Models */,
-				9F1552E92CEF35B200DD9F6E /* Network */,
 				9F1552EC2CEF35C000DD9F6E /* AuthUI */,
 				9F1552EE2CEF35C000DD9F6E /* DesignSystem */,
 				9F1552F02CEF35C000DD9F6E /* FeedUI */,
@@ -141,6 +137,7 @@
 				9F21F9B62CFDC288003B9250 /* MediaUI */,
 				9F21FACA2D00411D003B9250 /* ProfileUI */,
 				9FB136002DEEB30A003D7ABE /* ComposerUI */,
+				9FA3256A2E05439D007BAC14 /* Client */,
 			);
 			productName = IcySky;
 			productReference = 9F2142232CE9DAA1004167D7 /* IcySky.app */;
@@ -260,6 +257,8 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -313,7 +312,9 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 			};
 			name = Release;
 		};
@@ -439,10 +440,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Models;
 		};
-		9F1552E92CEF35B200DD9F6E /* Network */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Network;
-		};
 		9F1552EC2CEF35C000DD9F6E /* AuthUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AuthUI;
@@ -467,10 +464,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ProfileUI;
 		};
-		9F5892022CEB2E2D00798943 /* Network */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Network;
-		};
 		9F5892962CEC703B00798943 /* DesignSystem */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DesignSystem;
@@ -482,6 +475,10 @@
 		9F58939E2CEDF04200798943 /* Models */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Models;
+		};
+		9FA3256A2E05439D007BAC14 /* Client */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Client;
 		};
 		9FA557072CF61EE4008A62B4 /* NotificationsUI */ = {
 			isa = XCSwiftPackageProductDependency;

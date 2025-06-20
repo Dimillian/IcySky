@@ -4,7 +4,7 @@ import AuthUI
 import ComposerUI
 import Destinations
 import MediaUI
-import Network
+import Client
 import SwiftUI
 import User
 

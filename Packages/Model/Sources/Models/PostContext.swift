@@ -1,6 +1,6 @@
 import ATProtoKit
 import Foundation
-import Network
+import Client
 import SwiftUI
 
 @MainActor
@@ -24,7 +24,7 @@ public class PostContextProvider {
 
 @MainActor
 @Observable
-public class PostContext {
+public final class PostContext: Sendable {
   private var post: PostItem
   private let client: BSkyClient
 

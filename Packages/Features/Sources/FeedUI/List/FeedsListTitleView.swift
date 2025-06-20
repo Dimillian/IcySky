@@ -1,5 +1,5 @@
 import DesignSystem
-import Network
+import Client
 import SwiftUI
 
 public struct FeedsListTitleView: View {

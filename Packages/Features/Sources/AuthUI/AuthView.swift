@@ -2,7 +2,7 @@ import ATProtoKit
 import Auth
 import DesignSystem
 import Models
-import Network
+import Client
 import SwiftUI
 
 public struct AuthView: View {

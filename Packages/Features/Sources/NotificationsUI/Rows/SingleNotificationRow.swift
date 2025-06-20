@@ -2,7 +2,7 @@ import ATProtoKit
 import AppRouter
 import Destinations
 import Models
-import Network
+import Client
 import PostUI
 import SwiftUI
 

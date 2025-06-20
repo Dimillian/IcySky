@@ -3,7 +3,6 @@ import SwiftUI
 import Testing
 import ViewInspector
 
-@MainActor
 struct FeedsListTitleViewTests {
   @FocusState var isSearchFocused: Bool
   @State var filter: FeedsListFilter = .myFeeds

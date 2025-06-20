@@ -2,7 +2,6 @@ import SwiftUI
 import Foundation
 
 /// Processes text to identify and mark patterns (hashtags, mentions, URLs)
-@MainActor
 struct ComposerTextProcessor {
   private let combinedRegex: Regex<AnyRegexOutput>
   

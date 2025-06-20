@@ -1,6 +1,6 @@
 import Foundation
 import Models
-import Network
+import Client
 import SwiftUI
 import User
 
